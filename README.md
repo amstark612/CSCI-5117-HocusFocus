@@ -10,8 +10,10 @@ CSCI 5117, Spring 2022, [assignment description](https://canvas.umn.edu/courses/
 
 ### Students
 
-* First Last, x500@umn.edu
-* ...
+* Kinza, Ahmed ahme0170@umn.edu
+* Christina, Nguyen nguy4477@umn.edu
+* Suihan, Dong dongx460@umn.edu
+* Yizhe, Wang wang5959@umn.edu
 
 
 ## Key Features
