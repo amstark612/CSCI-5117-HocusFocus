@@ -5,6 +5,7 @@ import "firebase/firestore";
 import App from "./App.vue";
 import router from "./router";
 import { firestorePlugin } from "vuefire";
+import "@/assets/styles/global.css";
 Vue.use(firestorePlugin);
 
 Vue.config.productionTip = false;
