@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
+/***** utilities *****/
 .clickable {
 	cursor: pointer;
 	pointer-events: all !important;
@@ -11,4 +14,11 @@
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
+}
+
+/***** headings *****/
+@layer base {
+	h1 {
+		@apply text-3xl;
+	}
 }

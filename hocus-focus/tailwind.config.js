@@ -4,6 +4,9 @@ module.exports = {
   ],
   theme: {
     extend: {},
+		fontFamily: {
+			'sans': ['Fira Code'],
+		},
   },
   plugins: [],
 }

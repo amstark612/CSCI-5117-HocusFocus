@@ -1,5 +1,5 @@
 <template>
-	<div class="task-item flex justify-between items-center p-3 rounded-lg bg-rose-300 border border-red-500">
+	<div class="task-item flex justify-between items-center p-3 m-2 rounded-lg bg-rose-300 border border-red-500">
 		<div class="task-title flex-initial w-96 text-left flex flex-col">
 			<div class="line-clamp">
 				<span v-if="!editTitle" class="clickable" @click="editTitle = !editTitle">
@@ -35,9 +35,9 @@
 		<div class="flex flex-initial justify-end">
 			<div class="task-progress flex-initial w-96 text-center flex justify-end pr-4">
 				<div class="pr-4">
-					---------------- slider goes here -----------------
+					------ slider goes here -------
 				</div>
-				<div>
+				<div class="w-7">
 					{{ progress * 100 }}%
 				</div>
 			</div>
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+// CTN_TODO: disable edit mode of component when user edits a different component or clicks out
 export default {
 	name: 'BaseTaskItem',
 	data() {
