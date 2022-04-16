@@ -22,3 +22,49 @@
 		@apply text-3xl;
 	}
 }
+
+/***** tasks *****/
+@layer base {
+	.task-item {
+		@apply flex;
+		@apply justify-between;
+		@apply items-center;
+		@apply p-3;
+		@apply m-2;
+		@apply rounded-lg;
+		@apply border;
+		@apply border-red-500;
+	}
+
+	.task-item .muted {
+		@apply italic;
+		@apply text-rose-500;
+	}
+
+	/* CTN_TODO: figure out why no rounded borders when active */
+	.task-item input[type=text],
+	.task-item input[type=text]:active,
+	.task-item input[type=text]:focus {
+		@apply w-full;
+		@apply rounded;
+		@apply bg-rose-100;
+		@apply border;
+		@apply border-red-500;
+	}
+
+	.task-title {
+		@apply flex-initial;
+		@apply w-96;
+		@apply text-left;
+		@apply flex;
+		@apply flex-col;
+		@apply gap-y-1;
+	}
+
+	.task-actions {
+		@apply flex-none;
+		@apply w-9;
+		@apply text-center;
+		@apply align-middle;
+	}
+}

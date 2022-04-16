@@ -43,8 +43,9 @@ export default {
 
 	methods: {
 		deleteTask(taskId) {
-			console.log('leave me alone linter', taskId);
-			console.log('delete task from db and refresh list...');
+			db.collection('tasks').doc(taskId).delete().then(() => {
+				console.log('succesfully deleted task!');
+			})
 		}
 	}
 }

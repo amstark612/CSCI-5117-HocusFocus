@@ -1,6 +1,6 @@
 <template>
-	<div class="task-item flex justify-between items-center p-3 m-2 rounded-lg bg-rose-300 border border-red-500">
-		<div class="task-title flex-initial w-96 text-left flex flex-col">
+	<div class="task-item bg-rose-300">
+		<div class="task-title">
 			<div class="line-clamp">
 				<span v-if="!editTitle" class="clickable" @click="editTitle = !editTitle">
 					{{ task.title }}
@@ -11,11 +11,11 @@
 					type="text" 
 					v-model="title" 
 					v-on:keyup.enter="updateTitle"
-					class="w-full rounded bg-rose-100 border border-red-500"
+					@blur="updateTitle"
 				/>
 			</div>
 
-			<div class="line-clamp italic text-rose-500">
+			<div class="line-clamp muted">
 				<small v-if="!editTags" class="clickable" @click="editTags = !editTags">
 					<span v-for="tag in task.tags" :key="tag">
 						#{{ tag }}
@@ -27,7 +27,7 @@
 					type="text"
 					v-model="tags"
 					v-on:keyup.enter="updateTags"
-					class="w-full rounded bg-rose-100 border border-red-500"
+					@blur="updateTags"
 				/>
 			</div>
 		</div>
@@ -42,7 +42,7 @@
 				</div>
 			</div>
 
-			<div class="task-actions flex-none w-9 text-center align-middle">
+			<div class="task-actions">
 				<svg 
 					xmlns="http://www.w3.org/2000/svg" 
 					class="h-6 w-6 clickable" 
