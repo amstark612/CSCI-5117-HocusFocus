@@ -34,8 +34,8 @@
 
 		<!-- CTN_TODO: media query to not display slider on phones; make percentage editable -->
 		<div class="flex flex-initial justify-end">
-			<div class="task-progress flex-initial w-96 text-center flex justify-end pr-4">
-				<div class="pr-4">
+			<div class="task-progress flex-initial sm:w-96 flex justify-end items-center pr-4">
+				<div class="pr-4 hidden sm:block">
 					<!-- <vue-slide-bar v-model="progress" /> -->
 					------ slider goes here -------
 				</div>

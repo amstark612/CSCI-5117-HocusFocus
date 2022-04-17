@@ -62,9 +62,10 @@ body {
 /***** tasks *****/
 @layer base {
 	.task-item {
+		/* @apply block; */
 		@apply flex;
 		@apply justify-between;
-		@apply items-center;
+		@apply sm:items-center;
 		@apply border-red-500;
 	}
 
@@ -83,8 +84,7 @@ body {
 
 	.task-title {
 		@apply flex-initial;
-		@apply w-96;
-		@apply text-left;
+		@apply sm:w-96;
 		@apply flex;
 		@apply flex-col;
 		@apply gap-y-1;
@@ -95,5 +95,7 @@ body {
 		@apply w-9;
 		@apply text-center;
 		@apply align-middle;
+		@apply flex;
+		@apply items-center;
 	}
 }
