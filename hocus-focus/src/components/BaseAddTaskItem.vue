@@ -1,8 +1,8 @@
 <template>
-	<div class="card task-item bg-gradient-to-b from-pastel-yellow-200 to-pastel-yellow-300">
+	<div class="card task-item from-pastel-yellow-200 to-pastel-yellow-300">
 		<div class="task-title">
 			<div class="line-clamp">
-				<span v-if="!editTitle" class="clickable" @click="editTitle = !editTitle">
+				<span v-if="!editTitle" class="clickable" @click="editTitle = true">
 					{{ title }}
 				</span>
 
@@ -10,13 +10,13 @@
 					v-if="editTitle" 
 					type="text" 
 					v-model="title" 
-					v-on:keyup.enter="editTitle = !editTitle"
-					@blur="editTitle = !editTitle"
+					v-on:keyup.enter="editTitle = false"
+					@blur="editTitle = false"
 				/>
 			</div>
 
 			<div class="line-clamp muted">
-				<small v-if="!editTags" class="clickable" @click="editTags = !editTags">
+				<small v-if="!editTags" class="clickable" @click="editTags = true">
 					<span v-for="tag in tagArray" :key="tag">
 						#{{ tag }}
 					</span>
@@ -26,8 +26,8 @@
 					v-if="editTags"
 					type="text"
 					v-model="tags"
-					v-on:keyup.enter="editTags = !editTags"
-					@blur="editTags = !editTags"
+					v-on:keyup.enter="editTags = false"
+					@blur="editTags = false"
 				/>
 			</div>
 		</div>
@@ -38,7 +38,17 @@
 					------ slider goes here -------
 				</div>
 				<div class="w-7 text-center">
-					{{ progress * 100 }}%
+					<span v-if="!editProgress" @click="editProgress = true">{{ progress }}%</span>
+					<input 
+						v-if="editProgress" 
+						v-model="progress" 
+						v-on:keyup.enter="editProgress = false"
+						@blur="editProgress = false"
+						class="w-7"
+						type="number" 
+						min="0" 
+						max="100" 
+					/>
 				</div>
 			</div>
 
@@ -69,6 +79,7 @@ export default {
 	name: 'BaseAddTaskItem',
 	data() {
 		return {
+			editProgress: false,
 			editTitle: false,
 			editTags: false,
 			title: 'Click here to add a task',

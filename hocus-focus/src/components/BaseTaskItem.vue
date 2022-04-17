@@ -1,5 +1,5 @@
 <template>
-	<div class="card task-item bg-gradient-to-b from-pastel-orange-100 to-pastel-orange-200">
+	<div class="card task-item from-pastel-orange-100 to-pastel-orange-200">
 		<div class="task-title">
 			<div class="line-clamp">
 				<span v-if="!editTitle" class="clickable" @click="editTitle = true">

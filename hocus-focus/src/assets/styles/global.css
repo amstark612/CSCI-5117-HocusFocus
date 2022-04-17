@@ -68,6 +68,7 @@
 		@apply border;
 		@apply drop-shadow-lg;
 		@apply text-sm;
+		@apply bg-gradient-to-b;
 	}
 }
 
