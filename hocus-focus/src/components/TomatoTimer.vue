@@ -209,7 +209,11 @@ export default {
 	@apply mt-4;
 
 	@apply border-pastel-green-500;
-	@apply bg-pastel-green-200;
+	/* @apply bg-pastel-green-200; */
+	@apply bg-gradient-to-br;
+	@apply from-pastel-green-200;
+	@apply via-pastel-yellow-300;
+	@apply to-pastel-orange-300;
 	@apply text-pastel-green-500;
 }
 
