@@ -32,7 +32,7 @@
 			</div>
 
 			<div>
-				Timer
+				{{ timer }}
 			</div>
 
 			<div class="flex justify-center gap-x-4">
@@ -77,7 +77,7 @@
 					</svg>
 				</div>
 
-				<div title="Short Break">
+				<div title="Short Break" @click="runInterval(SHORT_BREAK)">
 					<svg 
 						xmlns="http://www.w3.org/2000/svg" 
 						class="h-8 w-8 clickable" 
@@ -90,7 +90,7 @@
 					</svg>
 				</div>
 
-				<div title="Long Break">
+				<div title="Long Break" @click="runInterval(LONG_BREAK)">
 					<svg 
 						xmlns="http://www.w3.org/2000/svg" 
 						class="h-8 w-8 clickable" 
@@ -117,15 +117,38 @@ export default {
 			editGoal: false,
 			intervalCount: 0,
 			running: false,
+			setIntervalObject: null,
 			timer: 0,
+			// CTN_TODO: dunno if we need this or not
 			shortBreakTimer: 0,
 			longBreakTimer: 0,
+
 			// intervals in milliseconds
-			MINUTE: 60000,
+			// MINUTE: 60000,
+			MINUTE: 2000, // make it easier to test things....
 			// will be updated upon mount
-			POMODORO_INTERVAL: 25,
+			// POMODORO_INTERVAL: 25,
+			// SHORT_BREAK: 5,
+			// LONG_BREAK: 20,
+
+			// make it easier to test things.....
+			POMODORO_INTERVAL: 5,
 			SHORT_BREAK: 5,
-			LONG_BREAK: 20,
+			LONG_BREAK: 5,
+		}
+	},
+
+	watch: {
+		intervalCount() {
+			if (this.intervalCount == 4) {
+				this.cycleCount += 1;
+				this.intervalCount = 0;
+			}
+		},
+		cycleCount() {
+			if (this.cycleCount == this.goal) {
+				console.log('summary prompt thingy');
+			}
 		}
 	},
 
@@ -135,20 +158,34 @@ export default {
 		this.LONG_BREAK *= this.MINUTE;
 	},
 
-	watch: {
-		running() {
-			// if the clock isn't running, check whether the timer is at pomodoro time
-			// if it is, what happens next depends on how many intervals and cycles has elapsed
-			// if (!this.running) {
-			// 	if (this.timer < this.POMODORO_INTERVAL) {
-			// 			
-			// 	}
-			// }
-		}
-	},
-
 	methods: {
+		runInterval(duration) {
+			console.log(duration);
+			if (this.setIntervalObject) {
+				this.timer = 0;
+				clearInterval(this.setIntervalObject);
+			}
 
-	}
+			this.running = true;
+
+			// https://stackoverflow.com/questions/29971898/how-to-create-an-accurate-timer-in-javascript
+			let start = Date.now();
+			this.setIntervalObject = setInterval(() => {
+				if (this.timer >= duration) {
+					this.running = false;
+					clearInterval(this.setIntervalObject);
+
+					// do other stuff depending on what duration is & num goals & num cycles
+					if (duration == this.POMODORO_INTERVAL) {
+						this.intervalCount += 1; // CTN_TODO maybe this should be renamed to pomodoroCount?
+					}
+				}
+
+				if (this.running) {
+					this.timer = Date.now() - start;
+				}
+			}, 1000);
+		},
+	},
 };
 </script>
