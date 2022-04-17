@@ -210,10 +210,9 @@ export default {
 
 	@apply border-pastel-green-500;
 	/* @apply bg-pastel-green-200; */
-	@apply bg-gradient-to-br;
-	@apply from-pastel-green-200;
-	@apply via-pastel-yellow-300;
-	@apply to-pastel-orange-300;
+	@apply bg-gradient-to-b;
+	@apply from-pastel-green-100;
+	@apply to-pastel-green-200;
 	@apply text-pastel-green-500;
 }
 
@@ -222,7 +221,12 @@ export default {
 	@apply justify-center;
 	@apply items-center;
 
+	/*
 	@apply bg-pastel-yellow-200;
+	*/
+	@apply bg-gradient-to-b;
+	@apply from-pastel-yellow-200;
+	@apply to-pastel-yellow-300;
 	@apply border-4;
 	@apply border-pastel-yellow-500;
 

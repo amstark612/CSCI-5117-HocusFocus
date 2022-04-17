@@ -67,6 +67,7 @@
 		@apply rounded-lg;
 		@apply border;
 		@apply drop-shadow-lg;
+		@apply text-sm;
 	}
 }
 

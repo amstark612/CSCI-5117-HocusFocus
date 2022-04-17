@@ -1,8 +1,8 @@
 <template>
-	<div class="card task-item bg-pastel-orange-200">
+	<div class="card task-item bg-gradient-to-b from-pastel-orange-100 to-pastel-orange-200">
 		<div class="task-title">
 			<div class="line-clamp">
-				<span v-if="!editTitle" class="clickable" @click="editTitle = !editTitle">
+				<span v-if="!editTitle" class="clickable" @click="editTitle = true">
 					{{ task.title }}
 				</span>
 
@@ -16,7 +16,7 @@
 			</div>
 
 			<div class="line-clamp muted">
-				<small v-if="!editTags" class="clickable" @click="editTags = !editTags">
+				<small v-if="!editTags" class="clickable" @click="editTags = true">
 					<span v-for="tag in task.tags" :key="tag">
 						#{{ tag }}
 					</span>
@@ -40,7 +40,17 @@
 					------ slider goes here -------
 				</div>
 				<div class="w-7 text-center">
-					{{ progress * 100 }}%
+					<span v-if="!editProgress" @click="editProgress = true">{{ progress }}%</span>
+					<input 
+						v-if="editProgress" 
+						v-model="progress" 
+						v-on:keyup.enter="updateProgress"
+						@blur="updateProgress"
+						class="w-7"
+						type="number" 
+						min="0" 
+						max="100" 
+					/>
 				</div>
 			</div>
 
@@ -69,6 +79,7 @@ export default {
 	name: 'BaseTaskItem',
 	data() {
 		return {
+			editProgress: false,
 			editTitle: false,
 			editTags: false,
 			progress: null,
@@ -97,16 +108,21 @@ export default {
 	},
 
 	methods: {
-		updateTitle() {
-			console.log('emit new title to parent...');
-			console.log(this.title);
-			this.editTitle = false;
+		updateProgress() {
+			console.log('emit progress to parent...');
+			console.log(this.progress);
+			this.editProgress = false;
 		},
 		updateTags() {
 			console.log('emit new tags array to parent...');
 			console.log(this.tags.split(', '));
 			this.editTags = false;
-		}
+		},
+		updateTitle() {
+			console.log('emit new title to parent...');
+			console.log(this.title);
+			this.editTitle = false;
+		},
 	}
 }
 </script>

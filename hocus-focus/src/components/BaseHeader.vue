@@ -1,5 +1,5 @@
 <template>
-	<header class="flex flex-col">
+	<header class="flex flex-col text-pastel-blue-600">
 		<div class="py-4 flex justify-between">
 			<div id="logo">
 				<router-link to="/">hocus-focus</router-link>
