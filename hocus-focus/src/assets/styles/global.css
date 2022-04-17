@@ -48,16 +48,23 @@ body {
 	}
 }
 
+
+/***** card elements *****/
+@layer base {
+	.card {
+		@apply p-3;
+		@apply my-2;
+		@apply rounded-lg;
+		@apply border;
+	}
+}
+
 /***** tasks *****/
 @layer base {
 	.task-item {
 		@apply flex;
 		@apply justify-between;
 		@apply items-center;
-		@apply p-3;
-		@apply my-2;
-		@apply rounded-lg;
-		@apply border;
 		@apply border-red-500;
 	}
 

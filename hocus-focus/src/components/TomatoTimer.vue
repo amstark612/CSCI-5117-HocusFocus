@@ -2,7 +2,7 @@
 	<div class="text-center">
 		<h1>let's get focused</h1>
 
-		<div class="flex flex-col gap-y-6 mt-4 rounded-lg border border-lime-600 bg-lime-200 p-3 my-2">
+		<div class="card flex flex-col gap-y-6 mt-4 border-lime-600 bg-lime-200">
 			<div class="flex justify-around">
 				<div>
 					{{ intervalCount }} / 4 intervals
@@ -31,7 +31,7 @@
 				</div>
 			</div>
 
-			<div>
+			<div class="text-4xl">
 				{{ timer }}
 			</div>
 
@@ -114,6 +114,7 @@ export default {
 		return {
 			cycleCount: 0,
 			goal: 0,
+			totalFocusTime: 0,
 			editGoal: false,
 			intervalCount: 0,
 			running: false,
@@ -133,8 +134,8 @@ export default {
 
 			// make it easier to test things.....
 			POMODORO_INTERVAL: 5,
-			SHORT_BREAK: 5,
-			LONG_BREAK: 5,
+			SHORT_BREAK: 2,
+			LONG_BREAK: 3,
 		}
 	},
 
@@ -160,29 +161,30 @@ export default {
 
 	methods: {
 		runInterval(duration) {
-			console.log(duration);
 			if (this.setIntervalObject) {
-				this.timer = 0;
 				clearInterval(this.setIntervalObject);
 			}
 
+			this.timer = duration;
 			this.running = true;
 
-			// https://stackoverflow.com/questions/29971898/how-to-create-an-accurate-timer-in-javascript
 			let start = Date.now();
 			this.setIntervalObject = setInterval(() => {
-				if (this.timer >= duration) {
-					this.running = false;
-					clearInterval(this.setIntervalObject);
-
+				if (this.timer <= 0) {
 					// do other stuff depending on what duration is & num goals & num cycles
 					if (duration == this.POMODORO_INTERVAL) {
 						this.intervalCount += 1; // CTN_TODO maybe this should be renamed to pomodoroCount?
+						this.totalFocusTime += this.POMODORO_INTERVAL;
 					}
+
+					this.running = false;
+					clearInterval(this.setIntervalObject);
 				}
 
 				if (this.running) {
-					this.timer = Date.now() - start;
+					let timeElapsed = Date.now() - start;
+					let timeLeft = duration - timeElapsed;
+					this.timer = timeLeft < 0 ? 0 : timeLeft;
 				}
 			}, 1000);
 		},

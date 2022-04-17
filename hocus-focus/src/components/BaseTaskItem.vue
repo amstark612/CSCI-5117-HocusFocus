@@ -1,5 +1,5 @@
 <template>
-	<div class="task-item bg-red-200">
+	<div class="card task-item bg-red-200">
 		<div class="task-title">
 			<div class="line-clamp">
 				<span v-if="!editTitle" class="clickable" @click="editTitle = !editTitle">
