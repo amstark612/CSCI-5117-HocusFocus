@@ -120,9 +120,6 @@ export default {
 			running: false,
 			setIntervalObject: null,
 			timer: 0,
-			// CTN_TODO: dunno if we need this or not
-			shortBreakTimer: 0,
-			longBreakTimer: 0,
 
 			// intervals in milliseconds
 			MINUTE: 60000,
@@ -157,8 +154,8 @@ export default {
 			}
 		},
 		cycleCount() {
-			if (this.cycleCount == this.goal) {
-				console.log('summary prompt thingy');
+			if (this.goal % this.cycleCount == 0) {
+				console.log('summary prompt thingy - emit to parent probs');
 			}
 		}
 	},
