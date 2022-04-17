@@ -31,7 +31,7 @@
 			</nav>
 		</div>
 
-		<div v-if="showMenu" class="text-center py-4">
+		<div v-if="showMenu" class="text-center pb-4">
 			<router-link to="/tasks">tasks</router-link> |
 			<router-link to="/ranking">rankings</router-link> |
 			<!--- CTN_TODO: allow them to log out --->

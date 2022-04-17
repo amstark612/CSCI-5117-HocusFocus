@@ -1,5 +1,5 @@
 <template>
-	<div class="card task-item bg-red-200">
+	<div class="card task-item bg-pastel-orange-200">
 		<div class="task-title">
 			<div class="line-clamp">
 				<span v-if="!editTitle" class="clickable" @click="editTitle = !editTitle">
@@ -34,12 +34,12 @@
 
 		<!-- CTN_TODO: media query to not display slider on phones; make percentage editable -->
 		<div class="flex flex-initial justify-end">
-			<div class="task-progress flex-initial sm:w-96 flex justify-end items-center pr-4">
+			<div class="task-progress flex-initial sm:w-96 flex justify-end items-center pr-2">
 				<div class="pr-4 hidden sm:block">
 					<!-- <vue-slide-bar v-model="progress" /> -->
 					------ slider goes here -------
 				</div>
-				<div class="w-7">
+				<div class="w-7 text-center">
 					{{ progress * 100 }}%
 				</div>
 			</div>

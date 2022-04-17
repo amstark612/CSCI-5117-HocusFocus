@@ -4,8 +4,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
 
-body {
-	background-color: rgb(255 251 235);
+@layer base {
+	body {
+		@apply bg-pastel-green-100;
+		/* background-color: rgb(255 251 235); */
+	}
 }
 
 
@@ -25,7 +28,7 @@ body {
 @layer base {
 	h1 {
 		@apply text-3xl;
-		@apply text-lime-600;
+		@apply text-pastel-green-500;
 	}
 }
 
@@ -66,20 +69,20 @@ body {
 		@apply flex;
 		@apply justify-between;
 		@apply sm:items-center;
-		@apply border-red-500;
+		@apply border-pastel-orange-500;
 	}
 
 	.task-item .muted {
 		@apply italic;
-		@apply text-red-500;
+		@apply text-pastel-orange-300;
 	}
 
 	/* CTN_TODO: figure out why no rounded borders when active */
 	.task-item input[type=text],
 	.task-item input[type=text]:active,
 	.task-item input[type=text]:focus {
-		@apply bg-red-100;
-		@apply border-red-500;
+		@apply bg-pastel-yellow-100;
+		@apply border-pastel-orange-500;
 	}
 
 	.task-title {
@@ -95,6 +98,7 @@ body {
 		@apply w-9;
 		@apply text-center;
 		@apply align-middle;
+		@apply justify-center;
 		@apply flex;
 		@apply items-center;
 	}

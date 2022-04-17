@@ -2,7 +2,7 @@
 	<div class="text-center">
 		<h1>let's get focused</h1>
 
-		<div class="card flex flex-col gap-y-6 mt-4 border-lime-600 bg-lime-200">
+		<div class="card flex flex-col gap-y-6 mt-4 border-pastel-green-500 bg-pastel-green-200">
 			<div class="flex justify-around">
 				<div>
 					{{ intervalCount }} / 4 intervals
