@@ -2,8 +2,8 @@
 	<div class="text-center">
 		<h1>let's get focused</h1>
 
-		<div class="card flex flex-col gap-y-6 mt-4 border-pastel-green-500 bg-pastel-green-200">
-			<div class="flex justify-around">
+		<div class="card timer">
+			<div class="flex justify-around w-full">
 				<div>
 					{{ intervalCount }} / 4 intervals
 				</div>
@@ -31,7 +31,7 @@
 				</div>
 			</div>
 
-			<div class="text-4xl">
+			<div class="clock">
 				{{ minutes }}:{{ seconds }}
 			</div>
 
@@ -201,3 +201,36 @@ export default {
 	},
 };
 </script>
+
+<style scope>
+.timer {
+	@apply flex;
+	@apply flex-col;
+	@apply gap-y-6;
+	@apply items-center;
+
+	@apply mt-4;
+
+	@apply border-pastel-green-500;
+	@apply bg-pastel-green-200;
+	@apply text-pastel-green-500;
+}
+
+.clock {
+	@apply flex;
+	@apply justify-center;
+	@apply items-center;
+
+	@apply bg-pastel-yellow-300;
+	@apply border-4;
+	@apply border-pastel-yellow-500;
+
+	@apply drop-shadow-lg;
+
+	@apply rounded-full;
+	@apply w-36;
+	@apply h-36;
+
+	@apply text-4xl;
+}
+</style>

@@ -28,7 +28,8 @@
 @layer base {
 	h1 {
 		@apply text-3xl;
-		@apply text-pastel-green-500;
+		@apply text-pastel-blue-400;
+		@apply drop-shadow-md;
 	}
 }
 
@@ -59,6 +60,7 @@
 		@apply my-2;
 		@apply rounded-lg;
 		@apply border;
+		@apply drop-shadow-lg;
 	}
 }
 
@@ -70,6 +72,7 @@
 		@apply justify-between;
 		@apply sm:items-center;
 		@apply border-pastel-orange-500;
+		@apply text-pastel-orange-600;
 	}
 
 	.task-item .muted {

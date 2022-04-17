@@ -4,7 +4,7 @@
 			<div class="clickable pt-1" @click="addTask = !addTask" title="Click here to add a task">
 				<svg 
 					xmlns="http://www.w3.org/2000/svg" 
-					class="h-7 w-7 stroke-lime-600" 
+					class="h-7 w-7 stroke-pastel-yellow-400 drop-shadow-md" 
 					fill="none" 
 					viewBox="0 0 24 24" 
 					stroke="currentColor" 
