@@ -6,8 +6,8 @@
 
 @layer base {
 	body {
-		@apply bg-pastel-green-100;
-		/* background-color: rgb(255 251 235); */
+		/* @apply bg-pastel-yellow-100; */
+		background-color: #fef6eb;
 	}
 }
 

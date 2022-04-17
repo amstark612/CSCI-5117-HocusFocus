@@ -32,7 +32,7 @@
 			</div>
 
 			<div class="text-4xl">
-				{{ timer }}
+				{{ minutes }}:{{ seconds }}
 			</div>
 
 			<div class="flex justify-center gap-x-4">
@@ -125,17 +125,27 @@ export default {
 			longBreakTimer: 0,
 
 			// intervals in milliseconds
-			// MINUTE: 60000,
-			MINUTE: 2000, // make it easier to test things....
+			MINUTE: 60000,
+			// MINUTE: 2000, // make it easier to test things....
 			// will be updated upon mount
 			// POMODORO_INTERVAL: 25,
 			// SHORT_BREAK: 5,
-			// LONG_BREAK: 20,
+			LONG_BREAK: 20,
 
 			// make it easier to test things.....
 			POMODORO_INTERVAL: 5,
 			SHORT_BREAK: 2,
-			LONG_BREAK: 3,
+			//LONG_BREAK: 3,
+		}
+	},
+	computed: {
+		minutes() {
+			let min = Math.floor(this.timer / this.MINUTE).toFixed(0);
+			return ('00' + min).slice(-2);
+		},
+		seconds() {
+			let seconds = Math.floor((this.timer % this.MINUTE) / 1000).toFixed(0);
+			return ('00' + seconds).slice(-2);
 		}
 	},
 
