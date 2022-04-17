@@ -1,5 +1,5 @@
 <template>
-	<div id="app" class="mx-auto w-4/5">
+	<div id="app" class="mx-auto w-11/12">
 		<BaseHeader />
 
 		<router-view />

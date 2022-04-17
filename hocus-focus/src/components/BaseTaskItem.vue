@@ -32,6 +32,7 @@
 			</div>
 		</div>
 
+		<!-- CTN_TODO: media query to not display slider on phones; make percentage editable -->
 		<div class="flex flex-initial justify-end">
 			<div class="task-progress flex-initial w-96 text-center flex justify-end pr-4">
 				<div class="pr-4">

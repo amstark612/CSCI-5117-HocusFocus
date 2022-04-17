@@ -24,6 +24,25 @@
 	}
 }
 
+/***** forms *****/
+@layer base {
+	input[type=text],
+	input[type=number] {
+		@apply rounded;
+		@apply border;
+	}
+
+	input[type=number] {
+		-moz-appearance: textfield;
+	}
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin:0;
+	}
+}
+
 /***** tasks *****/
 @layer base {
 	.task-item {
@@ -31,7 +50,7 @@
 		@apply justify-between;
 		@apply items-center;
 		@apply p-3;
-		@apply m-2;
+		@apply my-2;
 		@apply rounded-lg;
 		@apply border;
 		@apply border-red-500;
@@ -46,10 +65,7 @@
 	.task-item input[type=text],
 	.task-item input[type=text]:active,
 	.task-item input[type=text]:focus {
-		@apply w-full;
-		@apply rounded;
 		@apply bg-red-100;
-		@apply border;
 		@apply border-red-500;
 	}
 
