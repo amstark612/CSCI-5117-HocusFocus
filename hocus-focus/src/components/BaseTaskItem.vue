@@ -1,5 +1,5 @@
 <template>
-	<div class="task-item bg-rose-300">
+	<div class="task-item bg-red-300">
 		<div class="task-title">
 			<div class="line-clamp">
 				<span v-if="!editTitle" class="clickable" @click="editTitle = !editTitle">
@@ -35,6 +35,7 @@
 		<div class="flex flex-initial justify-end">
 			<div class="task-progress flex-initial w-96 text-center flex justify-end pr-4">
 				<div class="pr-4">
+					<!-- <vue-slide-bar v-model="progress" /> -->
 					------ slider goes here -------
 				</div>
 				<div class="w-7">
@@ -60,6 +61,8 @@
 </template>
 
 <script>
+// import VueSlideBar from 'vue-slide-bar';
+
 // CTN_TODO: disable edit mode of component when user edits a different component or clicks out
 export default {
 	name: 'BaseTaskItem',
@@ -76,6 +79,9 @@ export default {
 		task: Object,
 	},
 	emits: ['delete'],
+	components: {
+		// VueSlideBar,
+	},
 
 	watch: {
 		progress() {

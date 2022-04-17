@@ -1,5 +1,5 @@
 <template>
-	<div class="task-item bg-rose-200">
+	<div class="task-item bg-red-200">
 		<div class="task-title">
 			<div class="line-clamp">
 				<span v-if="!editTitle" class="clickable" @click="editTitle = !editTitle">
@@ -43,7 +43,7 @@
 			</div>
 
 			<!-- CTN_TODO: highlight this somehow so it's clear that this is how you add the task --->
-			<div class="task-actions">
+			<div class="task-actions" title="Click here to save">
 				<svg 
 					xmlns="http://www.w3.org/2000/svg" 
 					class="h-6 w-6 clickable" 

@@ -20,6 +20,7 @@
 @layer base {
 	h1 {
 		@apply text-3xl;
+		@apply text-lime-600;
 	}
 }
 
@@ -38,7 +39,7 @@
 
 	.task-item .muted {
 		@apply italic;
-		@apply text-rose-500;
+		@apply text-red-500;
 	}
 
 	/* CTN_TODO: figure out why no rounded borders when active */
@@ -47,7 +48,7 @@
 	.task-item input[type=text]:focus {
 		@apply w-full;
 		@apply rounded;
-		@apply bg-rose-100;
+		@apply bg-red-100;
 		@apply border;
 		@apply border-red-500;
 	}
