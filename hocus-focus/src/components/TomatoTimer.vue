@@ -113,7 +113,7 @@ export default {
 	data() {
 		return {
 			cycleCount: 0,
-			goal: 0,
+			goal: 1,
 			totalFocusTime: 0,
 			editGoal: false,
 			intervalCount: 0,
@@ -127,7 +127,7 @@ export default {
 			// will be updated upon mount
 			// POMODORO_INTERVAL: 25,
 			// SHORT_BREAK: 5,
-			LONG_BREAK: 20,
+			LONG_BREAK: 10,
 
 			// make it easier to test things.....
 			POMODORO_INTERVAL: 5,
