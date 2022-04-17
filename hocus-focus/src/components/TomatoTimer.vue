@@ -222,7 +222,7 @@ export default {
 	@apply justify-center;
 	@apply items-center;
 
-	@apply bg-pastel-yellow-300;
+	@apply bg-pastel-yellow-200;
 	@apply border-4;
 	@apply border-pastel-yellow-500;
 

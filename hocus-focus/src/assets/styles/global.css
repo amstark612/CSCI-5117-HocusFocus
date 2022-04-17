@@ -8,6 +8,12 @@
 	body {
 		/* @apply bg-pastel-yellow-100; */
 		background-color: #fef6eb;
+		/*
+		@apply bg-gradient-to-br;
+		@apply from-pastel-green-200;
+		@apply via-pastel-yellow-300;
+		@apply to-pastel-orange-300;
+		*/
 	}
 }
 
