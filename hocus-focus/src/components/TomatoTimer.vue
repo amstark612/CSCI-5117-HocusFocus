@@ -36,6 +36,13 @@
 			</div>
 
 			<div class="flex justify-center gap-x-4">
+				<div title="timer-setting" @click="seen = !seen" class="control">
+					<!-- <router-link to="/setting"> -->
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 clickable" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+					</svg><!-- </router-link> -->
+				</div>
+				
 				<div title="Play/Pause">
 					<svg 
 						v-if="running"
@@ -101,14 +108,29 @@
 					>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
 					</svg>
-					</div>
+				</div>
+				
+			</div>
+			<div v-if="seen" id="hide">
+					<button>Timer</button>
+					<!-- <button disabled> Theme </button> -->
+					<br/>
+					<h4> promodora duration : <editable-span :text="this.promdo" @edited="updatePromo"/></h4> 
+					<br/>
+					<h4> short break duration : <editable-span :text="this.short" @edited="updateShort"/></h4><br/>
+					<h4> long break duration : <editable-span :text="this.long" @edited="updateLong"/></h4><br/>
+					<h4> long break delay : <editable-span :text="this.delay" @edited="updateDelay"/></h4><br/>
+					<h4> atuo start breaks : <span @click="auto_start_break = !auto_start_break"> {{this.auto_start_break}}</span></h4><br/>
+					<button @click="seen = !seen"> Close X </button>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import EditableSpan from './EditableSpan.vue';
 export default {
+  components: { EditableSpan },
 	name: "TomatoTimer",
 	data() {
 		return {
@@ -120,6 +142,12 @@ export default {
 			running: false,
 			setIntervalObject: null,
 			timer: 0,
+			seen: false,
+			promdo: 25,
+			short: 5,
+			long: 10,
+			delay: 4,
+			auto_start_break: true,
 
 			// intervals in milliseconds
 			MINUTE: 60000,
@@ -195,6 +223,18 @@ export default {
 				}
 			}, 1000);
 		},
+		updatePromo: function(newPromo) {
+			this.promdo = newPromo
+		},
+		updateShort: function(newShort) {
+			this.short = newShort
+		},
+		updateLong: function(newLong) {
+			this.long = newLong
+		},
+		updateDelay: function(newDelay) {
+			this.delay = newDelay
+		}
 	},
 };
 </script>

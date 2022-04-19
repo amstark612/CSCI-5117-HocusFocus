@@ -7,7 +7,7 @@
 
 			<nav class="hidden sm:block">
 				<router-link to="/tasks">tasks</router-link> |
-				<router-link to="/ranking">rankings</router-link> |
+				<router-link to="/ranking">rankings</router-link> 
 				<!--- CTN_TODO: allow them to log out --->
 				{{ username }}
 			</nav>
