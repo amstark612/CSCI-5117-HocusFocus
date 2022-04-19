@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
+@layer base {
+	body {
+		/* @apply bg-pastel-yellow-100; */
+		background-color: #fef6eb;
+		/*
+		@apply bg-gradient-to-br;
+		@apply from-pastel-green-200;
+		@apply via-pastel-yellow-300;
+		@apply to-pastel-orange-300;
+		*/
+	}
+}
+
+
+/***** utilities *****/
+.clickable {
+	cursor: pointer;
+	pointer-events: all !important;
+}
+.line-clamp {
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+/***** headings *****/
+@layer base {
+	h1 {
+		@apply text-3xl;
+		@apply text-pastel-blue-400;
+		@apply drop-shadow-md;
+	}
+}
+
+/***** forms *****/
+@layer base {
+	input[type=text],
+	input[type=number] {
+		@apply rounded;
+		@apply border;
+	}
+
+	input[type=number] {
+		-moz-appearance: textfield;
+	}
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin:0;
+	}
+}
+
+
+/***** card elements *****/
+@layer base {
+	.card {
+		@apply p-3;
+		@apply my-2;
+		@apply rounded-lg;
+		@apply border;
+		@apply drop-shadow-lg;
+		@apply text-sm;
+		@apply bg-gradient-to-b;
+	}
+}
+
+/***** tasks *****/
+@layer base {
+	.task-item {
+		/* @apply block; */
+		@apply flex;
+		@apply justify-between;
+		@apply sm:items-center;
+		@apply border-pastel-orange-500;
+		@apply text-pastel-orange-600;
+	}
+
+	.task-item .muted {
+		@apply italic;
+		@apply text-pastel-orange-300;
+	}
+
+	/* CTN_TODO: figure out why no rounded borders when active */
+	.task-item input[type=text],
+	.task-item input[type=text]:active,
+	.task-item input[type=text]:focus {
+		@apply bg-pastel-yellow-100;
+		@apply border-pastel-orange-500;
+	}
+
+	.task-title {
+		@apply flex-initial;
+		@apply sm:w-96;
+		@apply flex;
+		@apply flex-col;
+		@apply gap-y-1;
+	}
+
+	.task-actions {
+		@apply flex-none;
+		@apply w-9;
+		@apply text-center;
+		@apply align-middle;
+		@apply justify-center;
+		@apply flex;
+		@apply items-center;
+	}
+}

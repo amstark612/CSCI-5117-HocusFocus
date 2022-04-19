@@ -4,14 +4,16 @@ CSCI 5117, Spring 2022, [assignment description](https://canvas.umn.edu/courses/
 
 ## App Info:
 
-* Team Name: TODO
-* App Name: TODO
+* Team Name: Mutiny
+* App Name: hocus-focus
 * App Link: <https://TODO.firebaseapp.com/>
 
 ### Students
 
-* First Last, x500@umn.edu
-* ...
+* Kinza, Ahmed ahme0170@umn.edu
+* Christina, Nguyen nguy4477@umn.edu
+* Suihan, Dong dongx460@umn.edu
+* Yizhe, Wang wang5959@umn.edu
 
 
 ## Key Features
@@ -33,9 +35,29 @@ Which (if any) progressive web app feature(s) does your app support?
 
 ## Mockup images
 
-**[Add images/photos that show your mockup](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository) along with a very brief caption:**
+Main page (logged in)
 
-![](https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif)
+![image](https://user-images.githubusercontent.com/43075531/161647863-aec0dc15-9f07-44da-9330-c8f06871ea4b.png)
+
+Summary modal of main page (logged in; happens after a user completes their 'goal' number of sessions)
+
+![image](https://user-images.githubusercontent.com/43075531/161648020-157b01db-96fb-4a4c-ad29-1f0c3cde947f.png)
+
+Settings modal of main page (viewable and editable by anyone)
+
+![image](https://user-images.githubusercontent.com/43075531/161648124-6a34e9e0-a6d8-48b2-b827-fef706a82a0a.png)
+
+Leaderboard (viewable by anyone)
+
+![image](https://user-images.githubusercontent.com/43075531/161647903-43b0b9bd-8a3e-4b45-9fda-a65de4cd848b.png)
+
+Tasks page (logged in)
+
+![image](https://user-images.githubusercontent.com/43075531/161647951-4cc2d4a9-d600-4c2c-9113-c8c43058ec6a.png)
+
+Login page
+
+![image](https://user-images.githubusercontent.com/43075531/161648156-d05050d0-ee1d-4ec1-89d5-b76c7ea3fb62.png)
 
 
 ## Testing Notes

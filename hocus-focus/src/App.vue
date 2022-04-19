@@ -1,33 +1,27 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/tasks">Tasks</router-link> |
-      <router-link to="/ranking">Ranking</router-link>
-    </nav>
-    <router-view/>
-  </div>
+	<div id="app" class="mx-auto w-11/12 lg:w-4/5 xl:w-3/5 2xl:w-2/4">
+		<BaseHeader />
+
+		<router-view />
+	</div>
 </template>
 
-<style>
+<script>
+import BaseHeader from "@/components/BaseHeader.vue";
+
+export default {
+	name: "App",
+	components: {
+		BaseHeader,
+	},
+};
+</script>
+
+<style scoped>
+@import "@/assets/styles/global.css";
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 </style>
