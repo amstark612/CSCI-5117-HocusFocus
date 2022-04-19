@@ -121,6 +121,7 @@
 					<h4> long break duration : <editable-span :text="this.long" @edited="updateLong"/></h4><br/>
 					<h4> long break delay : <editable-span :text="this.delay" @edited="updateDelay"/></h4><br/>
 					<h4> atuo start breaks : <span @click="auto_start_break = !auto_start_break"> {{this.auto_start_break}}</span></h4><br/>
+					<button @click="seen = !seen"> Close X </button>
 			</div>
 		</div>
 	</div>
