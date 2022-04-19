@@ -2,6 +2,7 @@ import Vue from "vue";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/functions";
 import App from "./App.vue";
 import router from "./router";
 import { firestorePlugin } from "vuefire";
@@ -40,5 +41,26 @@ const settings = { timestampsInSnapshots: true };
 db.settings(settings);
 
 const auth = firebase.auth();
+
+// /**
+//  * Creates a document with ID -> uid in the `users` collection.
+//  *
+//  * @param {Object} userRecord Contains the auth, uid and displayName info.
+//  * @param {Object} context Details about the event.
+//  */
+// const createProfile = (userRecord) => {
+// 	const { displayName, email, photoUrl, uid } = userRecord;
+// 	const focus_time = 0;
+
+// 	return db
+// 		.collection("users")
+// 		.doc(uid)
+// 		.set({ displayName, email, photoUrl, focus_time })
+// 		.catch(console.error);
+// };
+
+// module.exports = {
+// 	authOnCreate: firebase.functions.auth.user().onCreate(createProfile),
+// };
 
 export { db, auth };
