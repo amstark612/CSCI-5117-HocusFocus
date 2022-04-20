@@ -199,10 +199,4 @@ export default {
 .status {
 	@apply rounded-full;
 }
-
-@media screen and (min-width: 500px) {
-	.progress {
-		display: none;
-	}
-}
 </style>
