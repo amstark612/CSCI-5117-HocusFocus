@@ -84,22 +84,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="w-7 text-center progress">
-				<span v-if="!editProgress" @click="editProgress = true"
-					>{{ progress }}%</span
-				>
-				<input
-					v-if="editProgress"
-					v-model="progress"
-					v-on:keyup.enter="updateProgress"
-					@blur="updateProgress"
-					class="w-7"
-					type="number"
-					min="0"
-					max="100"
-				/>
-			</div>
 			<div class="task-actions">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
