@@ -5,11 +5,10 @@
 				<router-link to="/">hocus-focus</router-link>
 			</div>
 
-			<nav class="hidden sm:block">
-				<router-link to="/tasks">tasks</router-link> |
+			<nav v-if="this.$route.name != 'Login'" class="hidden sm:block">
+				{{ displayName }} | <router-link to="/tasks">tasks</router-link> |
 				<router-link to="/ranking">rankings</router-link> |
-				<!--- CTN_TODO: allow them to log out --->
-				{{ username }}
+				<button @click="logout">log out</button>
 			</nav>
 
 			<nav class="sm:hidden">
@@ -31,11 +30,13 @@
 			</nav>
 		</div>
 
-		<div v-if="showMenu" class="text-center pb-4">
+		<div
+			v-if="showMenu && this.$route.name != 'Login'"
+			class="text-center pb-4"
+		>
 			<router-link to="/tasks">tasks</router-link> |
 			<router-link to="/ranking">rankings</router-link> |
-			<!--- CTN_TODO: allow them to log out --->
-			{{ username }}
+			<button @click="logout">log out</button>
 		</div>
 	</header>
 </template>
@@ -48,8 +49,15 @@ export default {
 	data() {
 		return {
 			showMenu: false,
-			username: null,
+			displayName: null,
 		};
+	},
+	methods: {
+		logout: function () {
+			auth.signOut().then(() => {
+				this.$router.replace("/");
+			});
+		},
 	},
 
 	beforeCreate() {
@@ -58,7 +66,7 @@ export default {
 				.doc(user.uid)
 				.get()
 				.then((ref) => {
-					this.username = ref.data().username;
+					this.displayName = ref.data().displayName.toLowerCase();
 				});
 		});
 	},

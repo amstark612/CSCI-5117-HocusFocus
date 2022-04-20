@@ -13,6 +13,7 @@
 
 <script>
 import firebase from "firebase/app";
+import { auth, db } from "../main";
 
 export default {
 	name: "LoginView",
@@ -30,11 +31,79 @@ export default {
 				.auth()
 				.signInWithPopup(provider)
 				.then(() => {
+					this.registerAccount();
 					this.$router.replace("home");
 				})
 				.catch((err) => {
 					alert("Oops. " + err.message);
 				});
+		},
+		registerAccount() {
+			const user = firebase.auth().currentUser;
+			if (user) {
+				const uid = user.uid;
+
+				db.collection("users")
+					.doc(uid)
+					.get()
+					.then((doc) => {
+						if (!doc.exists) {
+							// create user document
+							db.collection("users")
+								.doc(uid)
+								.set({
+									displayName: user.displayName,
+									email: user.email,
+									focusTime: 0,
+									joinDate: new Date(),
+									photoUrl: user.photoURL,
+								})
+								.then(() => {
+									console.log("Document successfully written!");
+								})
+								.catch((error) => {
+									console.error("Error writing document: ", error);
+								});
+
+							// set default timer settings
+							db.collection("users")
+								.doc(uid)
+								.collection("timer_settings")
+								.doc("0")
+								.set({
+									autobreak: true,
+									delay: 4,
+									long: 10,
+									pomodoro: 25,
+									short: 5,
+								})
+								.then(() => {
+									console.log("Document successfully written!");
+								})
+								.catch((error) => {
+									console.error("Error writing document: ", error);
+								});
+
+							// set default task!
+							db.collection("users")
+								.doc(auth.currentUser.uid)
+								.collection("tasks")
+								.doc("0")
+								.set({
+									createdAt: new Date(),
+									progress: 0,
+									tags: ["ACT", "math"],
+									title: "need to study for the ACT!",
+								})
+								.then(() => {
+									console.log("Document successfully written!");
+								})
+								.catch((error) => {
+									console.error("Error writing document: ", error);
+								});
+						}
+					});
+			}
 		},
 	},
 };

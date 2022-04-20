@@ -51,7 +51,7 @@ export default {
 	mounted() {
 		this.displayName = this.ranking.displayName;
 		this.email = this.ranking.email;
-		this.profilePicture = this.ranking.profilePicture;
+		this.profilePicture = this.ranking.photoUrl;
 		this.focusTime = this.ranking.focusTime;
 		this.getFocusTimeString();
 	},
@@ -60,10 +60,10 @@ export default {
 			const hours = parseInt(this.focusTime / 60);
 			const minutes = this.focusTime % 60;
 			if (hours < 10) {
-				this.focusTime = `0${hours}`;
+				this.focusTimeString = `0${hours}`;
 			}
 			if (minutes < 10) {
-				this.focusTime += `:0${minutes}`;
+				this.focusTimeString += `:0${minutes}`;
 			} else {
 				this.focusTimeString = `${hours}:${minutes}`;
 			}
