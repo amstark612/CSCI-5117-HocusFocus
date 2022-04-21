@@ -35,9 +35,9 @@
 export default {
 	name: "TimerProgressBar",
 	data: () => ({
-		progress: 80,
+		progress: 0,
 		sec: 0,
-		min: 20,
+		min: 0,
 		emptyColor: {
 			radial: true,
 			colors: [
