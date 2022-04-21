@@ -4,16 +4,14 @@
 
 		<div class="card timer">
 			<div class="flex justify-around w-full">
-				<div>
-					{{ intervalCount }} / 4 intervals
-				</div>
+				<div>{{ intervalCount }} / 4 intervals</div>
 
 				<div>
-					{{ cycleCount }} 
-					/ 
-					<span 
+					{{ cycleCount }}
+					/
+					<span
 						v-if="!editGoal"
-						class="clickable" 
+						class="clickable"
 						title="Click to edit"
 						@click="editGoal = !editGoal"
 					>
@@ -31,66 +29,80 @@
 				</div>
 			</div>
 
-			<div class="clock">
+			<TimerProgressBar />
+			<!-- <timer-progress-bar></timer-progress-bar> -->
+
+			<!-- <div class="clock">
 				{{ minutes }}:{{ seconds }}
-			</div>
+			</div> -->
 
 			<div class="flex justify-center gap-x-4">
 				<div title="timer-setting" @click="seen = !seen" class="control">
 					<!-- <router-link to="/setting"> -->
-					<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 clickable" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-					</svg><!-- </router-link> -->
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-6 w-6 clickable"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+						/></svg
+					><!-- </router-link> -->
 				</div>
-				
+
 				<div title="Play/Pause">
-					<svg 
+					<svg
 						v-if="running"
 						@click="running = false"
-						xmlns="http://www.w3.org/2000/svg" 
-						class="h-8 w-8 clickable" 
-						fill="none" 
-						viewBox="0 0 24 24" 
-						stroke="currentColor" 
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-8 w-8 clickable"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
 						stroke-width="1.5"
 					>
-						<path 
-							stroke-linecap="round" 
-							stroke-linejoin="round" 
-							d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" 
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
 						/>
 					</svg>
 
-					<svg 
+					<svg
 						v-if="!running"
 						@click="running = true"
-						xmlns="http://www.w3.org/2000/svg" 
-						class="h-8 w-8 clickable" 
-						fill="none" 
-						viewBox="0 0 24 24" 
-						stroke="currentColor" 
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-8 w-8 clickable"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
 						stroke-width="1.5"
 					>
-						<path 
-							stroke-linecap="round" 
-							stroke-linejoin="round" 
-							d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" 
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
 						/>
-						<path 
-							stroke-linecap="round" 
-							stroke-linejoin="round" 
-							d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 						/>
 					</svg>
 				</div>
 
 				<div title="Short Break" @click="runInterval(SHORT_BREAK)">
-					<svg 
-						xmlns="http://www.w3.org/2000/svg" 
-						class="h-8 w-8 clickable" 
-						fill="none" 
-						viewBox="0 0 24 24" 
-						stroke="currentColor" 
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-8 w-8 clickable"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
 						stroke-width="1.5"
 					>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
@@ -98,40 +110,60 @@
 				</div>
 
 				<div title="Long Break" @click="runInterval(LONG_BREAK)">
-					<svg 
-						xmlns="http://www.w3.org/2000/svg" 
-						class="h-8 w-8 clickable" 
-						fill="none" 
-						viewBox="0 0 24 24" 
-						stroke="currentColor" 
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-8 w-8 clickable"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
 						stroke-width="1.5"
 					>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" />
 					</svg>
 				</div>
-				
 			</div>
 			<div v-if="seen" id="hide">
-					<button>Timer</button>
-					<!-- <button disabled> Theme </button> -->
-					<br/>
-					<h4> promodora duration : <editable-span :text="this.promdo.toString()" @edited="updatePromo"/></h4> 
-					<br/>
-					<h4> short break duration : <editable-span :text="this.short.toString()" @edited="updateShort"/></h4><br/>
-					<h4> long break duration : <editable-span :text="this.long.toString()" @edited="updateLong"/></h4><br/>
-					<h4> long break delay : <editable-span :text="this.delay.toString()" @edited="updateDelay"/></h4><br/>
-					<h4> atuo start breaks : <span @click="auto_start_break = !auto_start_break">
-						{{this.auto_start_break}}</span></h4><br/>
-					<button @click="seen = !seen"> Close X </button>
+				<button>Timer</button>
+				<!-- <button disabled> Theme </button> -->
+				<br />
+				<h4>
+					promodora duration :
+					<editable-span :text="this.promdo.toString()" @edited="updatePromo" />
+				</h4>
+				<br />
+				<h4>
+					short break duration :
+					<editable-span :text="this.short.toString()" @edited="updateShort" />
+				</h4>
+				<br />
+				<h4>
+					long break duration :
+					<editable-span :text="this.long.toString()" @edited="updateLong" />
+				</h4>
+				<br />
+				<h4>
+					long break delay :
+					<editable-span :text="this.delay.toString()" @edited="updateDelay" />
+				</h4>
+				<br />
+				<h4>
+					atuo start breaks :
+					<span @click="auto_start_break = !auto_start_break">
+						{{ this.auto_start_break }}</span
+					>
+				</h4>
+				<br />
+				<button @click="seen = !seen">Close X</button>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import EditableSpan from './EditableSpan.vue';
+import EditableSpan from "./EditableSpan.vue";
+import TimerProgressBar from "./TimerProgressBar.vue";
 export default {
-  components: { EditableSpan },
+	components: { EditableSpan, TimerProgressBar },
 	name: "TomatoTimer",
 	data() {
 		return {
@@ -162,17 +194,17 @@ export default {
 			POMODORO_INTERVAL: 5,
 			SHORT_BREAK: 2,
 			//LONG_BREAK: 3,
-		}
+		};
 	},
 	computed: {
 		minutes() {
 			let min = Math.floor(this.timer / this.MINUTE).toFixed(0);
-			return ('00' + min).slice(-2);
+			return ("00" + min).slice(-2);
 		},
 		seconds() {
 			let seconds = Math.floor((this.timer % this.MINUTE) / 1000).toFixed(0);
-			return ('00' + seconds).slice(-2);
-		}
+			return ("00" + seconds).slice(-2);
+		},
 	},
 
 	watch: {
@@ -184,9 +216,9 @@ export default {
 		},
 		cycleCount() {
 			if (this.goal % this.cycleCount == 0) {
-				console.log('summary prompt thingy - emit to parent probs');
+				console.log("summary prompt thingy - emit to parent probs");
 			}
-		}
+		},
 	},
 
 	mounted() {
@@ -224,18 +256,18 @@ export default {
 				}
 			}, 1000);
 		},
-		updatePromo: function(newPromo) {
-			this.promdo = parseInt(newPromo)
+		updatePromo: function (newPromo) {
+			this.promdo = parseInt(newPromo);
 		},
-		updateShort: function(newShort) {
-			this.short = parseInt(newShort)
+		updateShort: function (newShort) {
+			this.short = parseInt(newShort);
 		},
-		updateLong: function(newLong) {
-			this.long = parseInt(newLong)
+		updateLong: function (newLong) {
+			this.long = parseInt(newLong);
 		},
-		updateDelay: function(newDelay) {
-			this.delay = parseInt(newDelay)
-		}
+		updateDelay: function (newDelay) {
+			this.delay = parseInt(newDelay);
+		},
 	},
 };
 </script>
