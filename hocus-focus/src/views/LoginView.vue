@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
+import { auth, db, fieldValueUtility, provider } from "../main";
 
 export default {
 	name: "LoginView",
@@ -24,17 +24,82 @@ export default {
 	},
 	methods: {
 		socialLogin: function () {
-			const provider = new firebase.auth.GoogleAuthProvider();
-
-			firebase
-				.auth()
+      auth
 				.signInWithPopup(provider)
 				.then(() => {
-					this.$router.replace("home");
+					this.registerAccount();
+					this.$router.push("/");
 				})
 				.catch((err) => {
 					alert("Oops. " + err.message);
 				});
+		},
+		registerAccount() {
+			if (auth.currentUser) {
+        const user = auth.currentUser;
+				const uid = user.uid;
+
+				db.collection("users")
+					.doc(uid)
+					.get()
+					.then((doc) => {
+						if (!doc.exists) {
+							// create user document
+							db.collection("users")
+								.doc(uid)
+								.set({
+									displayName: user.displayName,
+									email: user.email,
+									focusTime: 0,
+									joinDate: fieldValueUtility.serverTimestamp(),
+									photoUrl: user.photoURL,
+								})
+								.then(() => {
+									console.log("Document successfully written!");
+								})
+								.catch((error) => {
+									console.error("Error writing document: ", error);
+								});
+
+							// set default timer settings
+							db.collection("users")
+								.doc(uid)
+								.collection("timer_settings")
+								.doc("0")
+								.set({
+									autobreak: true,
+									delay: 4,
+									long: 10,
+									pomodoro: 25,
+									short: 5,
+								})
+								.then(() => {
+									console.log("Document successfully written!");
+								})
+								.catch((error) => {
+									console.error("Error writing document: ", error);
+								});
+
+							// set default task!
+							db.collection("users")
+								.doc(auth.currentUser.uid)
+								.collection("tasks")
+								.doc("0")
+								.set({
+									createdAt: fieldValueUtility.serverTimestamp(),
+									progress: 0,
+									tags: ["ACT", "math"],
+									title: "need to study for the ACT!",
+								})
+								.then(() => {
+									console.log("Document successfully written!");
+								})
+								.catch((error) => {
+									console.error("Error writing document: ", error);
+								});
+						}
+					});
+			}
 		},
 	},
 };

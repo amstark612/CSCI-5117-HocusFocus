@@ -2,11 +2,15 @@ import Vue from "vue";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/functions";
 import App from "./App.vue";
 import router from "./router";
 import { firestorePlugin } from "vuefire";
+import VueEllipseProgress from "vue-ellipse-progress";
 import "@/assets/styles/global.css";
+
 Vue.use(firestorePlugin);
+Vue.use(VueEllipseProgress, "vep");
 
 Vue.config.productionTip = false;
 
@@ -40,5 +44,7 @@ const settings = { timestampsInSnapshots: true };
 db.settings(settings);
 
 const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
+const fieldValueUtility = firebase.firestore.FieldValue;
 
-export { db, auth };
+export { auth, db, fieldValueUtility, provider };

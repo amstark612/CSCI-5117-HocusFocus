@@ -1,5 +1,16 @@
 <template>
-  <div class="ranking">
-    <h1>This is an ranking page</h1>
-  </div>
+	<div class="rankings">
+		<RankingList />
+	</div>
 </template>
+
+<script>
+import RankingList from "@/components/RankingList.vue";
+
+export default {
+	name: "RankingView",
+	components: {
+		RankingList,
+	},
+};
+</script>
