@@ -110,37 +110,54 @@
 				</div>
 			</div>
 			<div v-if="seen" id="hide">
-				<button>Timer</button>
-				<!-- <button disabled> Theme </button> -->
-				<br />
-				<h4>
-					promodora duration :
-					<editable-span :text="this.promdo.toString()" @edited="updatePromo" />
-				</h4>
-				<br />
-				<h4>
-					short break duration :
-					<editable-span :text="this.short.toString()" @edited="updateShort" />
-				</h4>
-				<br />
-				<h4>
-					long break duration :
-					<editable-span :text="this.long.toString()" @edited="updateLong" />
-				</h4>
-				<br />
-				<h4>
-					long break delay :
-					<editable-span :text="this.delay.toString()" @edited="updateDelay" />
-				</h4>
-				<br />
-				<h4>
-					atuo start breaks :
-					<span @click="auto_start_break = !auto_start_break">
-						{{ this.auto_start_break }}</span
-					>
-				</h4>
-				<br />
-				<button @click="seen = !seen">Close X</button>
+
+					<button>Timer</button>
+					<!-- <button disabled> Theme </button> -->
+					<br/>
+					<h4> promodora duration : 
+						<span class="clickable" @click="minusPromo">
+							-
+						</span>
+						<editable-span :text="this.promdo.toString()" @edited="updatePromo"/>
+						<span class="clickable" @click="addPromo">
+							+
+						</span>
+					</h4> 
+					<br/>
+					<h4> short break duration : 
+						<span class="clickable" @click="minusShort">
+							-
+						</span>
+						<editable-span :text="this.short.toString()" @edited="updateShort"/>
+						<span class="clickable" @click="addShort">
+							+
+						</span>
+					</h4>
+					<br/>
+					<h4> long break duration : 
+						<span class="clickable" @click="minusLong">
+							-
+						</span>
+						<editable-span :text="this.long.toString()" @edited="updateLong"/>
+						<span class="clickable" @click="addLong">
+							+
+						</span>
+					</h4>
+					<br/>
+					<h4> long break delay : 
+						<span class="clickable" @click="minusDelay">
+							-
+						</span>
+						<editable-span :text="this.delay.toString()" @edited="updateDelay"/>
+						<span class="clickable" @click="addDelay">
+							+
+						</span>
+					</h4>
+					<br/>
+					<h4> atuo start breaks : <span @click="auto_start_break = !auto_start_break">
+						{{this.auto_start_break}}</span></h4><br/>
+					<button @click="seen = !seen"> Close X </button>
+
 			</div>
 		</div>
 	</div>
@@ -262,6 +279,35 @@ export default {
 		updateDelay: function (newDelay) {
 			this.delay = parseInt(newDelay);
 		},
+
+		updateDelay: function(newDelay) {
+			this.delay = parseInt(newDelay)
+		},
+		minusPromo: function() {
+			this.promdo = this.promdo - 1
+		},
+		addPromo: function() {
+			this.promdo = this.promdo + 1
+		},
+		minusShort: function() {
+			this.short = this.short - 1
+		},
+		addShort: function() {
+			this.short = this.short + 1
+		},
+		minusLong: function() {
+			this.long = this.long - 1
+		},
+		addLong: function() {
+			this.long = this.long + 1
+		},
+		minusDelay: function() {
+			this.delay = this.delay - 1
+		},
+		addDelay: function() {
+			this.delay = this.delay + 1
+		},
+
 	},
 };
 </script>
