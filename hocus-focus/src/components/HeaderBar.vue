@@ -6,9 +6,11 @@
 			</div>
 
 			<nav v-if="this.$route.name != 'Login'" class="hidden sm:block">
-				{{ displayName }} | <router-link to="/tasks">tasks</router-link> |
-				<router-link to="/ranking">rankings</router-link> |
-				<button @click="logout">log out</button>
+				<span v-if="displayName">{{ displayName }} | </span> 
+				<router-link v-if="displayName" to="/tasks">tasks | </router-link>
+				<router-link to="/ranking">rankings | </router-link>
+				<router-link v-if="!displayName" to="/Login">log in</router-link>
+				<button v-if="displayName" @click="logout">log out</button>
 			</nav>
 
 			<nav class="sm:hidden">
@@ -34,41 +36,41 @@
 			v-if="showMenu && this.$route.name != 'Login'"
 			class="text-center pb-4"
 		>
-			<router-link to="/tasks">tasks</router-link> |
-			<router-link to="/ranking">rankings</router-link> |
-			<button @click="logout">log out</button>
+			<span v-if="displayName">{{ displayName }} | </span> 
+			<router-link v-if="displayName" to="/tasks">tasks | </router-link>
+			<router-link to="/ranking">rankings | </router-link>
+			<router-link v-if="!displayName" to="/Login">log in</router-link>
+			<button v-if="displayName" @click="logout">log out</button>
 		</div>
 	</header>
 </template>
 
 <script>
-import { auth, db } from "@/main";
+import { auth } from "@/main";
 
 export default {
 	name: "BaseHeader",
 	data() {
 		return {
-			showMenu: false,
 			displayName: null,
+			showMenu: false,
 		};
 	},
+
+	beforeCreate() {
+		auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.displayName = user.displayName.toLowerCase();
+			}
+		});
+	},
+
 	methods: {
 		logout: function () {
 			auth.signOut().then(() => {
 				this.$router.replace("/");
 			});
 		},
-	},
-
-	beforeCreate() {
-		auth.onAuthStateChanged((user) => {
-			db.collection("users")
-				.doc(user.uid)
-				.get()
-				.then((ref) => {
-					this.displayName = ref.data().displayName.toLowerCase();
-				});
-		});
 	},
 };
 </script>

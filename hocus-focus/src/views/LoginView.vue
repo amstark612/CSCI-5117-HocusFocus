@@ -12,8 +12,7 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import { auth, db } from "../main";
+import { auth, db, fieldValueUtility, provider } from "../main";
 
 export default {
 	name: "LoginView",
@@ -25,10 +24,7 @@ export default {
 	},
 	methods: {
 		socialLogin: function () {
-			const provider = new firebase.auth.GoogleAuthProvider();
-
-			firebase
-				.auth()
+      auth
 				.signInWithPopup(provider)
 				.then(() => {
 					this.registerAccount();
@@ -39,8 +35,8 @@ export default {
 				});
 		},
 		registerAccount() {
-			const user = firebase.auth().currentUser;
-			if (user) {
+			if (auth.currentUser) {
+        const user = auth.currentUser;
 				const uid = user.uid;
 
 				db.collection("users")
@@ -55,7 +51,7 @@ export default {
 									displayName: user.displayName,
 									email: user.email,
 									focusTime: 0,
-									joinDate: new Date(),
+									joinDate: fieldValueUtility.serverTimestamp(),
 									photoUrl: user.photoURL,
 								})
 								.then(() => {
@@ -90,7 +86,7 @@ export default {
 								.collection("tasks")
 								.doc("0")
 								.set({
-									createdAt: new Date(),
+									createdAt: fieldValueUtility.serverTimestamp(),
 									progress: 0,
 									tags: ["ACT", "math"],
 									title: "need to study for the ACT!",

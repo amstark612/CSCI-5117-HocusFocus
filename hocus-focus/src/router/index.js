@@ -5,22 +5,22 @@ import LoginView from "../views/LoginView.vue";
 import TaskView from "../views/TaskView.vue";
 import RankingView from "../views/RankingView.vue";
 import TimerView from '../views/TimerView.vue';
-import firebase from "firebase/app";
+import { auth } from "@/main";
 
 Vue.use(VueRouter);
 
 const routes = [
 	{
-		path: "/",
+		path: "/login",
 		name: "Login",
 		component: LoginView,
 	},
 	{
-		path: "/home",
+		path: "/",
 		name: "home",
 		component: HomeView,
 		meta: {
-			requiresAuth: true,
+			requiresAuth: false,
 		},
 	},
 	{
@@ -59,11 +59,11 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, _, next) => {
-	const currentUser = firebase.auth().currentUser;
+	const currentUser = auth.currentUser;
 	const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 
-	if (requiresAuth && !currentUser) next("/");
-	else if (!requiresAuth && currentUser) next("/home");
+	// if (requiresAuth && !currentUser) next("/");
+	if (requiresAuth && !currentUser) next("/home");
 	else next();
 });
 

@@ -30,7 +30,7 @@
 	overflow: hidden;
 }
 
-/***** headings *****/
+/***** headings/links *****/
 @layer base {
 	h1 {
 		@apply text-3xl;

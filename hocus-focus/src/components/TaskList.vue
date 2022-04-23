@@ -2,6 +2,7 @@
 	<div id="task-list" class="mt-6">
 		<header class="flex justify-center gap-x-1">
 			<div
+				v-if="user"
 				class="clickable pt-1"
 				@click="addTask = !addTask"
 				title="Click here to add a task"
@@ -26,14 +27,21 @@
 			</div>
 		</header>
 
-		<BaseAddTaskItem v-if="addTask" />
+		<div v-if="user">
+			<BaseAddTaskItem v-if="addTask" />
 
-		<BaseTaskItem
-			v-for="task in tasks"
-			:key="task.id"
-			:task="task"
-			@delete="deleteTask"
-		/>
+			<BaseTaskItem
+				v-for="task in tasks"
+				:key="task.id"
+				:task="task"
+				@delete="deleteTask"
+			/>
+		</div>
+
+		<div else class="text-center m-4">
+			<router-link to="/Login" class="text-pastel-yellow-400">Log in</router-link>
+			to add a task!
+		</div>
 	</div>
 </template>
 
@@ -48,6 +56,8 @@ export default {
 		return {
 			addTask: false,
 			tasks: [],
+			tasksKey: 0,
+			user: null,
 		};
 	},
 	components: {
@@ -55,16 +65,22 @@ export default {
 		BaseTaskItem,
 	},
 
-	firestore() {
-		return {
-			tasks: db
-				.collection("users")
-				.doc(auth.currentUser.uid)
-				.collection("tasks"),
-		};
+	watch: {
+		user() { if (this.user) this.fetchData(); },
+		tasksKey() { if (this.user) this.fetchData(); },
 	},
 
 	methods: {
+		fetchData() {
+			db.collection("users")
+				.doc(auth.currentUser.uid)
+				.collection("tasks")
+				.get().then(doc => {
+					if (doc.exists) {
+						this.todos = doc.data();
+					}
+			});
+		},
 		deleteTask(taskId) {
 			db.collection("users")
 				.doc(auth.currentUser.uid)
@@ -73,7 +89,8 @@ export default {
 				.delete()
 				.then(() => {
 					console.log("succesfully deleted task!");
-				});
+					this.tasksKey += 1;
+			});
 		},
 	},
 };
