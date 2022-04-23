@@ -73,6 +73,7 @@ export default {
 
 			this.firestoreRef.get().then(res => {
 					res.forEach(doc => {
+						// this is hacky but doc.data() never includes the id - if someone else knows how to get around this lmk!
 						this.tasks.push({
 							id: doc.id,
 							createdAt: doc.data().createdAt,
@@ -96,7 +97,7 @@ export default {
 			if (property.progress) {
 				console.log('emit task id to parent or something so we can track number of tasks worked on');
 			} else if (property.tags) {
-				console.log('stub for updating tags...');
+				console.log('stub for parsing tags...');
 			}
 
 			this.firestoreRef.doc(taskId)
