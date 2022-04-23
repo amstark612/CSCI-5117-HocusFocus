@@ -5,11 +5,16 @@
 		title="Click here to add a task"
 	>
 		<BaseIcon 
-			:height="'h-7'"
-			:width="'w-7'"
-			:d="'M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z'" 
-			:classes="['stroke-pastel-yellow-400', 'drop-shadow-md']"
-			:clickable="true"
+			:properties="{
+				height: 'h-7',
+				width: 'w-7',
+				strokeWidth: '1.5',
+				classes: [
+					'stroke-pastel-yellow-400',
+					'drop-shadow-md'
+				],
+			}"
+			:dArray="['M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z']" 
 		/>
 	</div>
 </template>

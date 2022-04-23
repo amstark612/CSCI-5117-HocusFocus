@@ -30,7 +30,6 @@
 			</div>
 
 			<TimerProgressBar />
-			<!-- <timer-progress-bar></timer-progress-bar> -->
 
 			<!-- <div class="clock">
 				{{ minutes }}:{{ seconds }}
@@ -56,44 +55,32 @@
 				</div>
 
 				<div title="Play/Pause">
-					<svg
+					<BaseIcon 
 						v-if="running"
-						@click="running = false"
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-8 w-8 clickable"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						stroke-width="1.5"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"
-						/>
-					</svg>
+						@clicked="running = false"
+						:properties="{
+							height: 'h-8',
+							width: 'w-8',
+							strokeWidth: '1.5',
+							classes: ['stroke-pastel-green-500'],
+						}"
+						:dArray="['M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z']"
+					/>
 
-					<svg
-						v-if="!running"
-						@click="running = true"
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-8 w-8 clickable"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						stroke-width="1.5"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-						/>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-						/>
-					</svg>
+					<BaseIcon
+						v-else
+						@clicked="running = true"
+						:properties="{
+							height: 'h-8',
+							width: 'w-8',
+							strokeWidth: '1.5',
+							classes: ['stroke-pastel-green-500'],
+						}"
+						:dArray="[
+							'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z',
+							'M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+						]"
+					/>
 				</div>
 
 				<div title="Short Break" @click="runInterval(SHORT_BREAK)">
@@ -160,10 +147,11 @@
 </template>
 
 <script>
+import BaseIcon from "@/components/BaseIcon.vue";
 import EditableSpan from "./EditableSpan.vue";
 import TimerProgressBar from "./TimerProgressBar.vue";
+
 export default {
-	components: { EditableSpan, TimerProgressBar },
 	name: "TomatoTimer",
 	data() {
 		return {
@@ -196,6 +184,12 @@ export default {
 			//LONG_BREAK: 3,
 		};
 	},
+	components: { 
+		BaseIcon,
+		EditableSpan, 
+		TimerProgressBar,
+	},
+
 	computed: {
 		minutes() {
 			let min = Math.floor(this.timer / this.MINUTE).toFixed(0);
@@ -294,9 +288,6 @@ export default {
 	@apply justify-center;
 	@apply items-center;
 
-	/*
-	@apply bg-pastel-yellow-200;
-	*/
 	@apply bg-gradient-to-b;
 	@apply from-pastel-yellow-200;
 	@apply to-pastel-yellow-300;

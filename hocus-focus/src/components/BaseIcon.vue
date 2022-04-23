@@ -9,6 +9,8 @@
 		@click="$emit('clicked')"
 	>
 		<path
+			v-for="d in dArray"
+			:key="d"
 			stroke-linecap="round"
 			stroke-linejoin="round"
 			:d="d"
@@ -20,35 +22,30 @@
 export default {
 	name: "BaseIcon",
 	props: {
-		height: String,
-		width: String,
-		d: String,
-		clickable: Boolean,
-		classes: Array,
-		viewBox: String,
-		strokeWidth: String,
+		properties: Object,
+		dArray: Array,
 	},
 	emits: ["clicked"],
 
 	computed: {
 		styleClasses() {
 			let baseClasses = [
-				this.height ? this.height : "h-6",
-				this.width ? this.width : "w-6",
-				this.clickable ? "clickable" : "",
+				this.properties?.height ? this.properties.height : "h-6",
+				this.properties?.width ? this.properties.width : "w-6",
+				this.properties?.clickable == null ? "clickable" : "",
 			];
 
-			if (this.classes) {
-				return [...this.classes, ...baseClasses].join(" ");
+			if (this.properties?.classes) {
+				return [...this.properties.classes, ...baseClasses].join(" ");
 			} else {
 				return ["stroke-pastel-yellow-400", ...baseClasses].join(" ");
 			}
 		},
 		vBox() {
-			return this.viewBox ? this.viewBox : "0 0 24 24";
+			return this.properties?.viewBox ? this.properties.viewBox : "0 0 24 24";
 		},
 		stroke() {
-			return this.strokeWidth ? this.strokeWidth : "2";
+			return this.properties?.strokeWidth ? this.properties.strokeWidth : "2";
 		}
 	}
 }

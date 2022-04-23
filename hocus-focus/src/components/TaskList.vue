@@ -5,12 +5,15 @@
 			<div><h1>tasks</h1></div>
 		</header>
 
-		<div v-if="tasks.length == 0" class="flex flex-col items-center justify-center text-center m-4">
+		<div v-if="user && tasks.length == 0" class="flex flex-col items-center justify-center text-center m-4">
 			<BaseIcon 
-				:height="'h-9'"
-				:width="'w-9'"
-				:strokeWidth="'1.5'"
-				:d="'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2'"
+				:properties="{
+					height: 'h-9',
+					width: 'w-9',
+					strokeWidth: '1.5',
+					clickable: false,
+				}"
+				:dArray="['M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2']"
 			/>
 			<div class="m-2">no tasks on deck!</div>
 		</div>
@@ -44,9 +47,7 @@ export default {
 	name: "TaskList",
 	data() {
 		return {
-			firestoreRef: db.collection("users")
-											.doc(auth.currentUser.uid)
-											.collection("tasks"),
+			firestoreRef: null,
 			tasks: [],
 			tasksKey: 0,
 			user: null,
@@ -63,7 +64,14 @@ export default {
 	},
 
 	watch: {
-		user() { if (this.user) this.fetchData(); },
+		user() { 
+			if (this.user) {
+				this.firestoreRef = db.collection("users")
+															.doc(auth.currentUser.uid)
+															.collection("tasks");
+				this.fetchData(); 
+			}
+		},
 		tasksKey() { if (this.user) this.fetchData(); },
 	},
 

@@ -33,8 +33,7 @@
 
 			<div class="task-actions">
 				<BaseIcon
-					:d="'M6 18L18 6M6 6l12 12'"
-					:clickable="true"
+					:dArray="['M6 18L18 6M6 6l12 12']"
 					@clicked="$emit('delete', task.id)"
 				/>
 			</div>
