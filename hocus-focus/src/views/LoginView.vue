@@ -28,7 +28,7 @@ export default {
 				.signInWithPopup(provider)
 				.then(() => {
 					this.registerAccount();
-					this.$router.replace("home");
+					this.$router.push("/");
 				})
 				.catch((err) => {
 					alert("Oops. " + err.message);

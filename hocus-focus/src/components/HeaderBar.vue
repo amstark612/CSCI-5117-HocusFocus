@@ -1,5 +1,5 @@
 <template>
-	<header class="flex flex-col text-pastel-blue-600">
+	<header class="flex flex-col">
 		<div class="py-4 flex justify-between">
 			<div id="logo">
 				<router-link to="/">hocus-focus</router-link>
@@ -39,7 +39,7 @@
 			<span v-if="displayName">{{ displayName }} | </span> 
 			<router-link v-if="displayName" to="/tasks">tasks | </router-link>
 			<router-link to="/ranking">rankings | </router-link>
-			<router-link v-if="!displayName" to="/Login">log in</router-link>
+			<router-link v-if="!displayName" to="/login">log in</router-link>
 			<button v-if="displayName" @click="logout">log out</button>
 		</div>
 	</header>
@@ -58,7 +58,7 @@ export default {
 	},
 
 	beforeCreate() {
-		auth.onAuthStateChanged((user) => {
+		auth.onAuthStateChanged(user => {
       if (user) {
         this.displayName = user.displayName.toLowerCase();
 			}
@@ -68,7 +68,7 @@ export default {
 	methods: {
 		logout: function () {
 			auth.signOut().then(() => {
-				this.$router.replace("/");
+				this.$router.push("/");
 			});
 		},
 	},
