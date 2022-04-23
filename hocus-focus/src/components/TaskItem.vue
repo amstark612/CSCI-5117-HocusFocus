@@ -35,7 +35,7 @@
 				<BaseIcon
 					:d="'M6 18L18 6M6 6l12 12'"
 					:clickable="true"
-					@click="$emit('delete', task.id)"
+					@clicked="$emit('delete', task.id)"
 				/>
 			</div>
 		</div>

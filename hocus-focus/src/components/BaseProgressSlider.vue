@@ -18,7 +18,6 @@
 		</div>
 		<input
 			type="range"
-			list="tickmarks"
 			:value="percentage"
 			min="0"
 			max="100"

@@ -6,6 +6,7 @@
 		:viewBox="vBox"
 		stroke="currentColor"
 		:stroke-width="stroke"
+		@click="$emit('clicked')"
 	>
 		<path
 			stroke-linecap="round"
@@ -27,6 +28,7 @@ export default {
 		viewBox: String,
 		strokeWidth: String,
 	},
+	emits: ["clicked"],
 
 	computed: {
 		styleClasses() {
