@@ -15,6 +15,29 @@ export const pomodoro = {
 	},
 };
 
+export const settingsLabel = [
+	{
+		label: "pomodoro duration",
+		field: "pomodoro",
+	},
+	{
+		label: "short break duration",
+		field: "short",
+	},
+	{
+		label: "long break duration",
+		field: "long",
+	},
+	{
+		label: "long break delay",
+		field: "delay",
+	},
+	{
+		label: "goal # of cycles",
+		field: "goalCycles",
+	},
+];
+
 export const radialTimer = {
 	// Radial progress bar options
 

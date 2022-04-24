@@ -68,7 +68,7 @@
 
 <script>
 import { auth, db } from "@/main";
-import { pomodoro } from "@/constants";
+import { pomodoro, settingsLabel } from "@/constants";
 import BaseIcon from "@/components/BaseIcon.vue";
 
 export default {
@@ -76,28 +76,7 @@ export default {
 	data() {
 		return {
 			settings: pomodoro.DEFAULT_SETTINGS,
-			settingsLabel: [
-				{
-					label: "pomodoro duration",
-					field: "pomodoro",
-				},
-				{
-					label: "short break duration",
-					field: "short",
-				},
-				{
-					label: "long break duration",
-					field: "long",
-				},
-				{
-					label: "long break delay",
-					field: "delay",
-				},
-				{
-					label: "goal # of cycles",
-					field: "goalCycles",
-				},
-			],
+			settingsLabel: settingsLabel,
 		};
 	},
 	props: {
