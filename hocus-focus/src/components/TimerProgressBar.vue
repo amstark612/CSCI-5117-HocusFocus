@@ -23,135 +23,106 @@
 		class="font-medium stroke-current text-gray-200 dark:text-gray-600 text-center mx-auto"
 	>
 		<span slot="legend-caption">
-			<span>{{ minPrefix }}{{ min }}</span>
-			<span class="mx-2">:</span>
-			<span>{{ secPrefix }}{{ sec }}</span>
+			{{ minutes }} : {{ seconds }}
 		</span>
 	</vep>
 </template>
 
 <script>
 // import Interval from "../helpers/interval";
+import { radialTimer } from "@/constants";
+import { time } from "@/constants";
+
 export default {
 	name: "TimerProgressBar",
-	data: () => ({
-		progress: 0,
-		sec: 0,
-		min: 0,
-		emptyColor: {
-			radial: true,
-			colors: [
-				{
-					color: "#3260FC",
-					offset: "50",
-					opacity: "0.15",
-				},
-				{
-					color: "#3260FC",
-					offset: "70",
-					opacity: "0.15",
-				},
-				{
-					color: "#3260FC",
-					offset: "70",
-					opacity: "0.1",
-				},
-				{
-					color: "#3260FC",
-					offset: "90",
-					opacity: "1",
-				},
-				{
-					color: "#3260FC",
-					offset: "60",
-					opacity: "1",
-				},
-				{
-					color: "#3260FC",
-					offset: "0",
-					opacity: "0",
-				},
-			],
-		},
-		emptyColorFill: {
-			radial: true,
-			colors: [
-				{
-					color: "#3260FC",
-					offset: "50",
-					opacity: "0.2",
-				},
-				{
-					color: "#3260FC",
-					offset: "50",
-					opacity: "0.15",
-				},
-				{
-					color: "#3260FC",
-					offset: "70",
-					opacity: "0.15",
-				},
-				{
-					color: "#3260FC",
-					offset: "70",
-					opacity: "0.1",
-				},
-				{
-					color: "#3260FC",
-					offset: "90",
-					opacity: "0.1",
-				},
-				{
-					color: "transparent",
-					offset: "90",
-					opacity: "0.1",
-				},
-				{
-					color: "transparent",
-					offset: "95",
-					opacity: "0.1",
-				},
-				{
-					color: "transparent",
-					offset: "95",
-					opacity: "0.1",
-				},
-			],
-		},
-		// Timer utility package
-		timer: null,
-		// Data for the current session
-		current: {
-			mode: null,
-			modeText: "",
-			modeColor: "",
-			timeLeft: 0,
-			timeLeftText: "",
-		},
+	data() {
+		return {
+			emptyColor: radialTimer.EMPTY_COLOR,
+			emptyColorFill: radialTimer.EMPTY_COLOR_FILL,
+			focusModeColor: radialTimer.FOCUS_MODE_COLOR,
+			restModeColor: radialTimer.REST_MODE_COLOR,
+			// Timer utility package
+			// timer: null,
+			// Data for the current session
+			current: {
+				mode: null,
+				modeText: "",
+				modeColor: "",
+				timeLeftText: "",
+			},
 
-		// Radial progress bar options
-		restModeColor: "#2ecc71",
-		focusModeColor: "#6366f1",
-	}),
+			timeLeft: 0,
+			intervalObject: null,
+		}
+	},
+	props: {
+		duration: Number,
+		running: Boolean,
+	},
+	emits: [
+		"timeUp",
+	],
+
 	computed: {
-		minPrefix() {
-			return this.min < 10 ? "0" : "";
+		minutes() {
+			let min = Math.floor(this.timeLeft / time.MS_PER_MIN).toFixed(0);
+			return ("00" + min).slice(-2);
 		},
-		secPrefix() {
-			return this.sec < 10 ? "0" : "";
+		seconds() {
+			let seconds = Math.floor((this.timeLeft % time.MS_PER_MIN) / time.MS_PER_SEC).toFixed(0);
+			return ("00" + seconds).slice(-2);
+		},
+		progress() { // return progress as a percentage
+			let remaining = this.duration ? this.timeLeft / this.duration : 1;
+			return remaining * 100;
 		},
 	},
-	methods: {
-		runTimer() {
-			if (this.sec === 60) {
-				this.sec = 0;
-				this.min++;
-				this.progress = (this.sec * 100) / 60;
-				return;
+
+	watch: {
+		duration() { 
+			// if user has autobreak set to false, don't start until they press start
+			if (this.running) {
+				this.runInterval() 
 			}
-			this.sec++;
-			this.progress = (this.sec * 100) / 60;
 		},
+		running() { 
+			if (this.running && !this.intervalObject) {
+				this.runInterval();
+			}
+		},
+	},
+
+	methods: {
+		runInterval() {
+			if (this.intervalObject) {
+				clearInterval(this.intervalObject);
+			}
+
+			this.timeLeft = this.duration;
+
+			let start = Date.now();
+			let pausedAt = null;
+			this.intervalObject = setInterval(() => {
+				if (this.timeLeft <= 0) {
+					clearInterval(this.intervalObject);
+					this.$emit('timeUp', this.timeLeft);
+				}
+
+				if (this.running) {
+					if (pausedAt) { // just resumed, adjust time
+						start += Date.now() - pausedAt;
+						pausedAt = null;
+					}
+
+					let timeElapsed = Date.now() - start;
+					// do not let timer go negative
+					this.timeLeft = Math.min(this.duration - timeElapsed, this.timeLeft);
+				} else if (!pausedAt) { // just began pause
+					pausedAt = Date.now();	
+				}
+			}, 1000);
+		},
+
 		// Determine current UI properties: text & color
 		currently: function (mode) {
 			switch (mode) {
@@ -175,10 +146,5 @@ export default {
 			}
 		},
 	},
-	mounted() {
-		setInterval(this.runTimer, 1000);
-	},
 };
 </script>
-
-<style></style>
