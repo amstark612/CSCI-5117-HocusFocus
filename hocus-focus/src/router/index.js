@@ -4,7 +4,6 @@ import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import TaskView from "../views/TaskView.vue";
 import RankingView from "../views/RankingView.vue";
-import TimerView from '../views/TimerView.vue';
 import { auth } from "@/main";
 
 Vue.use(VueRouter);
@@ -42,14 +41,6 @@ const routes = [
 			requiresAuth: true,
 		},
 	},
-	{
-		path: "/setting",
-		name: "setting",
-		component: TimerView,
-		meta: {
-			requiresAuth: true,
-		},
-	}
 ];
 
 const router = new VueRouter({

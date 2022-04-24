@@ -123,7 +123,7 @@ export default {
 								long: doc.data().long,
 								pomodoro: doc.data().pomodoro,
 								short: doc.data().short,
-								goalCycles: 2,
+								goalCycles: doc.data().goalCycles,
 							};
 						}
 					});

@@ -40,6 +40,15 @@
 			<span class="clickable" @click="settings.delay += 1"> + </span>
 		</h4>
 		<h4>
+			goal cycles :
+			<span class="clickable" @click="settings.goalCycles -= 1"> - </span>
+			<editable-span
+				:text="this.settings.goalCycles.toString()"
+				@edited="this.settings.goalCycles = $event"
+			/>
+			<span class="clickable" @click="settings.goalCycles += 1"> + </span>
+		</h4>
+		<h4>
 			auto start breaks :
 			<span class="clickable" @click="settings.autobreak = !settings.autobreak">
 				{{ settings.autobreak }}</span
@@ -93,6 +102,7 @@ export default {
 								long: doc.data().long,
 								pomodoro: doc.data().pomodoro,
 								short: doc.data().short,
+								goalCycles: doc.data().goalCycles,
 							};
 						}
 					});
