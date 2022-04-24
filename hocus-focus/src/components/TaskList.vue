@@ -102,6 +102,7 @@ export default {
 			});
 		},
 		updateTask(taskId, property) {
+			console.log(property);
 			if (property.progress) {
 				console.log('emit task id to parent or something so we can track number of tasks worked on');
 			} else if (property.tags) {

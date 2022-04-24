@@ -23,7 +23,7 @@
 			max="100"
 			step="5"
 			class="w-full"
-			@input="$emit('progress', $event.target.value)"
+			@change="$emit('progress', $event.target.value)"
 		/>
 	</div>
 </template>

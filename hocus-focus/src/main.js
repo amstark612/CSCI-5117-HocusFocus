@@ -11,6 +11,7 @@ import "@/assets/styles/global.css";
 
 Vue.use(firestorePlugin);
 Vue.use(VueEllipseProgress, "vep");
+const eventBus = new Vue();
 
 Vue.config.productionTip = false;
 
@@ -47,4 +48,4 @@ const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 const fieldValueUtility = firebase.firestore.FieldValue;
 
-export { auth, db, fieldValueUtility, provider };
+export { auth, db, fieldValueUtility, provider, eventBus };

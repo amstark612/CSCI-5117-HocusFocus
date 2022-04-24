@@ -1,49 +1,61 @@
 <template>
 	<div v-if="show">
-
-			<button style="font-size: medium; padding-top: 5%" @click="showTimerSetting = true">Timer</button>
-			<br>
-			<h4 style="text-align: justify"> pomodoro duration : 
-				<span style="text-align: justify" class="clickable" @click="settings.pomodoro -= 1">
-					-
-				</span>
-				<editable-span style="text-align: justify" :text="this.settings.pomodoro.toString()" @edited="settings.pomodoro = $event"/>
-				<span style="text-align: justify" class="clickable" @click="settings.pomodoro += 1">
-					+
-				</span>
-			</h4> 
-			<h4 style="text-align: justify"> short break duration : 
-				<span style="text-align: justify" class="clickable" @click="settings.short -= 1">
-					-
-				</span>
-				<editable-span style="text-align: justify" :text="this.settings.short.toString()" @edited="settings.short = $event"/>
-				<span style="text-align: justify" class="clickable" @click="settings.short += 1">
-					+
-				</span>
-			</h4>
-			<h4 style="text-align: justify"> long break duration : 
-				<span style="text-align: justify" class="clickable" @click="settings.long -= 1">
-					-
-				</span>
-				<editable-span style="text-align: justify" :text="this.settings.long.toString()" @edited="settings.long = $event"/>
-				<span style="text-align: justify" class="clickable" @click="settings.long += 1">
-					+
-				</span>
-			</h4>
-			<h4 style="text-align: justify"> long break delay : 
-				<span style="text-align: justify" class="clickable" @click="settings.delay -= 1">
-					-
-				</span>
-				<editable-span style="text-align: justify" :text="this.settings.delay.toString()" @edited="this.settings.delay = $event"/>
-				<span style="text-align: justify" class="clickable" @click="settings.delay += 1">
-					+
-				</span>
-			</h4>
-			<h4 style="text-align: justify"> auto start breaks : <span style="text-align: justify" class="clickable" @click="settings.autobreak = !settings.autobreak">
-				{{settings.autobreak}}</span></h4><br/>
-			<button @click="update"> Close X </button>
-
-
+		<button style="padding-top: 5%; padding-bottom: 3%; font-size: medium;">Timer</button>
+		<!-- <button disabled> Theme </button> -->
+		<br />
+		<h4 style="padding-bottom: 3%; font-size: medium; text-align: justify">
+			pomodoro duration :
+			<span class="clickable" @click="settings.pomodoro -= 1"> - </span>
+			<editable-span
+				:text="this.settings.pomodoro.toString()"
+				@edited="settings.pomodoro = $event"
+			/>
+			<span class="clickable" @click="settings.pomodoro += 1"> + </span>
+		</h4>
+		<h4 style="padding-bottom: 3%; font-size: medium; text-align: justify">
+			short break duration :
+			<span class="clickable" @click="settings.short -= 1"> - </span>
+			<editable-span
+				:text="this.settings.short.toString()"
+				@edited="settings.short = $event"
+			/>
+			<span class="clickable" @click="settings.short += 1"> + </span>
+		</h4>
+		<h4 style="padding-bottom: 3%; font-size: medium; text-align: justify">
+			long break duration :
+			<span class="clickable" @click="settings.long -= 1"> - </span>
+			<editable-span
+				:text="this.settings.long.toString()"
+				@edited="settings.long = $event"
+			/>
+			<span class="clickable" @click="settings.long += 1"> + </span>
+		</h4>
+		<h4 style="padding-bottom: 3%; font-size: medium; text-align: justify">
+			long break delay :
+			<span class="clickable" @click="settings.delay -= 1"> - </span>
+			<editable-span
+				:text="this.settings.delay.toString()"
+				@edited="this.settings.delay = $event"
+			/>
+			<span class="clickable" @click="settings.delay += 1"> + </span>
+		</h4>
+		<h4 style="padding-bottom: 3%; font-size: medium; text-align: justify">
+			goal cycles :
+			<span class="clickable" @click="settings.goalCycles -= 1"> - </span>
+			<editable-span
+				:text="this.settings.goalCycles.toString()"
+				@edited="this.settings.goalCycles = $event"
+			/>
+			<span class="clickable" @click="settings.goalCycles += 1"> + </span>
+		</h4>
+		<h4 style="padding-bottom: 3%; font-size: medium; text-align: justify">
+			auto start breaks :
+			<span class="clickable" @click="settings.autobreak = !settings.autobreak">
+				{{ settings.autobreak }}</span
+			>
+		</h4>
+		
+		<button style="padding-top: 5%; font-size: medium;" @click="update">Close X</button>
 	</div>
 </template>
 
@@ -58,14 +70,12 @@ export default {
 	data() {
 		return {
 			settings: pomodoro.DEFAULT_SETTINGS,
-			showTimerSetting: true,
-			showThemeSetting: false,
-		}
+		};
 	},
 	props: {
 		show: Boolean,
 	},
-	emits: ['close'],
+	emits: ["close"],
 	components: {
 		EditableSpan,
 	},
@@ -77,30 +87,34 @@ export default {
 	methods: {
 		fetchSettings() {
 			if (auth.currentUser) {
-				this.firestoreRef = db.collection("users")
-															.doc(auth.currentUser.uid)
-															.collection("timer_settings");
+				this.firestoreRef = db
+					.collection("users")
+					.doc(auth.currentUser.uid)
+					.collection("timer_settings");
 
-				this.firestoreRef.doc('0')
-						.get().then(doc => {
-							if (doc.exists) {
-								this.settings = {
-									autobreak: doc.data().autobreak,
-									delay: doc.data().delay,
-									long: doc.data().long,
-									pomodoro: doc.data().pomodoro,
-									short: doc.data().short,
-								}
-							}
-				});
+				this.firestoreRef
+					.doc("0")
+					.get()
+					.then((doc) => {
+						if (doc.exists) {
+							this.settings = {
+								autobreak: doc.data().autobreak,
+								delay: doc.data().delay,
+								long: doc.data().long,
+								pomodoro: doc.data().pomodoro,
+								short: doc.data().short,
+								goalCycles: doc.data().goalCycles,
+							};
+						}
+					});
 			}
 		},
 
 		update() {
 			// CTN_TODO: save settings *on close*
 			// CTN_TODO: emit to parent so timer manager can fetch new settings
-			this.$emit('close');
+			this.$emit("close");
 		},
-	}
+	},
 };
 </script>

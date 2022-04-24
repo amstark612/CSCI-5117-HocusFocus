@@ -1,7 +1,7 @@
 export const time = {
-	MS_PER_SEC: 		1000,
-	SEC_PER_MIN:		60,
-	MS_PER_MIN:			60 * 1000,
+	MS_PER_SEC: 1000,
+	SEC_PER_MIN: 60,
+	MS_PER_MIN: 60 * 1000,
 };
 
 export const pomodoro = {
@@ -11,92 +11,42 @@ export const pomodoro = {
 		long: 10,
 		pomodoro: 25,
 		short: 5,
+		goalCycles: 1,
 	},
 };
 
 export const radialTimer = {
 	// Radial progress bar options
-	REST_MODE_COLOR: 		"#2ecc71",
-	FOCUS_MODE_COLOR:		"#6366f1",
 
-	EMPTY_COLOR: {
+	FOCUS_MODE_COLOR: {
 		radial: true,
 		colors: [
 			{
-				color: "#3260FC",
+				color: "#ff4e4d",
 				offset: "50",
-				opacity: "0.15",
-			},
-			{
-				color: "#3260FC",
-				offset: "70",
-				opacity: "0.15",
-			},
-			{
-				color: "#3260FC",
-				offset: "70",
-				opacity: "0.1",
-			},
-			{
-				color: "#3260FC",
-				offset: "90",
-				opacity: "1",
-			},
-			{
-				color: "#3260FC",
-				offset: "60",
-				opacity: "1",
-			},
-			{
-				color: "#3260FC",
-				offset: "0",
-				opacity: "0",
+				opacity: "0.4",
 			},
 		],
 	},
 
-	EMPTY_COLOR_FILL: {
+	LONG_BREAK_MODE_COLOR: {
 		radial: true,
 		colors: [
 			{
-				color: "#3260FC",
+				color: "#0bbddb",
 				offset: "50",
-				opacity: "0.2",
+				opacity: "0.4",
 			},
+		],
+	},
+
+	SHORT_BREAK_MODE_COLOR: {
+		radial: true,
+		colors: [
 			{
-				color: "#3260FC",
+				color: "#05ec8c",
 				offset: "50",
-				opacity: "0.15",
-			},
-			{
-				color: "#3260FC",
-				offset: "70",
-				opacity: "0.15",
-			},
-			{
-				color: "#3260FC",
-				offset: "70",
-				opacity: "0.1",
-			},
-			{
-				color: "#3260FC",
-				offset: "90",
-				opacity: "0.1",
-			},
-			{
-				color: "transparent",
-				offset: "90",
-				opacity: "0.1",
-			},
-			{
-				color: "transparent",
-				offset: "95",
-				opacity: "0.1",
-			},
-			{
-				color: "transparent",
-				offset: "95",
-				opacity: "0.1",
+				opacity: "0.4",
 			},
 		],
 	},

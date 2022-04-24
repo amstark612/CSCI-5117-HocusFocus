@@ -4,24 +4,17 @@
 
 		<div class="card timer">
 			<div class="flex justify-around w-full">
-				<div>{{ pomodoroCount }} / 4 intervals</div>
+				<div>{{ cyclePomodoroCount }} / 4 intervals</div>
 
 				<div>
-					{{ Math.floor(cycleCount) }}
-					/
-					<EditableSpan
-						:text="goalCycles.toString()"
-						:inputType="'number'"
-						:classes="'bg-pastel-green-100 w-5'"
-						@edited="goalCycles = parseInt($event)"
-					/>
-					cycles
+					{{ Math.floor(cycleCount) }} / {{ timer.settings.goalCycles }} cycles
 				</div>
 			</div>
 
-			<TimerProgressBar 
+			<TimerProgressBar
 				:running="timer.running"
-				:duration="timer.intervalDuration" 
+				:duration="timer.intervalDuration"
+				:currentIntervalType="currentIntervalType"
 				@timeUp="timeUp"
 			/>
 
@@ -30,8 +23,8 @@
 				@pause="timer.running = !timer.running"
 				@resume="resume"
 				@runInterval="runInterval"
+				@skipInterval="skipInterval"
 			/>
-
 		</div>
 	</div>
 </template>
@@ -39,7 +32,6 @@
 <script>
 import { auth, db } from "@/main";
 import { pomodoro, time } from "@/constants";
-import EditableSpan from "./EditableSpan.vue";
 import TimerControls from "@/components/TimerControls.vue";
 import TimerProgressBar from "./TimerProgressBar.vue";
 
@@ -50,26 +42,26 @@ export default {
 			firestoreRef: null,
 
 			// bookkeeping variables
-			goalCycles: 1,			// count of cycles the user aims to complete
-			intervalCount: 0,		// count of any interval type user has begun
-			pomodoroCount: 0,		// count of pomodoro intervals user has completed
-			settingsKey: 0,			// refresh settings when incremented
+			goalCycles: 1, // count of cycles the user aims to complete
+			intervalCount: 0, // count of any interval type user has begun
+			pomodoroCount: 0, // total count of pomodoro intervals user has completed
+			cyclePomodoroCount: 0, // how many pomodoros completed in a cycle
+			settingsKey: 0, // refresh settings when incremented
 
 			// session summary data
 			totalFocusTime: 0,
 
 			timer: {
 				intervalDuration: null,
-				settings: pomodoro.DEFAULT_SETTINGS,			// user's timer settings
+				settings: pomodoro.DEFAULT_SETTINGS,
 				running: false,
 				sequence: null,
 			},
 		};
 	},
 	components: {
-    EditableSpan,
 		TimerControls,
-    TimerProgressBar,
+		TimerProgressBar,
 	},
 
 	computed: {
@@ -79,10 +71,12 @@ export default {
 				pomodoro: this.timer.settings.pomodoro * time.MS_PER_MIN,
 				long: this.timer.settings.long * time.MS_PER_MIN,
 				short: this.timer.settings.short * time.MS_PER_MIN,
-			}
+			};
 		},
 		currentIntervalType() {
-			return this.timer.sequence[this.intervalCount % this.timer.sequence.length];
+			return this.timer.sequence[
+				this.intervalCount % this.timer.sequence.length
+			];
 		},
 		cycleCount() {
 			return this.pomodoroCount / 4;
@@ -92,17 +86,17 @@ export default {
 	watch: {
 		// CTN_TODO this needs testing
 		cycleCount() {
-			console.log(this.cycleCount % this.goalCycles);
-			if (!(this.cycleCount % this.goalCycles)) {
-				console.log("summary prompt thingy - emit to parent probs");
-				// possibly reset something or other here...? otherwise would need to show summary for every subsequent cycle?
-				this.pomodoroCount = 0;
+			if (this.cycleCount % this.goalCycles == 0) {
+				this.cyclePomodoroCount = 0;
+			}
+			if (this.cycleCount == this.goalCycles) {
+				console.log("emit to parent and show summary!");
 			}
 		},
 		settingsKey() {
 			this.fetchSettings();
 			this.timer.sequence = this.computeSequence();
-		}
+		},
 	},
 
 	mounted() {
@@ -113,29 +107,32 @@ export default {
 	methods: {
 		fetchSettings() {
 			if (auth.currentUser) {
-				this.firestoreRef = db.collection("users")
-															.doc(auth.currentUser.uid)
-															.collection("timer_settings");
+				this.firestoreRef = db
+					.collection("users")
+					.doc(auth.currentUser.uid)
+					.collection("timer_settings");
 
-				this.firestoreRef.doc('0')
-						.get().then(doc => {
-							if (doc.exists) {
-								this.timer.settings = {
-									autobreak: doc.data().autobreak,
-									delay: doc.data().delay,
-									long: doc.data().long,
-									pomodoro: doc.data().pomodoro,
-									short: doc.data().short,
-								}
-							}
-				});
+				this.firestoreRef
+					.doc("0")
+					.get()
+					.then((doc) => {
+						if (doc.exists) {
+							this.timer.settings = {
+								autobreak: doc.data().autobreak,
+								delay: doc.data().delay,
+								long: doc.data().long,
+								pomodoro: doc.data().pomodoro,
+								short: doc.data().short,
+								goalCycles: doc.data().goalCycles,
+							};
+						}
+					});
 			}
 		},
 
 		computeSequence() {
 			let sequence = Array(this.timer.settings.delay - 1);
-			sequence.fill(['pomodoro', 'short'])
-							.push(['pomodoro', 'long']);
+			sequence.fill(["pomodoro", "short"]).push(["pomodoro", "long"]);
 
 			return sequence.flat();
 		},
@@ -143,20 +140,39 @@ export default {
 		timeUp(timeElapsed) {
 			this.timer.running = false;
 
-			this.totalFocusTime += timeElapsed == this.settingsMs.pomodoro ? timeElapsed : 0;
+			if (timeElapsed == this.settingsMs.pomodoro) {
+				this.totalFocusTime += timeElapsed;
+				this.cyclePomodoroCount++;
+				this.pomodoroCount++;
+			} else {
+				this.totalFocusTime += 0;
+			}
 
 			this.intervalCount += 1;
-			this.timer.intervalDuration = this.settingsMs[this.currentIntervalType];
-			this.timer.running = this.timer.settings.autobreak;
+
+			this.timer.intervalDuration = null;
+			if (this.timer.settings.autobreak) {
+				this.runInterval();
+			}
 		},
 
 		resume() {
-			// figure out how/whether to start a new interval or just resume an interval in progress?
-			this.running = true;
+			if (!this.timer.intervalDuration) {
+				this.runInterval();
+			} else {
+				// figure out how/whether to start a new interval or just resume an interval in progress?
+				this.timer.running = true;
+			}
 		},
 
-		runInterval(intervalType) {
-			this.timer.intervalDuration = this.settingsMs[intervalType];
+		skipInterval() {
+			console.log(this.currentIntervalType);
+
+			this.timeUp(this.settingsMs[this.currentIntervalType]);
+		},
+
+		runInterval() {
+			this.timer.intervalDuration = this.settingsMs[this.currentIntervalType];
 			this.timer.running = true;
 		},
 	},
