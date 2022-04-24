@@ -1,7 +1,7 @@
 <template>
-  <span v-if="!editMode" @click="editMode=true" >{{text}}</span>
+  <span v-if="!editMode" @click="editMode=true" >{{ text }}</span>
   <input 
-		type="text"
+		:type="t"
 		v-else
 		@blur="clickOut" 
 		@keyup.enter="clickOut" 
@@ -15,8 +15,8 @@ export default {
   name: 'EditableSpan',
   props: {
 		classes: String,
+		inputType: String,
     text: String,
-		width: String,
   },
   data: function() {
       return {
@@ -24,13 +24,18 @@ export default {
           inputContent: this.text,
       }
   },
+	computed: {
+		t() {
+			return this.inputType ? this.inputType : "text";
+		},
+	},
   methods:{
       clickOut: function() {
           this.editMode = false;
           this.$emit("edited", this.inputContent)
-      }
-  }
-}
+      },
+  },
+};
 </script>
 
 <style scoped>

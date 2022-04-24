@@ -4,36 +4,26 @@
 
 		<div class="card timer">
 			<div class="flex justify-around w-full">
-				<div>{{ intervalCount }} / 4 intervals</div>
+				<div>{{ pomodoroCount }} / 4 intervals</div>
 
 				<div>
 					{{ cycleCount }}
 					/
-					<span
-						v-if="!editGoal"
-						class="clickable"
-						title="Click to edit"
-						@click="editGoal = !editGoal"
-					>
-						{{ goal }}
-					</span>
-					<input
-						v-if="editGoal"
-						v-model="goal"
-						type="number"
-						class="w-5 pl-1 bg-lime-100"
-						@blur="editGoal = !editGoal"
-						v-on:keyup.enter="editGoal = !editGoal"
+					<EditableSpan
+						:text="goal.toString()"
+						:inputType="'number'"
+						:classes="'bg-pastel-green-100 w-5'"
+						@edited="goal = parseInt($event)"
 					/>
 					cycles
 				</div>
 			</div>
 
-			<TimerProgressBar />
-
-			<!-- <div class="clock">
-				{{ minutes }}:{{ seconds }}
-			</div> -->
+			<TimerProgressBar 
+				:running="running"
+				:duration="intervalDuration" 
+				@timeUp="timeUp"
+			/>
 
 			<div class="flex justify-center gap-x-4">
 				<div title="timer-setting" @click="seen = !seen" class="control">
@@ -83,7 +73,7 @@
 					/>
 				</div>
 
-				<div title="Short Break" @click="runInterval(SHORT_BREAK)">
+				<div title="Short Break" @click="runInterval(short)">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-8 w-8 clickable"
@@ -96,7 +86,7 @@
 					</svg>
 				</div>
 
-				<div title="Long Break" @click="runInterval(LONG_BREAK)">
+				<div title="Long Break" @click="runInterval(long)">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="h-8 w-8 clickable"
@@ -164,6 +154,8 @@
 </template>
 
 <script>
+import { auth, db } from "@/main";
+import { pomodoro, time } from "@/constants";
 import BaseIcon from "@/components/BaseIcon.vue";
 import EditableSpan from "./EditableSpan.vue";
 import TimerProgressBar from "./TimerProgressBar.vue";
@@ -172,112 +164,94 @@ export default {
 	name: "TomatoTimer",
 	data() {
 		return {
-			cycleCount: 0,
-			goal: 1,
-			totalFocusTime: 0,
-			editGoal: false,
-			intervalCount: 0,
-			running: false,
-			setIntervalObject: null,
-			timer: 0,
 			seen: false,
-			promdo: 25,
-			short: 5,
-			long: 10,
-			delay: 4,
-			auto_start_break: true,
 
-			// intervals in milliseconds
-			MINUTE: 60000,
-			// MINUTE: 2000, // make it easier to test things....
-			// will be updated upon mount
-			// POMODORO_INTERVAL: 25,
-			// SHORT_BREAK: 5,
-			LONG_BREAK: 10,
+			cycleCount: 0,			// count of number of pomodoro cycles user has completed
+			goal: 1,						// count of cycles the user aims to complete
+			intervalCount: 0,		// count of any interval type user has begun
+			pomodoroCount: 0,		// count of pomodoro intervals user has completed
+			timer: 0,
 
-			// make it easier to test things.....
-			POMODORO_INTERVAL: 5,
-			SHORT_BREAK: 2,
-			//LONG_BREAK: 3,
+			totalFocusTime: 0,
+
+			// used for running timer
+			intervalDuration: null,
+			settings: null,			// user's timer settings
+			running: false,
+
+			firestoreRef: null,
 		};
 	},
-	components: { 
-		BaseIcon,
-		EditableSpan, 
-		TimerProgressBar,
+	components: {
+    BaseIcon,
+    EditableSpan,
+    TimerProgressBar,
 	},
 
 	computed: {
-		minutes() {
-			let min = Math.floor(this.timer / this.MINUTE).toFixed(0);
-			return ("00" + min).slice(-2);
-		},
-		seconds() {
-			let seconds = Math.floor((this.timer % this.MINUTE) / 1000).toFixed(0);
-			return ("00" + seconds).slice(-2);
+		delay() { return this.settings?.delay * time.MS_PER_MIN },
+		pomodoro() { return this.settings?.pomodoro * time.MS_PER_MIN },
+		long() { return this.settings?.long * time.MS_PER_MIN },
+		short() { return this.settings?.short * time.MS_PER_MIN },
+
+		currentIntervalType() {
+			return pomodoro.CYCLE[this.intervalCount % pomodoro.CYCLE.length];
 		},
 	},
 
 	watch: {
-		intervalCount() {
-			if (this.intervalCount == 4) {
-				this.cycleCount += 1;
-				this.intervalCount = 0;
-			}
+		pomodoroCount() { // a cycle includes exactly 4 pomodoros
+			this.cycleCount += !(this.pomodoroCount % 4) ? 1 : 0;
 		},
 		cycleCount() {
-			if (this.goal % this.cycleCount == 0) {
+			if (!(this.goal % this.cycleCount)) {
 				console.log("summary prompt thingy - emit to parent probs");
+				// possibly reset something or other here...? otherwise would need to show summary for every subsequent cycle?
 			}
 		},
 	},
 
 	mounted() {
-		this.POMODORO_INTERVAL *= this.MINUTE;
-		this.SHORT_BREAK *= this.MINUTE;
-		this.LONG_BREAK *= this.MINUTE;
+		this.fetchSettings();
 	},
 
 	methods: {
-		runInterval(duration) {
-			if (this.setIntervalObject) {
-				clearInterval(this.setIntervalObject);
+		fetchSettings() {
+			if (auth.currentUser) {
+				this.firestoreRef = db.collection("users")
+															.doc(auth.currentUser.uid)
+															.collection("timer_settings");
+
+				this.firestoreRef.doc('0')
+						.get().then(doc => {
+							if (doc.exists) {
+								this.settings = {
+									autobreak: doc.data().autobreak,
+									delay: doc.data().delay,
+									long: doc.data().long,
+									pomodoro: doc.data().pomodoro,
+									short: doc.data().short,
+								}
+							}	
+				});
+			}
+		},
+		timeUp(timeElapsed) {
+			this.running = false;
+
+			if (this.currentInterval === 'POMODORO') {
+				this.intervalCount += 1;
+				this.totalFocusTime += timeElapsed;
+
 			}
 
-			this.timer = duration;
+			let nextIntervalType = this.currentInterval;
+			this.intervalDuration = this.settings[nextIntervalType];
+			this.running = this.settings.autobreak;
+		},
+		runInterval(duration) {
+			this.intervalDuration = duration;
 			this.running = true;
-
-			let start = Date.now();
-			this.setIntervalObject = setInterval(() => {
-				if (this.timer <= 0) {
-					// do other stuff depending on what duration is & num goals & num cycles
-					if (duration == this.POMODORO_INTERVAL) {
-						this.intervalCount += 1; // CTN_TODO maybe this should be renamed to pomodoroCount?
-						this.totalFocusTime += this.POMODORO_INTERVAL;
-					}
-
-					this.running = false;
-					clearInterval(this.setIntervalObject);
-				}
-
-				if (this.running) {
-					let timeElapsed = Date.now() - start;
-					let timeLeft = duration - timeElapsed;
-					this.timer = timeLeft < 0 ? 0 : timeLeft;
-				}
-			}, 1000);
-		},
-		updatePromo: function (newPromo) {
-			this.promdo = parseInt(newPromo);
-		},
-		updateShort: function (newShort) {
-			this.short = parseInt(newShort);
-		},
-		updateLong: function (newLong) {
-			this.long = parseInt(newLong);
-		},
-		updateDelay: function (newDelay) {
-			this.delay = parseInt(newDelay);
 		},
 
 		updateDelay: function(newDelay) {
