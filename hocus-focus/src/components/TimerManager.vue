@@ -7,7 +7,7 @@
 				<div>{{ pomodoroCount }} / 4 intervals</div>
 
 				<div>
-					{{ session.cycleCount }}
+					{{ Math.floor(cycleCount) }}
 					/
 					<EditableSpan
 						:text="goalCycles.toString()"
@@ -48,21 +48,21 @@ export default {
 	data() {
 		return {
 			firestoreRef: null,
+
 			// bookkeeping variables
 			goalCycles: 1,			// count of cycles the user aims to complete
 			intervalCount: 0,		// count of any interval type user has begun
 			pomodoroCount: 0,		// count of pomodoro intervals user has completed
+			settingsKey: 0,			// refresh settings when incremented
 
 			// session summary data
-			session: {
-				totalFocusTime: 0,
-				cycleCount: 0,			// count of number of pomodoro cycles user has completed
-			},
+			totalFocusTime: 0,
 
 			timer: {
 				intervalDuration: null,
 				settings: pomodoro.DEFAULT_SETTINGS,			// user's timer settings
 				running: false,
+				sequence: null,
 			},
 		};
 	},
@@ -81,27 +81,33 @@ export default {
 				short: this.timer.settings.short * time.MS_PER_MIN,
 			}
 		},
-
 		currentIntervalType() {
-			return pomodoro.CYCLE[this.intervalCount % pomodoro.CYCLE.length];
+			return this.timer.sequence[this.intervalCount % this.timer.sequence.length];
+		},
+		cycleCount() {
+			return this.pomodoroCount / 4;
 		},
 	},
 
 	watch: {
-		pomodoroCount() { // a cycle includes exactly 4 pomodoros
-			// CTN_TODO: is this even right? or does this need to be after the long break? ask kinza
-			this.session.cycleCount += !(this.pomodoroCount % 4) ? 1 : 0;
-		},
+		// CTN_TODO this needs testing
 		cycleCount() {
-			if (!(this.goalCycles % this.session.cycleCount)) {
+			console.log(this.cycleCount % this.goalCycles);
+			if (!(this.cycleCount % this.goalCycles)) {
 				console.log("summary prompt thingy - emit to parent probs");
 				// possibly reset something or other here...? otherwise would need to show summary for every subsequent cycle?
+				this.pomodoroCount = 0;
 			}
 		},
+		settingsKey() {
+			this.fetchSettings();
+			this.timer.sequence = this.computeSequence();
+		}
 	},
 
 	mounted() {
 		this.fetchSettings();
+		this.timer.sequence = this.computeSequence();
 	},
 
 	methods: {
@@ -126,20 +132,27 @@ export default {
 			}
 		},
 
+		computeSequence() {
+			let sequence = Array(this.timer.settings.delay - 1);
+			sequence.fill(['pomodoro', 'short'])
+							.push(['pomodoro', 'long']);
+
+			return sequence.flat();
+		},
+
 		timeUp(timeElapsed) {
 			this.timer.running = false;
-			this.timer.intervalCount += 1;
 
-			this.session.totalFocusTime += this.currentInterval === 'POMODORO' ? timeElapsed : 0;
-			console.log('hello kitty focus time is now', this.session.totalFocusTime);
+			this.totalFocusTime += timeElapsed == this.settingsMs.pomodoro ? timeElapsed : 0;
 
-			let nextIntervalType = this.currentInterval;
-			this.timer.intervalDuration = this.settingsMs[nextIntervalType.toLowerCase()];
-			this.timer.running = this.settings.autobreak;
+			this.intervalCount += 1;
+			this.timer.intervalDuration = this.settingsMs[this.currentIntervalType];
+			this.timer.running = this.timer.settings.autobreak;
 		},
 
 		resume() {
-			// whether to start a new interval or just resume an interval in progress?
+			// figure out how/whether to start a new interval or just resume an interval in progress?
+			this.running = true;
 		},
 
 		runInterval(intervalType) {

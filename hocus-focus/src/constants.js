@@ -5,25 +5,6 @@ export const time = {
 };
 
 export const pomodoro = {
-	CYCLE: [
-		'pomodoro',
-		'delay',
-		'short',
-		'delay',
-		'pomodoro',
-		'delay',
-		'short',
-		'delay',
-		'pomodoro',
-		'delay',
-		'short',
-		'delay',
-		'pomodoro',
-		'delay',
-		'long',
-		'delay', 
-	],
-
 	DEFAULT_SETTINGS: {
 		delay: 4,
 		autobreak: true,

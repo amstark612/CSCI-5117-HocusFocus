@@ -15,5 +15,7 @@ export default {
 		TaskList,
 		TimerManager,
 	},
+
+	// CTN_TODO this will manage the session and give the correct data to summary
 };
 </script>

@@ -13,7 +13,6 @@
 					+
 				</span>
 			</h4> 
-			<br/>
 			<h4> short break duration : 
 				<span class="clickable" @click="settings.short -= 1">
 					-
@@ -23,7 +22,6 @@
 					+
 				</span>
 			</h4>
-			<br/>
 			<h4> long break duration : 
 				<span class="clickable" @click="settings.long += 1">
 					-
@@ -33,7 +31,6 @@
 					+
 				</span>
 			</h4>
-			<br/>
 			<h4> long break delay : 
 				<span class="clickable" @click="settings.delay -= 1">
 					-
@@ -43,7 +40,6 @@
 					+
 				</span>
 			</h4>
-			<br/>
 			<h4> auto start breaks : <span @click="this.settings.autobreak = !this.settings.autobreak">
 				{{this.settings.autobreak}}</span></h4><br/>
 			<button @click="update"> Close X </button>

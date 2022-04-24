@@ -103,9 +103,10 @@ export default {
 			let pausedAt = null;
 			let start = Date.now();
 			this.intervalObject = setInterval(() => {
-				if (this.timeLeft <= 0) {
+				if (this.timeLeft == 0) {
 					clearInterval(this.intervalObject);
-					this.$emit('timeUp', this.timeLeft);
+					this.$emit('timeUp', this.duration);
+					return;
 				}
 
 				if (this.running) {
