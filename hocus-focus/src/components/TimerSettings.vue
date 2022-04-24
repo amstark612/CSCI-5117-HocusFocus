@@ -3,10 +3,7 @@
 
 			<button style="font-size: medium; padding-top: 5%" @click="showTimerSetting = true">Timer</button>
 			<br>
-			<!-- <button @click="showTheme"> Theme </button>
-			<br/> -->
-			<fieldset id="timersetting" v-if="showTimerSetting === true">
-				<h4 style="text-align: justify"> pomodoro duration : 
+			<h4 style="text-align: justify"> pomodoro duration : 
 				<span style="text-align: justify" class="clickable" @click="settings.pomodoro -= 1">
 					-
 				</span>
@@ -46,12 +43,7 @@
 				{{settings.autobreak}}</span></h4><br/>
 			<button @click="update"> Close X </button>
 
-			</fieldset>
 
-			<!-- <fieldset v-if="showThemeSetting === true">
-				Set your Own Theme currentColor
-			</fieldset> -->
-			
 	</div>
 </template>
 
@@ -109,10 +101,6 @@ export default {
 			// CTN_TODO: emit to parent so timer manager can fetch new settings
 			this.$emit('close');
 		},
-		// showTheme() {
-		// 	this.showTimerSetting = false
-		// 	this.shhowThemeSetting = true
-		// }
 	}
 };
 </script>
