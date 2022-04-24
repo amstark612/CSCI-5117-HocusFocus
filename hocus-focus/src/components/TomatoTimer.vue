@@ -296,10 +296,7 @@ export default {
 	@apply mt-4;
 
 	@apply border-pastel-green-500;
-	/* @apply bg-pastel-green-200; */
-	@apply bg-gradient-to-b;
-	@apply from-pastel-green-100;
-	@apply to-pastel-green-200;
+	@apply bg-pastel-green-100;
 	@apply text-pastel-green-500;
 }
 

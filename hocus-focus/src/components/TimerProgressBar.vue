@@ -100,8 +100,8 @@ export default {
 
 			this.timeLeft = this.duration;
 
-			let start = Date.now();
 			let pausedAt = null;
+			let start = Date.now();
 			this.intervalObject = setInterval(() => {
 				if (this.timeLeft <= 0) {
 					clearInterval(this.intervalObject);
@@ -114,7 +114,11 @@ export default {
 						pausedAt = null;
 					}
 
-					let timeElapsed = Date.now() - start;
+					// calculate time elapsed, floor-ing to the nearest seconds
+					// keeps accurate real-time and makes timer more consistent visually
+					// due to decision not to show milliseconds
+					let timeElapsed = (Date.now() - start) / time.MS_PER_SEC;
+					timeElapsed = Math.floor(timeElapsed) * time.MS_PER_SEC;
 					// do not let timer go negative
 					this.timeLeft = Math.min(this.duration - timeElapsed, this.timeLeft);
 				} else if (!pausedAt) { // just began pause
