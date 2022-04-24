@@ -62,10 +62,18 @@
 		
 
 		<div style="padding-bottom: 3%; font-size: medium; text-justify: auto; text-align: start;">
-			auto start breaks <span style="margin-left:7%">:</span>
-		<span style="padding-left: 2%" class="clickable" @click="settings.autobreak = !settings.autobreak">
-			{{ settings.autobreak }}
-		</span></div>
+			auto start breaks 
+			<span style="margin-left:7%">: 
+				<!-- this part is for debug  -->
+				<!-- {{this.settings.autobreak}} -->
+			</span>	
+			
+			<toggle-button :value="true" color="#82C7EB"  :labels="true" @change="settings.autobreak = !settings.autobreak"/> 
+					
+			<!-- <span style="padding-left: 2%" class="clickable" @click="settings.autobreak = !settings.autobreak">
+				{{ settings.autobreak }}
+			</span> -->
+		</div>
 		
 		
 		<button style="padding-top: 5%; font-size: medium;" @click="update">Close X</button>

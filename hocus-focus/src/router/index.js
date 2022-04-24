@@ -5,7 +5,8 @@ import LoginView from "../views/LoginView.vue";
 import TaskView from "../views/TaskView.vue";
 import RankingView from "../views/RankingView.vue";
 import { auth } from "@/main";
-
+import ToggleButton from 'vue-js-toggle-button'
+Vue.use(ToggleButton)
 Vue.use(VueRouter);
 
 const routes = [
