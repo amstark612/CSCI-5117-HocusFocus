@@ -23,11 +23,11 @@
 				</span>
 			</h4>
 			<h4> long break duration : 
-				<span class="clickable" @click="settings.long += 1">
+				<span class="clickable" @click="settings.long -= 1">
 					-
 				</span>
 				<editable-span :text="this.settings.long.toString()" @edited="settings.long = $event"/>
-				<span class="clickable" @click="settings.short -= 1">
+				<span class="clickable" @click="settings.long += 1">
 					+
 				</span>
 			</h4>
@@ -40,8 +40,8 @@
 					+
 				</span>
 			</h4>
-			<h4> auto start breaks : <span @click="this.settings.autobreak = !this.settings.autobreak">
-				{{this.settings.autobreak}}</span></h4><br/>
+			<h4> auto start breaks : <span class="clickable" @click="settings.autobreak = !settings.autobreak">
+				{{settings.autobreak}}</span></h4><br/>
 			<button @click="update"> Close X </button>
 
 	</div>
