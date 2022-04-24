@@ -85,6 +85,7 @@
 import BaseIcon from "@/components/BaseIcon.vue";
 import TimerSettings from "@/components/TimerSettings.vue";
 
+
 export default {
 	name: "TimerControls",
 	data() {

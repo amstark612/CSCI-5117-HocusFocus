@@ -64,3 +64,9 @@
 		@apply text-sm;
 	}
 }
+
+#timersetting {
+	font-size: medium;
+    padding: auto;
+	
+}
