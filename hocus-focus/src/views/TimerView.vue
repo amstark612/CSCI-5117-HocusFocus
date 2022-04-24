@@ -19,7 +19,7 @@
 		<br />
 		<h4>
 			pomodoro duration :
-			<editable-span :text="pomodoro" @edited="updatePromo" />
+			<editable-span :text="pomodoro" @edited="updatePomodoro" />
 		</h4>
 		<br />
 		<h4>
@@ -70,8 +70,8 @@ export default {
 						this.pomodoro = data.pomodoro;
 						this.shortBreak = data.short;
 						this.longBreak = data.long;
-						this.longDelay = this.delay;
-						this.autoBreak = this.autobreak;
+						this.longDelay = data.delay;
+						this.autoBreak = data.autobreak;
 					} else {
 						// doc.data() will be undefined in this case
 						console.log("No such document!");
