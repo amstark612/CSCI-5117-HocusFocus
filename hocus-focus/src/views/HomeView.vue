@@ -1,19 +1,19 @@
 <template>
 	<div class="home">
-		<TomatoTimer />
+		<TimerManager />
 		<TaskList />
 	</div>
 </template>
 
 <script>
 import TaskList from "@/components/TaskList.vue";
-import TomatoTimer from "@/components/TomatoTimer.vue";
+import TimerManager from "@/components/TimerManager.vue";
 
 export default {
 	name: "HomeView",
 	components: {
 		TaskList,
-		TomatoTimer,
+		TimerManager,
 	},
 };
 </script>

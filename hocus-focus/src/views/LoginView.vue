@@ -13,6 +13,7 @@
 
 <script>
 import { auth, db, fieldValueUtility, provider } from "../main";
+import { pomodoro } from "@/constants";
 
 export default {
 	name: "LoginView",
@@ -66,13 +67,7 @@ export default {
 								.doc(uid)
 								.collection("timer_settings")
 								.doc("0")
-								.set({
-									autobreak: true,
-									delay: 4,
-									long: 10,
-									pomodoro: 25,
-									short: 5,
-								})
+								.set(pomodoro.DEFAULT_SETTINGS)
 								.then(() => {
 									console.log("Document successfully written!");
 								})

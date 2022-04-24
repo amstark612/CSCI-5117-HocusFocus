@@ -23,6 +23,14 @@ export const pomodoro = {
 		'long',
 		'delay', 
 	],
+
+	DEFAULT_SETTINGS: {
+		delay: 4,
+		autobreak: true,
+		long: 10,
+		pomodoro: 25,
+		short: 5,
+	},
 };
 
 export const radialTimer = {
