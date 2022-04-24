@@ -1,61 +1,74 @@
 <template>
 	<div v-if="show">
-		<button>Timer</button>
+		<button style="padding-top: 5%; padding-bottom: 3%; font-size: medium;">Timer</button>
 		<!-- <button disabled> Theme </button> -->
 		<br />
-		<h4>
-			pomodoro duration :
-			<span class="clickable" @click="settings.pomodoro -= 1"> - </span>
-			<editable-span
-				:text="this.settings.pomodoro.toString()"
-				@edited="settings.pomodoro = $event"
-			/>
-			<span class="clickable" @click="settings.pomodoro += 1"> + </span>
-		</h4>
-		<h4>
-			short break duration :
-			<span class="clickable" @click="settings.short -= 1"> - </span>
-			<editable-span
-				:text="this.settings.short.toString()"
-				@edited="settings.short = $event"
-			/>
-			<span class="clickable" @click="settings.short += 1"> + </span>
-		</h4>
-		<h4>
+		<div style="padding-bottom: 3%; font-size: medium; text-align: start; text-justify: auto;">
+			pomodoro duration
+			<span style="margin-left:7%">:</span>
+		
+		<span class="clickable" @click="settings.pomodoro -= 1"> - </span>
+		<editable-span
+			:text="this.settings.pomodoro.toString()"
+			@edited="settings.pomodoro = $event"
+		/>
+		<span class="clickable" @click="settings.pomodoro += 1"> + </span>
+		</div>
+		
+	
+		<div style="padding-bottom: 3%; font-size: medium; text-justify: auto; text-align: start;">
+			short break duration:
+		
+		<span class="clickable" @click="settings.short -= 1"> - </span>
+		<editable-span
+			:text="this.settings.short.toString()"
+			@edited="settings.short = $event"
+		/>
+		<span class="clickable" @click="settings.short += 1"> + </span>
+		</div>
+
+		<div style="padding-bottom: 3%; font-size: medium; text-justify: auto; text-align: start;">
 			long break duration :
-			<span class="clickable" @click="settings.long -= 1"> - </span>
-			<editable-span
-				:text="this.settings.long.toString()"
-				@edited="settings.long = $event"
-			/>
-			<span class="clickable" @click="settings.long += 1"> + </span>
-		</h4>
-		<h4>
-			long break delay :
-			<span class="clickable" @click="settings.delay -= 1"> - </span>
-			<editable-span
-				:text="this.settings.delay.toString()"
-				@edited="this.settings.delay = $event"
-			/>
-			<span class="clickable" @click="settings.delay += 1"> + </span>
-		</h4>
-		<h4>
-			goal cycles :
-			<span class="clickable" @click="settings.goalCycles -= 1"> - </span>
-			<editable-span
-				:text="this.settings.goalCycles.toString()"
-				@edited="this.settings.goalCycles = $event"
-			/>
-			<span class="clickable" @click="settings.goalCycles += 1"> + </span>
-		</h4>
-		<h4>
-			auto start breaks :
-			<span class="clickable" @click="settings.autobreak = !settings.autobreak">
-				{{ settings.autobreak }}</span
-			>
-		</h4>
-		<br />
-		<button @click="update">Close X</button>
+		
+		<span class="clickable" @click="settings.long -= 1"> - </span>
+		<editable-span
+			:text="this.settings.long.toString()"
+			@edited="settings.long = $event"
+		/>
+		<span class="clickable" @click="settings.long += 1"> + </span>
+		</div>
+		
+
+		<div style="padding-bottom: 3%; font-size: medium; text-justify: auto; text-align: start;">
+			long break delay 
+			<span style="margin-left:10.5%">:</span>
+		<span class="clickable" @click="settings.delay -= 1"> - </span>
+		<editable-span
+			:text="this.settings.delay.toString()"
+			@edited="this.settings.delay = $event"
+		/>
+		<span class="clickable" @click="settings.delay += 1"> + </span></div>
+		
+
+		<div style="padding-bottom: 3%; font-size: medium; text-justify: auto; text-align: start;">
+			goal cycles 
+			<span style="margin-left:28.5%">:</span>
+		<span class="clickable" @click="settings.goalCycles -= 1"> - </span>
+		<editable-span
+			:text="this.settings.goalCycles.toString()"
+			@edited="this.settings.goalCycles = $event"
+		/>
+		<span class="clickable" @click="settings.goalCycles += 1"> + </span></div>
+		
+
+		<div style="padding-bottom: 3%; font-size: medium; text-justify: auto; text-align: start;">
+			auto start breaks <span style="margin-left:7%">:</span>
+		<span style="padding-left: 2%" class="clickable" @click="settings.autobreak = !settings.autobreak">
+			{{ settings.autobreak }}
+		</span></div>
+		
+		
+		<button style="padding-top: 5%; font-size: medium;" @click="update">Close X</button>
 	</div>
 </template>
 
@@ -63,6 +76,7 @@
 import { auth, db } from "@/main";
 import { pomodoro } from "@/constants";
 import EditableSpan from "@/components/EditableSpan.vue";
+
 
 export default {
 	name: "TimerSettings",
