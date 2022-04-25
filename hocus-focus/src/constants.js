@@ -41,36 +41,45 @@ export const settingsLabel = [
 export const radialTimer = {
 	// Radial progress bar options
 
-	FOCUS_MODE_COLOR: {
-		radial: true,
-		colors: [
-			{
-				color: "#ff4e4d",
-				offset: "50",
-				opacity: "0.4",
-			},
-		],
+	pomodoro: {
+		mode: "Focus",
+		color:  {
+			radial: true,
+			colors: [
+				{
+					color: "#ff4e4d",
+					offset: "50",
+					opacity: "0.4",
+				},
+			],
+		},
 	},
 
-	LONG_BREAK_MODE_COLOR: {
-		radial: true,
-		colors: [
-			{
-				color: "#0bbddb",
-				offset: "50",
-				opacity: "0.4",
-			},
-		],
+	long: {
+		mode: "Long Break",
+		color: {
+			radial: true,
+			colors: [
+				{
+					color: "#0bbddb",
+					offset: "50",
+					opacity: "0.4",
+				},
+			],
+		},
 	},
 
-	SHORT_BREAK_MODE_COLOR: {
-		radial: true,
-		colors: [
-			{
-				color: "#05ec8c",
-				offset: "50",
-				opacity: "0.4",
-			},
-		],
+	short: {
+		mode: "Short Break",
+		color: {
+			radial: true,
+			colors: [
+				{
+					color: "#05ec8c",
+					offset: "50",
+					opacity: "0.4",
+				},
+			],
+		},
 	},
 };

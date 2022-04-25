@@ -63,30 +63,10 @@ export default {
 			return remaining * 100;
 		},
 		timerColor() {
-			let color;
-
-			if (this.currentIntervalType === "pomodoro") {
-				color = radialTimer.FOCUS_MODE_COLOR;
-			} else if (this.currentIntervalType === "short") {
-				color = radialTimer.SHORT_BREAK_MODE_COLOR;
-			} else if (this.currentIntervalType === "long") {
-				color = radialTimer.LONG_BREAK_MODE_COLOR;
-			}
-
-			return color;
+			return radialTimer[this.currentIntervalType].color;
 		},
 		timerText() {
-			let mode;
-
-			if (this.currentIntervalType === "pomodoro") {
-				mode = "Focus";
-			} else if (this.currentIntervalType === "short") {
-				mode = "Short Break";
-			} else if (this.currentIntervalType === "long") {
-				mode = "Long Break";
-			}
-
-			return mode;
+			return radialTimer[this.currentIntervalType].mode;
 		}
 	},
 
