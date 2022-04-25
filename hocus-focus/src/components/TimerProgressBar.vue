@@ -2,7 +2,7 @@
 	<vep
 		:progress="progress"
 		line="butt"
-		:color="current.modeColor"
+		:color="timerColor"
 		empty-color="#324c7e"
 		thickness="20"
 		emptyThickness="8"
@@ -20,7 +20,7 @@
 			</p>
 			<!-- Current pomodoro mode text: Focusing/Resting -->
 			<p class="dial-label">
-				{{ current.modeText }}
+				{{ timerText }}
 			</p>
 		</template>
 	</vep>
@@ -35,15 +35,6 @@ export default {
 	name: "TimerProgressBar",
 	data() {
 		return {
-			emptyColor: radialTimer.EMPTY_COLOR,
-			emptyColorFill: radialTimer.EMPTY_COLOR_FILL,
-			focusModeColor: radialTimer.FOCUS_MODE_COLOR,
-			shortBreakModeColor: radialTimer.SHORT_BREAK_MODE_COLOR,
-			longBreakModeColor: radialTimer.LONG_BREAK_MODE_COLOR,
-			current: {
-				modeText: "",
-				modeColor: "",
-			},
 			timeLeft: 0,
 			intervalObject: null,
 		};
@@ -71,10 +62,32 @@ export default {
 			let remaining = this.duration ? this.timeLeft / this.duration : 1;
 			return remaining * 100;
 		},
-	},
+		timerColor() {
+			let color;
 
-	mounted() {
-		this.currentRoundDisplay();
+			if (this.currentIntervalType === "pomodoro") {
+				color = radialTimer.FOCUS_MODE_COLOR;
+			} else if (this.currentIntervalType === "short") {
+				color = radialTimer.SHORT_BREAK_MODE_COLOR;
+			} else if (this.currentIntervalType === "long") {
+				color = radialTimer.LONG_BREAK_MODE_COLOR;
+			}
+
+			return color;
+		},
+		timerText() {
+			let mode;
+
+			if (this.currentIntervalType === "pomodoro") {
+				mode = "Focus";
+			} else if (this.currentIntervalType === "short") {
+				mode = "Short Break";
+			} else if (this.currentIntervalType === "long") {
+				mode = "Long Break";
+			}
+
+			return mode;
+		}
 	},
 
 	watch: {
@@ -88,7 +101,6 @@ export default {
 
 	methods: {
 		runInterval() {
-			this.currentRoundDisplay();
 			if (this.intervalObject) {
 				clearInterval(this.intervalObject);
 			}
@@ -123,19 +135,6 @@ export default {
 					pausedAt = Date.now();
 				}
 			}, 1000);
-		},
-
-		currentRoundDisplay() {
-			if (this.currentIntervalType === "pomodoro") {
-				this.current.modeText = "Focus";
-				this.current.modeColor = this.focusModeColor;
-			} else if (this.currentIntervalType === "short") {
-				this.current.modeText = "Short Break";
-				this.current.modeColor = this.shortBreakModeColor;
-			} else if (this.currentIntervalType === "long") {
-				this.current.modeText = "Long Break";
-				this.current.modeColor = this.longBreakModeColor;
-			}
 		},
 	},
 };

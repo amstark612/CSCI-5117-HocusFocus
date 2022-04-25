@@ -74,9 +74,12 @@ export default {
 			};
 		},
 		currentIntervalType() {
-			return this.timer.sequence[
-				this.intervalCount % this.timer.sequence.length
-			];
+			if (this.timer.sequence) {
+				let index = this.intervalCount % this.timer.sequence.length;
+				return this.timer.sequence[index];
+			} else {
+				return 'pomodoro';
+			}
 		},
 		cycleCount() {
 			return this.pomodoroCount / 4;

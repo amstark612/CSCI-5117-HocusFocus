@@ -77,9 +77,8 @@ export default {
 
 	methods: {
 		fetchData() {
-			this.tasks = [];
-
 			this.firestoreRef.get().then(res => {
+					this.tasks = [];
 					res.forEach(doc => {
 						// this is hacky but doc.data() never includes the id - if someone else knows how to get around this lmk!
 						this.tasks.push({
