@@ -1,6 +1,6 @@
 <template>
 	<div v-if="show">
-		<button>Timer</button>
+		<button style="margin-top: 3%; font-size: large">Timer</button>
 		<!-- <button disabled> Theme </button> -->
 		<br />
 		<div
@@ -8,9 +8,9 @@
 			v-for="setting in settingsLabel"
 			:key="setting.label"
 		>
-			<div class="col-span-3 card">{{ setting.label }}</div>
+			<div style="font-size: medium" class="col-span-3 card">{{ setting.label }}</div>
 			<div class="col-span-1 text-2xl p-3 my-2">:</div>
-			<div class="col-span-1 card">
+			<div style="font-size: medium" class="col-span-1 card">
 				{{ settings[setting.field] }}
 			</div>
 			<div>
@@ -38,7 +38,7 @@
 		</div>
 
 		<div class="grid grid-cols-4 gap-4 p-5">
-			<div class="col-span-3 card">auto start breaks</div>
+			<div style="font-size: medium" class="col-span-3 card">auto start breaks</div>
 			<div class="col-span-1 p-3 my-2">
 				<toggle-button
 					:value="settings.autobreak"
@@ -51,7 +51,7 @@
 		<br />
 		<div title="Save Changes" class="close">
 			<BaseIcon
-				@clicked="update"
+				@clicked="update; close()"
 				:properties="{
 					height: 'h-8',
 					width: 'w-8',
@@ -138,6 +138,7 @@ export default {
 						pomodoro: this.settings.pomodoro,
 						short: this.settings.short,
 						goalCycles: this.settings.goalCycles,
+						
 					})
 					.then(() => {
 						console.log("Document successfully updated!");
@@ -150,6 +151,10 @@ export default {
 				alert("Log in to Save Preferences!");
 			}
 		},
+
+		close() {
+			this.$emit("close");
+		}
 	},
 };
 </script>
