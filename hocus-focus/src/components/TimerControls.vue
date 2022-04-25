@@ -61,7 +61,7 @@
 		</div>
 
 		<!-- CTN_TODO need to update some key here and then emit to parent to refresh -->
-		<TimerSettings :show="showSettings" @close="showSettings = false" />
+		<TimerSettings :show="showSettings" @close="updateSettings" />
 	</div>
 </template>
 
@@ -79,10 +79,23 @@ export default {
 	props: {
 		running: Boolean,
 	},
-	emits: ["pause", "resume", "runInterval", "skipInterval"],
+	emits: [
+		"updateSettings",
+		"pause", 
+		"resume", 
+		"runInterval", 
+		"skipInterval"
+	],
 	components: {
 		BaseIcon,
 		TimerSettings,
 	},
+
+	methods: {
+		updateSettings() {
+			this.showSettings = false;
+			this.$emit("updateSettings");
+		}
+	}
 };
 </script>

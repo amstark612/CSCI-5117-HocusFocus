@@ -11,7 +11,7 @@
 			<div style="font-size: medium" class="col-span-3 card">{{ setting.label }}</div>
 			<div class="col-span-1 text-2xl p-3 my-2">:</div>
 			<div style="font-size: medium" class="col-span-1 card">
-				{{ settings[setting.field] }}
+				{{ settingsMin[setting.field] }}
 			</div>
 			<div>
 				<BaseIcon
@@ -51,7 +51,7 @@
 		<br />
 		<div title="Save Changes" class="close">
 			<BaseIcon
-				@clicked="update; close()"
+				@clicked="save"
 				:properties="{
 					height: 'h-8',
 					width: 'w-8',
@@ -68,13 +68,14 @@
 
 <script>
 import { auth, db } from "@/main";
-import { pomodoro, settingsLabel } from "@/constants";
+import { pomodoro, settingsLabel, time } from "@/constants";
 import BaseIcon from "@/components/BaseIcon.vue";
 
 export default {
 	name: "TimerSettings",
 	data() {
 		return {
+			MS_PER_MIN: time.MS_PER_MIN,
 			settings: pomodoro.DEFAULT_SETTINGS,
 			settingsLabel: settingsLabel,
 		};
@@ -87,16 +88,36 @@ export default {
 		BaseIcon,
 	},
 
+	computed: {
+		settingsMin() {
+			let computedSettings = {...this.settings};
+
+			pomodoro.TIME_FIELDS.forEach(field => {
+				computedSettings[field] /= time.MS_PER_MIN;
+			});
+
+			return computedSettings;
+		},
+	},
+
 	mounted() {
 		this.fetchSettings();
 	},
 
 	methods: {
 		incrementSettings(field) {
-			this.settings[field]++;
+			if (pomodoro.TIME_FIELDS.includes(field)) {
+				this.settings[field] += time.MS_PER_MIN;
+			} else {
+				this.settings[field]++;
+			}
 		},
 		decrementSettings(field) {
-			this.settings[field]--;
+			if (pomodoro.TIME_FIELDS.includes(field)) {
+				this.settings[field] -= time.MS_PER_MIN;
+			} else {
+				this.settings[field]--;
+			}
 		},
 		fetchSettings() {
 			if (auth.currentUser) {
@@ -123,7 +144,7 @@ export default {
 			}
 		},
 
-		update() {
+		save() {
 			if (auth.currentUser) {
 				this.firestoreRef = db
 					.collection("users")
@@ -142,6 +163,7 @@ export default {
 					})
 					.then(() => {
 						console.log("Document successfully updated!");
+						this.$emit("close");
 					})
 					.catch((error) => {
 						// The document probably doesn't exist.
@@ -149,11 +171,8 @@ export default {
 					});
 			} else {
 				alert("Log in to Save Preferences!");
+				this.$emit("close");
 			}
-		},
-
-		close() {
-			this.$emit("close");
 		}
 	},
 };

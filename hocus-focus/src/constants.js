@@ -8,11 +8,17 @@ export const pomodoro = {
 	DEFAULT_SETTINGS: {
 		delay: 4,
 		autobreak: true,
-		long: 10,
-		pomodoro: 25,
-		short: 5,
+		long: 10 * time.MS_PER_MIN,
+		pomodoro: 25 * time.MS_PER_MIN,
+		short: 5 * time.MS_PER_MIN,
 		goalCycles: 1,
 	},
+
+	TIME_FIELDS: [
+		'long',
+		'pomodoro',
+		'short'
+	],
 };
 
 export const settingsLabel = [

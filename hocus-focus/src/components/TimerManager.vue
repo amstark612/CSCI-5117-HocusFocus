@@ -4,7 +4,7 @@
 
 		<div class="card timer">
 			<div class="flex justify-around w-full">
-				<div>{{ cyclePomodoroCount }} / 4 intervals</div>
+				<div>{{ pomodoroCount }} / 4 intervals</div>
 
 				<div>
 					{{ Math.floor(cycleCount) }} / {{ timer.settings.goalCycles }} cycles
@@ -24,6 +24,7 @@
 				@resume="resume"
 				@runInterval="runInterval"
 				@skipInterval="skipInterval"
+				@updateSettings="fetchSettings"
 			/>
 		</div>
 	</div>
@@ -42,11 +43,9 @@ export default {
 			firestoreRef: null,
 
 			// bookkeeping variables
-			goalCycles: 1, // count of cycles the user aims to complete
+			goalCycles: 1, 		// count of cycles the user aims to complete
 			intervalCount: 0, // count of any interval type user has begun
 			pomodoroCount: 0, // total count of pomodoro intervals user has completed
-			cyclePomodoroCount: 0, // how many pomodoros completed in a cycle
-			settingsKey: 0, // refresh settings when incremented
 
 			// session summary data
 			totalFocusTime: 0,
@@ -82,14 +81,11 @@ export default {
 		// CTN_TODO this needs testing
 		cycleCount() {
 			if (this.cycleCount % this.goalCycles == 0) {
-				this.cyclePomodoroCount = 0;
+				this.pomodoroCount = 0;
 			}
 			if (this.cycleCount == this.goalCycles) {
 				console.log("emit to parent and show summary!");
 			}
-		},
-		settingsKey() {
-			this.fetchSettings();
 		},
 	},
 
@@ -117,16 +113,8 @@ export default {
 					.get()
 					.then((doc) => {
 						if (doc.exists) {
-							console.log(doc.data().delay);
-							this.timer.settings = {
-								autobreak: doc.data().autobreak,
-								delay: doc.data().delay,
-								long: doc.data().long,
-								pomodoro: doc.data().pomodoro,
-								short: doc.data().short,
-								goalCycles: doc.data().goalCycles,
-							};
-
+							console.log('successfully fetched settings');
+							this.timer.settings = doc.data();
 							this.timer.sequence = computeSequence();
 						}
 					});
@@ -136,9 +124,8 @@ export default {
 		timeUp(timeElapsed) {
 			this.timer.running = false;
 
-			if (timeElapsed == this.settingsMs.pomodoro) {
+			if (this.currentIntervalType === 'pomodoro') {
 				this.totalFocusTime += timeElapsed;
-				this.cyclePomodoroCount++;
 				this.pomodoroCount++;
 			} else {
 				this.totalFocusTime += 0;
@@ -156,19 +143,16 @@ export default {
 			if (!this.timer.intervalDuration) {
 				this.runInterval();
 			} else {
-				// figure out how/whether to start a new interval or just resume an interval in progress?
 				this.timer.running = true;
 			}
 		},
 
 		skipInterval() {
-			console.log(this.currentIntervalType);
-
-			this.timeUp(this.settingsMs[this.currentIntervalType]);
+			this.timeUp(this.timer.settings[this.currentIntervalType]);
 		},
 
 		runInterval() {
-			this.timer.intervalDuration = this.settingsMs[this.currentIntervalType];
+			this.timer.intervalDuration = this.timer.settings[this.currentIntervalType];
 			this.timer.running = true;
 		},
 	},
