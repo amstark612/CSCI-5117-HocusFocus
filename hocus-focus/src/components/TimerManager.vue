@@ -31,7 +31,7 @@
 
 <script>
 import { auth, db } from "@/main";
-import { pomodoro, time } from "@/constants";
+import { pomodoro } from "@/constants";
 import TimerControls from "@/components/TimerControls.vue";
 import TimerProgressBar from "./TimerProgressBar.vue";
 
@@ -65,14 +65,6 @@ export default {
 	},
 
 	computed: {
-		settingsMs() {
-			return {
-				delay: this.timer.settings.delay * time.MS_PER_MIN,
-				pomodoro: this.timer.settings.pomodoro * time.MS_PER_MIN,
-				long: this.timer.settings.long * time.MS_PER_MIN,
-				short: this.timer.settings.short * time.MS_PER_MIN,
-			};
-		},
 		currentIntervalType() {
 			if (this.timer.sequence) {
 				let index = this.intervalCount % this.timer.sequence.length;
@@ -98,17 +90,22 @@ export default {
 		},
 		settingsKey() {
 			this.fetchSettings();
-			this.timer.sequence = this.computeSequence();
 		},
 	},
 
 	mounted() {
 		this.fetchSettings();
-		this.timer.sequence = this.computeSequence();
 	},
 
 	methods: {
 		fetchSettings() {
+
+			let computeSequence = () => {
+				let sequence = Array(this.timer.settings.delay - 1);
+				sequence.fill(["pomodoro", "short"]).push(["pomodoro", "long"]);
+				return sequence.flat();
+			};
+
 			if (auth.currentUser) {
 				this.firestoreRef = db
 					.collection("users")
@@ -120,6 +117,7 @@ export default {
 					.get()
 					.then((doc) => {
 						if (doc.exists) {
+							console.log(doc.data().delay);
 							this.timer.settings = {
 								autobreak: doc.data().autobreak,
 								delay: doc.data().delay,
@@ -128,16 +126,11 @@ export default {
 								short: doc.data().short,
 								goalCycles: doc.data().goalCycles,
 							};
+
+							this.timer.sequence = computeSequence();
 						}
 					});
 			}
-		},
-
-		computeSequence() {
-			let sequence = Array(this.timer.settings.delay - 1);
-			sequence.fill(["pomodoro", "short"]).push(["pomodoro", "long"]);
-
-			return sequence.flat();
 		},
 
 		timeUp(timeElapsed) {

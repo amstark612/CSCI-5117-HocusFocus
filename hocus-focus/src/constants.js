@@ -47,7 +47,7 @@ export const radialTimer = {
 			radial: true,
 			colors: [
 				{
-					color: "#ff4e4d",
+					color: "#e25b45",
 					offset: "50",
 					opacity: "0.4",
 				},
@@ -61,7 +61,7 @@ export const radialTimer = {
 			radial: true,
 			colors: [
 				{
-					color: "#0bbddb",
+					color: "#68cabb",
 					offset: "50",
 					opacity: "0.4",
 				},
@@ -75,7 +75,7 @@ export const radialTimer = {
 			radial: true,
 			colors: [
 				{
-					color: "#05ec8c",
+					color: "#94b540",
 					offset: "50",
 					opacity: "0.4",
 				},
