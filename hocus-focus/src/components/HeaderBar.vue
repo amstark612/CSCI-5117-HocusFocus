@@ -6,7 +6,7 @@
 			</div>
 
 			<nav v-if="this.$route.name != 'Login'" class="hidden sm:block">
-				<span v-if="displayName">{{ displayName }} | </span> 
+				<span v-if="displayName">{{ displayName }} | </span>
 				<router-link v-if="displayName" to="/tasks">tasks | </router-link>
 				<router-link to="/ranking">rankings | </router-link>
 				<router-link v-if="!displayName" to="/Login">log in</router-link>
@@ -15,7 +15,9 @@
 
 			<nav class="sm:hidden">
 				<BaseIcon
-					:dArray="['M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z']"
+					:dArray="[
+						'M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z',
+					]"
 					:properties="{ classes: ['stroke-pastel-blue-600'] }"
 					@clicked="showMenu = !showMenu"
 				/>
@@ -26,7 +28,7 @@
 			v-if="showMenu && this.$route.name != 'Login'"
 			class="text-center pb-4"
 		>
-			<span v-if="displayName">{{ displayName }} | </span> 
+			<span v-if="displayName">{{ displayName }} | </span>
 			<router-link v-if="displayName" to="/tasks">tasks | </router-link>
 			<router-link to="/ranking">rankings | </router-link>
 			<router-link v-if="!displayName" to="/login">log in</router-link>
@@ -48,13 +50,13 @@ export default {
 		};
 	},
 	components: {
-    BaseIcon,
+		BaseIcon,
 	},
 
 	beforeCreate() {
-		auth.onAuthStateChanged(user => {
-      if (user) {
-        this.displayName = user.displayName.toLowerCase();
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				this.displayName = user.displayName.toLowerCase();
 			}
 		});
 	},
@@ -64,6 +66,7 @@ export default {
 			auth.signOut().then(() => {
 				this.$router.push("/");
 			});
+			this.displayName = null;
 		},
 	},
 };

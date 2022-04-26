@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { auth, db, fieldValueUtility, provider } from "../main";
+import { auth, db, fieldValueUtility, provider } from "@/main";
 import { pomodoro } from "@/constants";
 
 export default {
@@ -25,7 +25,7 @@ export default {
 	},
 	methods: {
 		socialLogin: function () {
-      auth
+			auth
 				.signInWithPopup(provider)
 				.then(() => {
 					this.registerAccount();
@@ -37,7 +37,7 @@ export default {
 		},
 		registerAccount() {
 			if (auth.currentUser) {
-        const user = auth.currentUser;
+				const user = auth.currentUser;
 				const uid = user.uid;
 
 				db.collection("users")

@@ -8,11 +8,75 @@
 
 <script>
 import HeaderBar from "@/components/HeaderBar.vue";
+import { auth, db, fieldValueUtility } from "@/main";
+import { pomodoro } from "@/constants";
 
 export default {
 	name: "App",
 	components: {
 		HeaderBar,
+	},
+
+	beforeCreate() {
+		if (auth.currentUser) {
+			const user = auth.currentUser;
+			const uid = user.uid;
+
+			db.collection("users")
+				.doc(uid)
+				.get()
+				.then((doc) => {
+					if (!doc.exists) {
+						// create user document
+						db.collection("users")
+							.doc(uid)
+							.set({
+								displayName: user.displayName,
+								email: user.email,
+								focusTime: 0,
+								joinDate: fieldValueUtility.serverTimestamp(),
+								photoUrl: user.photoURL,
+							})
+							.then(() => {
+								console.log("Document successfully written!");
+							})
+							.catch((error) => {
+								console.error("Error writing document: ", error);
+							});
+
+						// set default timer settings
+						db.collection("users")
+							.doc(uid)
+							.collection("timer_settings")
+							.doc("0")
+							.set(pomodoro.DEFAULT_SETTINGS)
+							.then(() => {
+								console.log("Document successfully written!");
+							})
+							.catch((error) => {
+								console.error("Error writing document: ", error);
+							});
+
+						// set default task!
+						db.collection("users")
+							.doc(auth.currentUser.uid)
+							.collection("tasks")
+							.doc("0")
+							.set({
+								createdAt: fieldValueUtility.serverTimestamp(),
+								progress: 0,
+								tags: ["ACT", "math"],
+								title: "need to study for the ACT!",
+							})
+							.then(() => {
+								console.log("Document successfully written!");
+							})
+							.catch((error) => {
+								console.error("Error writing document: ", error);
+							});
+					}
+				});
+		}
 	},
 };
 </script>
