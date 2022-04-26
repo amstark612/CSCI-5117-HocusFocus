@@ -27,11 +27,7 @@ export default {
 	name: "RankingList",
 	data() {
 		return {
-			displayName: null,
-			email: null,
-			profilePicture: null,
-			focusTime: null,
-			focusTimeString: null,
+			rankings: null,
 		};
 	},
 	components: {
