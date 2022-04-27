@@ -1,21 +1,15 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import LoginView from "../views/LoginView.vue";
 import TaskView from "../views/TaskView.vue";
 import RankingView from "../views/RankingView.vue";
 import { auth } from "@/main";
-import ToggleButton from 'vue-js-toggle-button';
-import 'tw-elements';
-Vue.use(ToggleButton)
+import ToggleButton from "vue-js-toggle-button";
+import "tw-elements";
+Vue.use(ToggleButton);
 Vue.use(VueRouter);
 
 const routes = [
-	{
-		path: "/login",
-		name: "login",
-		component: LoginView,
-	},
 	{
 		path: "/",
 		name: "home",
@@ -40,7 +34,7 @@ const routes = [
 		name: "ranking",
 		component: RankingView,
 		meta: {
-			requiresAuth: true,
+			requiresAuth: false,
 		},
 	},
 ];
