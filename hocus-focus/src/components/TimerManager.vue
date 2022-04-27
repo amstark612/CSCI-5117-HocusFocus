@@ -164,15 +164,6 @@ export default {
             } catch (err) {
                 alert('Notification API error: ' + err);
             }
-
-            // this only works with in regular tabs (i.e. not in private-browsing mode)
-            // try {
-            //     navigator.serviceWorker.getRegistration()
-            //         .then((reg) => reg.showNotification("Time's up!"))
-            //         .catch((err) => alert('Service Worker registration error: ' + err));
-            //     } catch (err) {
-            //     alert('Notification API error: ' + err);
-            // }
         },
 	},
 };
