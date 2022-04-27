@@ -5,16 +5,18 @@
 				<h1>rankings</h1>
 			</div>
 		</header>
-		<div class="grid grid-cols-4">
+		<div class="grid grid-cols-5">
+			<div class="ml-4">rank</div>
 			<div class="col-span-2 ml-4">user</div>
 			<div></div>
 			<div class="text-center">time (hh:mm)</div>
 		</div>
 
 		<BaseRankingItem
-			v-for="ranking in rankings"
+			v-for="(ranking, index) in rankings"
 			:key="ranking.id"
 			:ranking="ranking"
+			:index="index + 1"
 		/>
 	</div>
 </template>

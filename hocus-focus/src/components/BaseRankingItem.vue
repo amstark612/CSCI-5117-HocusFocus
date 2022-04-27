@@ -1,6 +1,9 @@
 <template>
 	<div class="card from-pastel-yellow-100 to-pastel-yellow-200">
-		<div class="grid grid-cols-4">
+		<div class="grid grid-cols-5">
+			<div class="number text-5xl ml-4">
+				{{ index }}
+			</div>
 			<div class="ranking-picture">
 				<div class="w-6/12 sm:w-4/12">
 					<img
@@ -10,7 +13,7 @@
 					/>
 				</div>
 			</div>
-			<div class="ranking-name grid-rows-2">
+			<div class="ranking-name col-span-2 grid-rows-2">
 				<div class="line-clamp">
 					<span class="clickable">
 						{{ this.displayName }}
@@ -22,7 +25,6 @@
 					</span>
 				</div>
 			</div>
-			<div></div>
 			<div class="text-center">
 				<div class="line-clamp">
 					{{ this.focusTimeString }}
@@ -46,6 +48,7 @@ export default {
 	},
 	props: {
 		ranking: Object,
+		index: Number,
 	},
 
 	mounted() {
