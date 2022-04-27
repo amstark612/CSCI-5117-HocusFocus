@@ -87,7 +87,7 @@
                                     classes: ['stroke-pastel-green-500'],
                                 }"
                                 :dArray="[
-                                    'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+                                    'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z',
                                 ]"
                             />
                         </div>
@@ -113,7 +113,7 @@ import { pomodoro, settingsLabel, time } from "@/constants";
 import BaseIcon from "@/components/BaseIcon.vue";
 
 export default {
-	name: "TimerSettingModal",
+	name: "TimerSettings",
 	data() {
 		return {
 			MS_PER_MIN: time.MS_PER_MIN,
@@ -223,6 +223,7 @@ export default {
 	display: flex;
 	justify-content: center;
 }
+
 .modal-dialog {
     background-color: aliceblue;
 }

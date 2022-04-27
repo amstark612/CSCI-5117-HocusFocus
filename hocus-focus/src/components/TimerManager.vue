@@ -45,7 +45,7 @@ export default {
 			// bookkeeping variables
 			goalCycles: 1, // count of cycles the user aims to complete
 			intervalCount: 0, // count of any interval type user has begun
-			pomodoroCount: 0, // total count of pomodoro intervals user has completed
+			pomodoroCount: 0, // total count of pomodoro intervals user has completed in a cycle
 			cyclePomodoroCount: 0, // how many pomodoros completed in a cycle
 
 			// session summary data
@@ -122,14 +122,13 @@ export default {
 		},
 
 		timeUp(timeElapsed) {
+            this.notify();
 			this.timer.running = false;
 
 			if (this.currentIntervalType === "pomodoro") {
 				this.totalFocusTime += timeElapsed;
 				this.pomodoroCount++;
 				this.cyclePomodoroCount++;
-			} else {
-				this.totalFocusTime += 0;
 			}
 
 			this.intervalCount += 1;
@@ -148,6 +147,7 @@ export default {
 			}
 		},
 
+        // CTN_TODO this is just wrong; user can hack their focus time by skipping through tons of intervals
 		skipInterval() {
 			this.timeUp(this.timer.settings[this.currentIntervalType]);
 		},
@@ -157,6 +157,14 @@ export default {
 				this.timer.settings[this.currentIntervalType];
 			this.timer.running = true;
 		},
+
+        notify() {
+            try {
+                new Notification("Time's up!");
+            } catch (err) {
+                alert('Notification API error: ' + err);
+            }
+        },
 	},
 };
 </script>
