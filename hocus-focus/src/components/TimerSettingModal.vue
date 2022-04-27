@@ -90,35 +90,52 @@
 								/>
 							</div>
 						</div>
-						<div class="grid grid-cols-4 gap-4 p-5">
+					</div>
+					<div class="grid grid-cols-4">
+						<div class="col-span-2">
 							<button
+								data-bs-dismiss="modal"
 								@click="resetPreferences"
-								class="col-span-4 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+								title="reset preferences to default settings!"
+								type="button"
+								class="close modal-footer items-center justify-end p-4 border rounded-lg"
 							>
+								<BaseIcon
+									:properties="{
+										height: 'h-8',
+										width: 'w-8',
+										strokeWidth: '1.5',
+										classes: ['stroke-pastel-green-500', 'mr-2'],
+									}"
+									:dArray="[
+										'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
+									]"
+								/>
 								reset to default
 							</button>
 						</div>
-						<br />
-					</div>
-
-					<!-- Modal Footer: Close popup -->
-					<div
-						title="Save Preferences"
-						class="close modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md"
-					>
-						<BaseIcon
-							data-bs-dismiss="modal"
-							@clicked="save"
-							:properties="{
-								height: 'h-8',
-								width: 'w-8',
-								strokeWidth: '1.5',
-								classes: ['stroke-pastel-green-500'],
-							}"
-							:dArray="[
-								'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z',
-							]"
-						/>
+						<div class="col-span-2">
+							<button
+								@click="save"
+								data-bs-dismiss="modal"
+								title="save customized preferences!"
+								type="button"
+								class="close modal-footer items-center justify-end p-4 border rounded-lg"
+							>
+								<BaseIcon
+									:properties="{
+										height: 'h-8',
+										width: 'w-8',
+										strokeWidth: '1.5',
+										classes: ['stroke-pastel-green-500', 'mr-2'],
+									}"
+									:dArray="[
+										'M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4',
+									]"
+								/>
+								save preferences
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -179,6 +196,7 @@ export default {
 		},
 		resetPreferences() {
 			this.settings = pomodoro.DEFAULT_SETTINGS;
+			this.save();
 		},
 		fetchSettings() {
 			if (auth.currentUser) {
@@ -240,15 +258,13 @@ export default {
 <style scoped>
 .close {
 	@apply flex;
-	@apply flex-col;
 	@apply gap-y-6;
 	@apply items-center;
+	@apply m-4;
 
-	@apply mt-4;
-
-	@apply border-pastel-green-500;
-	@apply bg-pastel-green-100;
-	@apply text-pastel-green-500;
+	@apply border-pastel-blue-500;
+	@apply bg-pastel-blue-100;
+	@apply text-pastel-yellow-500;
 }
 
 .modal-dialog {
