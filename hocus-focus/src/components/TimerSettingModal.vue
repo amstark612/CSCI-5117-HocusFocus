@@ -228,12 +228,30 @@ export default {
 </script>
 <style scoped>
 .close {
-	display: flex;
-	justify-content: center;
+	@apply flex;
+	@apply flex-col;
+	@apply gap-y-6;
+	@apply items-center;
+
+	@apply mt-4;
+
+	@apply border-pastel-green-500;
+	@apply bg-pastel-green-100;
+	@apply text-pastel-green-500;
 }
 
 .modal-dialog {
-    background-color: aliceblue;
+	@apply flex;
+	@apply flex-col;
+	@apply gap-y-6;
+	@apply items-center;
+
+	@apply mt-4;
+
+	@apply border-pastel-green-500;
+	@apply bg-pastel-green-100;
+	@apply text-pastel-green-500;
 }
+
 </style>
 
