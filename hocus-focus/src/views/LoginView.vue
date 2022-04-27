@@ -138,4 +138,14 @@ p a {
 .social-button img {
 	width: 100%;
 }
+.login  {
+	@apply flex;
+	@apply flex-col;
+	@apply gap-y-6;
+	@apply items-center;
+
+	@apply mt-4;
+
+	@apply text-pastel-green-500;
+}
 </style>

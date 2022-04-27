@@ -2,8 +2,8 @@
     <div class="timer-pop">
         <!-- Modal -->
         <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-            id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalScrollableLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable relative w-auto pointer-events-none">
+            id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLongLabel" aria-hidden="true">
+            <div class="modal-dialog relative w-auto pointer-events-none">
                 <div
                     class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
                     <!-- Modal Header -->
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <br />
-                        <div title="Save Changes" class="close" data-bs-dismiss="modal">
+                        <!-- <div title="Save Changes" class="close" data-bs-dismiss="modal">
                             <BaseIcon
                                 @clicked="save"
                                 :properties="{
@@ -90,18 +90,26 @@
                                     'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z',
                                 ]"
                             />
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Modal Footer: Close popup -->
-                    <!-- <div
-                        class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                        <button type="button"
-                        class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-                        data-bs-dismiss="modal">
-                        Close
-                        </button>
-                    </div> -->
+                    <div
+                        class="close modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+                        <BaseIcon
+                            data-bs-dismiss="modal"
+                            @clicked="save"
+                            :properties="{
+                                height: 'h-8',
+                                width: 'w-8',
+                                strokeWidth: '1.5',
+                                classes: ['stroke-pastel-green-500'],
+                            }"
+                            :dArray="[
+                                'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z',
+                            ]"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -124,7 +132,7 @@ export default {
 	props: {
 		show: Boolean,
 	},
-	emits: ["close"],
+	// emits: ["close"],
 	components: {
 		BaseIcon,
 	},
@@ -204,7 +212,7 @@ export default {
 					})
 					.then(() => {
 						console.log("Document successfully updated!");
-						this.$emit("close");
+						// this.$emit("close");
 					})
 					.catch((error) => {
 						// The document probably doesn't exist.
@@ -212,7 +220,7 @@ export default {
 					});
 			} else {
 				alert("Log in to Save Preferences!");
-				this.$emit("close");
+				// this.$emit("close");
 			}
 		}
 	},
@@ -220,12 +228,30 @@ export default {
 </script>
 <style scoped>
 .close {
-	display: flex;
-	justify-content: center;
+	@apply flex;
+	@apply flex-col;
+	@apply gap-y-6;
+	@apply items-center;
+
+	@apply mt-4;
+
+	@apply border-pastel-green-500;
+	@apply bg-pastel-green-100;
+	@apply text-pastel-green-500;
 }
 
 .modal-dialog {
-    background-color: aliceblue;
+	@apply flex;
+	@apply flex-col;
+	@apply gap-y-6;
+	@apply items-center;
+
+	@apply mt-4;
+
+	@apply border-pastel-green-500;
+	@apply bg-pastel-green-100;
+	@apply text-pastel-green-500;
 }
+
 </style>
 
