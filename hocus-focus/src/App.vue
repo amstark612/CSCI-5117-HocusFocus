@@ -1,5 +1,6 @@
 <template>
 	<div id="app" class="mx-auto w-11/12 lg:w-4/5 xl:w-3/5 2xl:w-2/4">
+        <NotificationPermissions />
 		<HeaderBar />
 
 		<router-view />
@@ -8,14 +9,16 @@
 
 <script>
 import HeaderBar from "@/components/HeaderBar.vue";
+import NotificationPermissions from "@/components/NotificationPermissions.vue";
 import { auth, db, fieldValueUtility } from "@/main";
 import { pomodoro } from "@/constants";
 
 export default {
 	name: "App",
 	components: {
-		HeaderBar,
-	},
+        HeaderBar,
+        NotificationPermissions,
+    },
 
 	beforeCreate() {
 		if (auth.currentUser) {
