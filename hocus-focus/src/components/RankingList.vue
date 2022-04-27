@@ -36,7 +36,7 @@ export default {
 
 	firestore() {
 		return {
-			rankings: db.collection("users"),
+			rankings: db.collection("users").orderBy("focusTime", "desc"),
 		};
 	},
 };
