@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<div class="flex justify-center gap-x-4">
-			<!-- click this icon will have a popup window for the timer setting -->
+			<!-- NOTE: This part of the code use the TimerSettingModal.vue, which has a pop up window
+				for timer setting-->
 			<div title="timer-setting" class="control" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">
 				<BaseIcon
 					:properties="{
@@ -16,6 +17,24 @@
 					]"
 				/>
 			</div>
+
+			<!-- NOTE: This part of the code use the TimerSetting.vue, which has a hide or show area 
+				of timer setting. To use this part of the code, uncomment of code with TimerSetting -->
+			<!-- <div title="timer-setting" class="control">
+				<BaseIcon
+					@clicked="showSettings = true"
+					:properties="{
+						height: 'h-8',
+						width: 'w-8',
+						strokeWidth: '1.5',
+						classes: ['stroke-pastel-green-500'],
+					}"
+					:dArray="[
+						'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z',
+						'M15 12a3 3 0 11-6 0 3 3 0 016 0z',
+					]"
+				/>
+			</div> -->
 
 			<div title="Play/Pause">
 				<BaseIcon
@@ -61,13 +80,13 @@
 		</div>
 
 		<!-- CTN_TODO need to update some key here and then emit to parent to refresh -->
-		<TimerSettings :show="showSettings" @close="updateSettings" />
+		<!-- <TimerSettings :show="showSettings" @close="updateSettings" /> -->
 	</div>
 </template>
 
 <script>
 import BaseIcon from "@/components/BaseIcon.vue";
-import TimerSettings from "@/components/TimerSettings.vue";
+// import TimerSettings from "@/components/TimerSettings.vue";
 
 export default {
 	name: "TimerControls",
@@ -88,7 +107,7 @@ export default {
 	],
 	components: {
 		BaseIcon,
-		TimerSettings,
+		// TimerSettings,
 	},
 
 	methods: {
