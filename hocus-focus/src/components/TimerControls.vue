@@ -3,7 +3,7 @@
 		<div class="flex justify-center gap-x-4">
 			<!-- NOTE: This part of the code use the TimerSettingModal.vue, which has a pop up window
 				for timer setting-->
-			<div title="timer-setting" class="control" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">
+			<div title="timer-setting" class="control" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
 				<BaseIcon
 					:properties="{
 						height: 'h-8',
