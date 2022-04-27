@@ -1,7 +1,7 @@
 <template>
 	<div v-if="show">
 		<button style="margin-top: 3%; font-size: large">Timer</button>
-		<!-- <button disabled> Theme </button> -->
+		
 		<br />
 		<div
 			class="grid grid-cols-6 gap-4 p-5"
