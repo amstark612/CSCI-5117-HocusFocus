@@ -8,6 +8,7 @@
 	body {
 		background-color: #fef6eb;
 		@apply text-pastel-blue-600;
+        font-family: 'Fira Code';
 	}
 }
 
