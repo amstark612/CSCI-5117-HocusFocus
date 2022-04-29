@@ -11,7 +11,8 @@
 
 			<div class="line-clamp muted">
 				<small v-if="!editTags" class="clickable" @click="editTags = true">
-					<span v-for="tag in task.tags" :key="tag"> #{{ tag }} </span>
+					<!-- <span v-for="tag in task.tags" :key="tag"> #{{ tag }} </span> -->
+					<span> #{{task.tags}}</span>
 				</small>
 
 				<input

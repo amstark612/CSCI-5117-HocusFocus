@@ -4,6 +4,7 @@ import HomeView from "../views/HomeView.vue";
 import TaskView from "../views/TaskView.vue";
 import RankingView from "../views/RankingView.vue";
 import ToggleButton from "vue-js-toggle-button";
+import TagedTasks from "../components/TagedTasks.vue"
 import "tw-elements";
 import { auth } from "@/main";
 import { registerUser } from "@/authUtilities";
@@ -35,6 +36,15 @@ const routes = [
 		meta: {
 			requiresAuth: false,
 		},
+	},
+	{
+		path: "/tasks/:tag",
+		name: "TagedTasks",
+		component: TagedTasks,
+		meta: {
+			requiresAuth: true,
+		},
+		props: true
 	},
 ];
 

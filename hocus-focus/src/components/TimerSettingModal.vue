@@ -116,7 +116,7 @@
 						</div>
 						<div class="col-span-2">
 							<button
-								@click="save"
+								@click="save()"
 								data-bs-dismiss="modal"
 								title="save customized preferences!"
 								type="button"

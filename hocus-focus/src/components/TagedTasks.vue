@@ -5,15 +5,37 @@
 			<div><h1>tasks</h1></div>
 		</header>
 
+		<div
+			v-if="user && tasks.length == 0"
+			class="flex flex-col items-center justify-center text-center m-4"
+		>
+			<BaseIcon
+				:properties="{
+					height: 'h-9',
+					width: 'w-9',
+					strokeWidth: '1.5',
+					clickable: false,
+				}"
+				:dArray="[
+					'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
+				]"
+			/>
+			<div class="m-2">no tasks on deck!</div>
+		</div>
+
+		<div v-if="!user" class="text-center m-4">
+			<span 
+                class="text-pastel-yellow-400 clickable"
+                @click="socialLogin"
+            >
+				log in
+            </span>
+			to add a task!
+		</div>
 
 		<div v-if="user">
-			<div id="tag-list" v-for="task in tasks" :key="task.id">
-				<!-- <div id="tag" v-for="tag in task.tags" :key="tag"> -->
-				<router-link id="tag-link" :to="{name: 'TagedTasks', params:{tag: task.tags}}">{{task.tags}}</router-link>
-				<!-- </div> -->
-			</div>
 			<TaskItem
-				v-for="task in incompleteTasks"
+				v-for="task in incompleteTagedTasks"
 				:key="task.id"
 				:task="task"
 				@delete="deleteTask"
@@ -29,11 +51,12 @@
 import { auth, db, provider } from "@/main";
 import { registerUser } from "@/authUtilities";
 import AddTask from "@/components/AddTask.vue";
-// import BaseIcon from "@/components/BaseIcon.vue";
+import BaseIcon from "@/components/BaseIcon.vue";
 import TaskItem from "@/components/TaskItem.vue";
 
 export default {
-	name: "TaskList",
+	name: "TagedTasks",
+  props: ['tag'],
 	data() {
 		return {
 			firestoreRef: null,
@@ -44,7 +67,7 @@ export default {
     emits: ["trackTask"],
 	components: {
 		AddTask,
-		// BaseIcon,
+		BaseIcon,
 		TaskItem,
 	},
 
@@ -65,8 +88,8 @@ export default {
 	},
 
     computed: {
-        incompleteTasks() {
-            return this.tasks.filter(task => task.progress < 100);
+        incompleteTagedTasks() {
+            return this.tasks.filter(task => task.progress < 100 && task.tags == this.tag);
         }
     },
 
@@ -131,19 +154,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped>
-#tag-list {
-    text-align: start;
-    border-radius: 50px;
-    border-color: #f4d4d8;
-    background-color: #f4d4d8;
-    padding-left: 1%;
-    padding-right: 1%;
-    margin-right: 2%;
-    display: inline;
-	
-	@apply bg-pastel-orange-100;
-	@apply text-pastel-orange-500;
-}
-</style>
