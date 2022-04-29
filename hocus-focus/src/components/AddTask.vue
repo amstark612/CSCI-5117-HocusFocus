@@ -38,7 +38,7 @@ export default {
 					userId: auth.currentUser.uid,
 					createdAt: fieldValueUtility.serverTimestamp(),
 					title: "Tap to edit title",
-					tags: ["tapToAddTags"],
+					tags: [],
 					progress: 0,
 				})
 				.then((ref) => {
