@@ -70,7 +70,8 @@ export default {
     @apply rounded-lg;
     @apply z-10;
     @apply p-4;
-    @apply gap-2;
+    @apply gap-4;
+    @apply border;
 }
 
 .modal-body {

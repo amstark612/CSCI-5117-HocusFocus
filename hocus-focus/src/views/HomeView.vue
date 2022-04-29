@@ -3,6 +3,7 @@
 		<TimerManager 
 			ref="timer" 
 			v-if="!showSummaryPrompt"
+            :key="settingsKey"
 			@sessionComplete="sessionComplete" 
 		/>
 
@@ -34,7 +35,7 @@
 		</div>
 
 		<TaskList @trackTask="trackTask" />
-		<TimerSettingModal />
+		<TimerSettingModal @updated="settingsKey++" />
 	</div>
 </template>
 
@@ -49,7 +50,7 @@ export default {
     data() {
         return {
             focusTime: null,
-			showSummaryPrompt: true,
+			showSummaryPrompt: false,
             showSummary: false,
             taskIds: [],
         }

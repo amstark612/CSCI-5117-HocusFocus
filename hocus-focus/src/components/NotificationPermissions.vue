@@ -14,10 +14,10 @@
             </template>
 
             <template v-slot:footer>
-                <div class="flex justify-center gap-2">
+                <div class="flex justify-center gap-4">
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
-                        class="h-6 w-6" 
+                        class="h-6 w-6 stroke-pastel-orange-400 clickable" 
                         fill="none" 
                         viewBox="0 0 24 24" 
                         stroke="currentColor" 
@@ -29,7 +29,7 @@
 
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
-                        class="h-6 w-6" 
+                        class="h-6 w-6 stroke-pastel-green-400 clickable" 
                         fill="none" 
                         viewBox="0 0 24 24" 
                         stroke="currentColor" 
