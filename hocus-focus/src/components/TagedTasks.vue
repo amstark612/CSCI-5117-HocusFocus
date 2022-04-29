@@ -1,11 +1,11 @@
 <template>
 	<div id="task-list" class="mt-6">
 		<header class="flex justify-center gap-x-1">
-			<AddTask @added="fetchData" />
+			<!-- <AddTask @added="fetchData" /> -->
 			<div><h1>tasks</h1></div>
 		</header>
 
-		<div
+		<!-- <div
 			v-if="user && tasks.length == 0"
 			class="flex flex-col items-center justify-center text-center m-4"
 		>
@@ -21,9 +21,9 @@
 				]"
 			/>
 			<div class="m-2">no tasks on deck!</div>
-		</div>
+		</div> -->
 
-		<div v-if="!user" class="text-center m-4">
+		<!-- <div v-if="!user" class="text-center m-4">
 			<span 
                 class="text-pastel-yellow-400 clickable"
                 @click="socialLogin"
@@ -31,7 +31,7 @@
 				log in
             </span>
 			to add a task!
-		</div>
+		</div> -->
 
 		<div v-if="user">
 			<TaskItem
@@ -50,8 +50,8 @@
 <script>
 import { auth, db, provider } from "@/main";
 import { registerUser } from "@/authUtilities";
-import AddTask from "@/components/AddTask.vue";
-import BaseIcon from "@/components/BaseIcon.vue";
+// import AddTask from "@/components/AddTask.vue";
+// import BaseIcon from "@/components/BaseIcon.vue";
 import TaskItem from "@/components/TaskItem.vue";
 
 export default {
@@ -66,8 +66,8 @@ export default {
 	},
     emits: ["trackTask"],
 	components: {
-		AddTask,
-		BaseIcon,
+		// AddTask,
+		// BaseIcon,
 		TaskItem,
 	},
 
