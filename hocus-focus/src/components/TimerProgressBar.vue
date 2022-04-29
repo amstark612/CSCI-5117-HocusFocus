@@ -32,7 +32,7 @@ export default {
 	name: "TimerProgressBar",
 	data() {
 		return {
-			timeLeft: 0,
+			timeLeft: this.duration,
 			intervalObject: null,
 		};
 	},
@@ -69,10 +69,7 @@ export default {
 
 	watch: {
 		duration() {
-			// if user has autobreak set to false, don't start until they press start
-			if (this.running && this.duration) {
-				this.runInterval();
-			} else {
+			if (this.duration) {
 				this.timeLeft = this.duration;
 			}
 		},

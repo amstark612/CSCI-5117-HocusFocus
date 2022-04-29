@@ -8,9 +8,9 @@
 
 		<div v-if="user">
 			<div id="tag-list" v-for="task in incompleteTasks" :key="task.id" >
-				<!-- <div id="tag" v-for="tag in task.tags" :key="tag"> -->
-				<router-link v-if="task.tags !== 'tapToAddTags'" id="tag-link" :to="{name: 'TagedTasks', params:{tag: task.tags}}">{{task.tags}}</router-link>
-				<!-- </div> -->
+				<div id="tag" v-for="tag in task.tags" :key="tag">
+					<router-link v-if="task.tags !== 'tapToAddTags'" id="tag-link" :to="{name: 'TagedTasks', params:{tag: tag}}">{{tag}}</router-link>
+				</div>
 			</div>
 			<TaskItem
 				v-for="task in incompleteTasks"
@@ -112,8 +112,6 @@ export default {
 		updateTask(taskId, property) {
 			if (property.progress) {
                 this.$emit("trackTask", taskId);
-			} else if (property.tags) {
-				console.log("stub for parsing tags...");
 			}
 
 			this.firestoreRef
@@ -133,7 +131,7 @@ export default {
 </script>
 
 <style scoped>
-#tag-list {
+#tag {
     text-align: start;
     border-radius: 50px;
     border-color: #f4d4d8;
@@ -145,5 +143,9 @@ export default {
 	
 	@apply bg-pastel-yellow-200;
 	@apply text-pastel-blue-500;
+}
+
+#tag-list {
+	display: inline;
 }
 </style>

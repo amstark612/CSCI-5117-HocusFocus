@@ -8,9 +8,9 @@
 			aria-labelledby="timerSettingsModalLabel"
 			aria-hidden="true"
 		>
-			<div class="modal-dialog relative w-auto pointer-events-none">
+			<div class="modal-dialog card relative w-auto pointer-events-none">
 				<div
-					class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
+					class="modal-content relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current"
 				>
 					<!-- Modal Header -->
 					<div
@@ -240,16 +240,14 @@ export default {
 						goalCycles: this.settings.goalCycles,
 					})
 					.then(() => {
-						console.log("Document successfully updated!");
-						// this.$emit("close");
+						console.log("Settings successfully updated!");
 					})
 					.catch((error) => {
 						// The document probably doesn't exist.
-						console.error("Error updating document: ", error);
+						console.error("Error updating settings: ", error);
 					});
 			} else {
 				alert("Log in to Save Preferences!");
-				// this.$emit("close");
 			}
 		},
 	},
@@ -275,6 +273,7 @@ export default {
 
 	@apply mt-4;
 
+    @apply border;
 	@apply border-pastel-green-500;
 	@apply bg-pastel-green-100;
 	@apply text-pastel-green-500;

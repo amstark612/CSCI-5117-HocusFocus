@@ -60,6 +60,8 @@ export default {
 			},
 		};
 	},
+	emits: ["sessionComplete"],
+
 	components: {
 		TimerControls,
 		TimerProgressBar,
@@ -86,7 +88,7 @@ export default {
 				this.cyclePomodoroCount = 0;
 			}
 			if (this.cycleCount == this.goalCycles) {
-                this.$emit("cycleComplete", this.totalFocusTime);
+                this.$emit("sessionComplete", this.totalFocusTime);
 			}
 		},
 	},
@@ -117,6 +119,7 @@ export default {
 							console.log("successfully fetched settings");
 							this.timer.settings = doc.data();
 							this.timer.sequence = computeSequence();
+							this.timer.intervalDuration = this.timer.settings.pomodoro;
 						}
 					});
 			}
@@ -150,20 +153,25 @@ export default {
 
 		resume() {
 			if (this.$refs.radialTimer.intervalObject == null) {
+				console.log('running new interval');
 				this.runInterval();
 			} else {
+				console.log('resuming');
 				this.timer.running = true;
 			}
 		},
 
 		skipInterval() {
+			clearInterval(this.$refs.radialTimer.intervalObject);
+			this.$refs.radialTimer.intervalObject = null;
 			this.timeUp(this.intervalDuration - this.$refs.radialTimer.timeLeft);
 		},
 
+		// only used for starting a fresh interval
 		runInterval() {
 			this.timer.intervalDuration = this.timer.settings[this.currentIntervalType];
-			console.log('from runInterval', this.currentIntervalType);
 			this.timer.running = true;
+			this.$refs.radialTimer.runInterval();
 		},
 
         notifyUser() {

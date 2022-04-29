@@ -7,9 +7,9 @@
 
 
 		<div v-if="user">
-			<div id="tag-list" v-for="task in allTasks" :key="task.id">
-				<div id="tag" v-if="task.tags !== 'tapToAddTags'">
-                    <router-link  id="tag-link" :to="{name: 'AllTasksTaged', params:{tag: task.tags}}">{{task.tags}}</router-link>
+			<div id="tag-list" v-for="task in allTasks" :key="task.id" >
+				<div id="tag" v-for="tag in task.tags" :key="tag">
+					<router-link v-if="task.tags !== 'tapToAddTags'" id="tag-link" :to="{name: 'AllTasksTaged', params:{tag: tag}}">{{tag}}</router-link>
 				</div>
 			</div>
 			<TaskItem
@@ -33,7 +33,7 @@ import AddTask from "@/components/AddTask.vue";
 import TaskItem from "@/components/TaskItem.vue";
 
 export default {
-	name: "TaskList",
+	name: "AllTasks",
 	data() {
 		return {
 			firestoreRef: null,
@@ -133,15 +133,21 @@ export default {
 </script>
 
 <style scoped>
-#tag, #tag-list {
+#tag {
     text-align: start;
     border-radius: 50px;
-    /* border-color: #f4d4d8;
-    background-color: #f4d4d8; */
+    border-color: #f4d4d8;
+    background-color: #f4d4d8;
+    padding-left: 1%;
+    padding-right: 1%;
     margin-right: 2%;
     display: inline;
-	padding-left: 1%;
+	
 	@apply bg-pastel-yellow-200;
 	@apply text-pastel-blue-500;
+}
+
+#tag-list {
+	display: inline;
 }
 </style>

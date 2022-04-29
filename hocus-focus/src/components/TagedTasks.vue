@@ -89,7 +89,7 @@ export default {
 
     computed: {
         incompleteTagedTasks() {
-            return this.tasks.filter(task => task.progress < 100 && task.tags == this.tag);
+            return this.tasks.filter(task => task.progress < 100 && task.tags.includes(this.tag));
         }
     },
 
