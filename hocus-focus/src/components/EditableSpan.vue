@@ -39,11 +39,11 @@ export default {
 </script>
 
 <style scoped>
-/* CTN_TODO: figure out why no rounded borders when active */
 input[type=text],
 input[type=text]:active,
 input[type=text]:focus {
 	@apply bg-pastel-yellow-100;
 	@apply border-pastel-yellow-500;
+    @apply outline-none;
 }
 </style>
