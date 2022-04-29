@@ -12,6 +12,7 @@
 			</div>
 
 			<TimerProgressBar
+                ref="timer"
 				:running="timer.running"
 				:duration="timer.intervalDuration"
 				:currentIntervalType="currentIntervalType"
@@ -31,7 +32,7 @@
 </template>
 
 <script>
-import { auth, db } from "@/main";
+import { auth, db, fieldValueUtility } from "@/main";
 import { pomodoro } from "@/constants";
 import TimerControls from "@/components/TimerControls.vue";
 import TimerProgressBar from "./TimerProgressBar.vue";
@@ -105,10 +106,10 @@ export default {
 			if (auth.currentUser) {
 				this.firestoreRef = db
 					.collection("users")
-					.doc(auth.currentUser.uid)
-					.collection("timer_settings");
+					.doc(auth.currentUser.uid);
 
 				this.firestoreRef
+					.collection("timer_settings")
 					.doc("0")
 					.get()
 					.then((doc) => {
@@ -122,11 +123,17 @@ export default {
 		},
 
 		timeUp(timeElapsed) {
-            this.notify();
+            this.notifyUser();
 			this.timer.running = false;
 
 			if (this.currentIntervalType === "pomodoro") {
 				this.totalFocusTime += timeElapsed;
+                this.firestoreRef.update({
+                    focusTime: fieldValueUtility.increment(timeElapsed),
+                }).then(() => {
+                    console.log('updated...?');
+                });
+
 				this.pomodoroCount++;
 				this.cyclePomodoroCount++;
 			}
@@ -153,12 +160,11 @@ export default {
 		},
 
 		runInterval() {
-			this.timer.intervalDuration =
-				this.timer.settings[this.currentIntervalType];
+			this.timer.intervalDuration = this.timer.settings[this.currentIntervalType];
 			this.timer.running = true;
 		},
 
-        notify() {
+        notifyUser() {
             try {
                 new Notification("Time's up!");
             } catch (err) {

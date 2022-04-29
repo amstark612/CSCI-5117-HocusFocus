@@ -24,9 +24,12 @@
 		</div>
 
 		<div v-if="!user" class="text-center m-4">
-			<router-link to="/login" class="text-pastel-yellow-400"
-				>log in</router-link
-			>
+			<span 
+                class="text-pastel-yellow-400 clickable"
+                @click="socialLogin"
+            >
+				log in
+            </span>
 			to add a task!
 		</div>
 
@@ -45,7 +48,8 @@
 </template>
 
 <script>
-import { auth, db } from "@/main";
+import { auth, db, provider, fieldValueUtility } from "@/main";
+import { pomodoro } from "@/constants";
 import AddTask from "@/components/AddTask.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import TaskItem from "@/components/TaskItem.vue";
@@ -86,6 +90,17 @@ export default {
 	},
 
 	methods: {
+		socialLogin() {
+			auth
+				.signInWithPopup(provider)
+				.then(() => {
+					this.registerAccount();
+					this.$router.push("/");
+				})
+				.catch((err) => {
+					alert("Oops. " + err.message);
+				});
+		},
 		fetchData() {
 			this.firestoreRef.get().then((res) => {
 				this.tasks = [];
@@ -128,6 +143,68 @@ export default {
 					console.log("successfuly updated task", property);
 					this.tasksKey += 1;
 				});
+		},
+
+		registerAccount() {
+			if (auth.currentUser) {
+				const user = auth.currentUser;
+				const uid = user.uid;
+
+				db.collection("users")
+					.doc(uid)
+					.get()
+					.then((doc) => {
+						if (!doc.exists) {
+							// create user document
+							db.collection("users")
+								.doc(uid)
+								.set({
+									displayName: user.displayName,
+									email: user.email,
+									focusTime: 0,
+									joinDate: fieldValueUtility.serverTimestamp(),
+									photoUrl: user.photoURL,
+								})
+								.then(() => {
+									console.log("Document successfully written!");
+								})
+								.catch((error) => {
+									console.error("Error writing document: ", error);
+								});
+
+							// set default timer settings
+							db.collection("users")
+								.doc(uid)
+								.collection("timer_settings")
+								.doc("0")
+								.set(pomodoro.DEFAULT_SETTINGS)
+								.then(() => {
+									console.log("Document successfully written!");
+								})
+								.catch((error) => {
+									console.error("Error writing document: ", error);
+								});
+
+							// set default task!
+							db.collection("users")
+								.doc(auth.currentUser.uid)
+								.collection("tasks")
+								.doc("0")
+								.set({
+									createdAt: fieldValueUtility.serverTimestamp(),
+									progress: 0,
+									tags: ["ACT", "math"],
+									title: "need to study for the ACT!",
+								})
+								.then(() => {
+									console.log("Document successfully written!");
+								})
+								.catch((error) => {
+									console.error("Error writing document: ", error);
+								});
+						}
+					});
+			}
 		},
 	},
 };
