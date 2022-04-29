@@ -16,6 +16,7 @@ export default {
     data() {
         return {
             focusTime: null,
+            showSummary: false,
             taskIds: [],
         }
     },
