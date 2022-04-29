@@ -35,7 +35,7 @@
 
 		<div v-if="user">
 			<TaskItem
-				v-for="task in tasks"
+				v-for="task in incompleteTasks"
 				:key="task.id"
 				:task="task"
 				@delete="deleteTask"
@@ -88,6 +88,12 @@ export default {
 			if (this.user) this.fetchData();
 		},
 	},
+
+    computed: {
+        incompleteTasks() {
+            return this.tasks.filter(task => task.progress < 100);
+        }
+    },
 
 	methods: {
 		socialLogin() {
