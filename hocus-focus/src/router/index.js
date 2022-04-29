@@ -52,7 +52,7 @@ router.beforeEach((to, _, next) => {
         registerUser(auth.currentUser);
         next();
     } else if (requiresAuth && !auth.currentUser) {
-        next("/home");
+        next("/");
     } else {
         next();
     }

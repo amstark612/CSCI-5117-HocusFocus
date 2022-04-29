@@ -105,20 +105,22 @@ export default {
 				});
 		},
 		fetchData() {
-			this.firestoreRef.get().then((res) => {
-				this.tasks = [];
-				res.forEach((doc) => {
-					// this is hacky but doc.data() never includes the id - if someone else knows how to get around this lmk!
-					this.tasks.push({
-						id: doc.id,
-						createdAt: doc.data().createdAt,
-						userId: doc.data().userId,
-						title: doc.data().title,
-						tags: doc.data().tags,
-						progress: doc.data().progress,
+            if (this.firestoreRef) {
+				this.firestoreRef.get().then((res) => {
+					this.tasks = [];
+					res.forEach((doc) => {
+						// this is hacky but doc.data() never includes the id - if someone else knows how to get around this lmk!
+						this.tasks.push({
+							id: doc.id,
+							createdAt: doc.data().createdAt,
+							userId: doc.data().userId,
+							title: doc.data().title,
+							tags: doc.data().tags,
+							progress: doc.data().progress,
+						});
 					});
 				});
-			});
+            }
 		},
 		deleteTask(taskId) {
 			this.firestoreRef

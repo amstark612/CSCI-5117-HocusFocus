@@ -12,7 +12,7 @@
 			</div>
 
 			<TimerProgressBar
-                ref="timer"
+                ref="radialTimer"
 				:running="timer.running"
 				:duration="timer.intervalDuration"
 				:currentIntervalType="currentIntervalType"
@@ -128,6 +128,7 @@ export default {
 
 			if (this.currentIntervalType === "pomodoro") {
 				this.totalFocusTime += timeElapsed;
+
                 if (auth.currentUser) {
                     this.firestoreRef.update({
                         focusTime: fieldValueUtility.increment(timeElapsed),
@@ -141,14 +142,13 @@ export default {
 			this.intervalCount += 1;
 
 			this.timer.intervalDuration = null;
-            console.log(this.timer.settings.autobreak);
 			if (this.timer.settings.autobreak) {
 				this.runInterval();
 			}
 		},
 
 		resume() {
-			if (!this.timer.intervalDuration) {
+			if (this.$refs.radialTimer.intervalObject == null) {
 				this.runInterval();
 			} else {
 				this.timer.running = true;
@@ -157,7 +157,7 @@ export default {
 
         // CTN_TODO this is just wrong; user can hack their focus time by skipping through tons of intervals
 		skipInterval() {
-			this.timeUp(this.timer.settings[this.currentIntervalType]);
+			this.timeUp(this.timer.intervalDuration - this.$refs.radialTimer.timeLeft);
 		},
 
 		runInterval() {
