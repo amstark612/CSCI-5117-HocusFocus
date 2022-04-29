@@ -139,9 +139,10 @@ export default {
 				this.cyclePomodoroCount++;
 			}
 
-			this.intervalCount += 1;
+			this.intervalCount++;
 
-			this.timer.intervalDuration = null;
+			// queue up next mode
+			this.timer.intervalDuration = this.timer.settings[this.currentIntervalType];
 			if (this.timer.settings.autobreak) {
 				this.runInterval();
 			}
@@ -155,13 +156,13 @@ export default {
 			}
 		},
 
-        // CTN_TODO this is just wrong; user can hack their focus time by skipping through tons of intervals
 		skipInterval() {
-			this.timeUp(this.timer.intervalDuration - this.$refs.radialTimer.timeLeft);
+			this.timeUp(this.intervalDuration - this.$refs.radialTimer.timeLeft);
 		},
 
 		runInterval() {
 			this.timer.intervalDuration = this.timer.settings[this.currentIntervalType];
+			console.log('from runInterval', this.currentIntervalType);
 			this.timer.running = true;
 		},
 

@@ -72,6 +72,8 @@ export default {
 			// if user has autobreak set to false, don't start until they press start
 			if (this.running && this.duration) {
 				this.runInterval();
+			} else {
+				this.timeLeft = this.duration;
 			}
 		},
 	},
