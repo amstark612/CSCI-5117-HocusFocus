@@ -134,8 +134,6 @@ export default {
 		updateTask(taskId, property) {
 			if (property.progress) {
                 this.$emit("trackTask", taskId);
-			} else if (property.tags) {
-				console.log("stub for parsing tags...");
 			}
 
 			this.firestoreRef

@@ -80,14 +80,17 @@ export default {
 
 	methods: {
 		updateTags() {
-            // replace hashes and spaces with commas, then split by commas
-            console.log(this.tags);
-            this.tags = this.tags.replace('#', ',')
-                                .replace(' ', ',')
-                                .split(',');
-            console.log(this.tags);
-			// this.$emit('tags', this.task.id, { tags: this.tags });
-			// this.editTags = false;
+            // replace hashes and spaces with commas, 
+            // then split by commas,
+            // then remove empty strings
+            let strip = /[# ]+/g;
+            let cleansed = this.tags
+                            .replace(strip, ',')
+                            .split(',')
+                            .filter(tag => tag);
+
+			this.$emit('tags', this.task.id, { tags: cleansed });
+			this.editTags = false;
 		},
 	},
 };

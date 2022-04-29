@@ -2,16 +2,12 @@
 	<div class="w-full">
 		<div class="flex mb-2 items-center justify-between">
 			<div>
-				<span
-					v-if="percentage < 100" class="status">
-					In progress
-				</span>
-				<span v-else class="status">
-					Completed
+				<span class="status" :class="statusClass">
+					{{ status }}
 				</span>
 			</div>
 			<div class="text-right">
-				<span class="text-xs inline-block">
+				<span class="text-xs">
 					{{ percentage }}%
 				</span>
 			</div>
@@ -35,6 +31,14 @@ export default {
 		percentage: Number,
 	},
 	emits: ['progress'],
+    computed: {
+        status() {
+            return this.percentage == 100 ? 'Complete' : 'In progress';
+        },
+        statusClass() {
+            return this.percentage == 100 ? 'complete' : 'incomplete';
+        },
+    },
 };
 </script>
 
@@ -43,5 +47,15 @@ export default {
 	@apply text-xs;
 	@apply inline-block;
 	@apply uppercase;
+    @apply rounded-lg;
+    @apply p-1;
+}
+
+.incomplete {
+    @apply bg-pastel-yellow-200;
+}
+
+.complete {
+    @apply bg-pastel-green-100;
 }
 </style>
