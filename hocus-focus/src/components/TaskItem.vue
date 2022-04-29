@@ -93,7 +93,6 @@ export default {
 	@apply border-pastel-yellow-500;
 	@apply text-pastel-yellow-500;
 	background-color: #fef6eb;
-	/* @apply bg-pastel-yellow-100; */
 }
 
 .task-item .muted {

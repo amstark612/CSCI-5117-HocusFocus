@@ -63,9 +63,6 @@
 				/>
 			</div>
 		</div>
-
-		<!-- CTN_TODO need to update some key here and then emit to parent to refresh -->
-		<!-- <TimerSettings :show="showSettings" @close="updateSettings" /> -->
 	</div>
 </template>
 

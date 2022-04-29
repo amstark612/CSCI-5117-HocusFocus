@@ -182,24 +182,4 @@ export default {
 	@apply bg-pastel-green-100;
 	@apply text-pastel-green-500;
 }
-
-.clock {
-	@apply flex;
-	@apply justify-center;
-	@apply items-center;
-
-	@apply bg-gradient-to-b;
-	@apply from-pastel-yellow-200;
-	@apply to-pastel-yellow-300;
-	@apply border-4;
-	@apply border-pastel-yellow-500;
-
-	@apply drop-shadow-lg;
-
-	@apply rounded-full;
-	@apply w-36;
-	@apply h-36;
-
-	@apply text-4xl;
-}
 </style>
