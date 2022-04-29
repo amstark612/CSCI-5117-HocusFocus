@@ -60,6 +60,8 @@ export default {
 			},
 		};
 	},
+	emits: ["sessionComplete"],
+
 	components: {
 		TimerControls,
 		TimerProgressBar,
@@ -86,7 +88,7 @@ export default {
 				this.cyclePomodoroCount = 0;
 			}
 			if (this.cycleCount == this.goalCycles) {
-                this.$emit("cycleComplete", this.totalFocusTime);
+                this.$emit("sessionComplete", this.totalFocusTime);
 			}
 		},
 	},
