@@ -1,7 +1,7 @@
 <template>
 	<div class="home">
-		<TimerManager />
-		<TaskList />
+		<TimerManager @cycleComplete="cycleComplete" />
+		<TaskList @trackTask="trackTask" />
 		<TimerSettingModal />
 	</div>
 </template>
@@ -13,12 +13,28 @@ import TimerSettingModal from '../components/TimerSettingModal.vue';
 
 export default {
 	name: "HomeView",
+    data() {
+        return {
+            focusTime: null,
+            taskIds: [],
+        }
+    },
 	components: {
 		TaskList,
 		TimerManager,
 		TimerSettingModal,
 	},
 
-	// CTN_TODO this will manage the session and give the correct data to summary
+    methods: {
+        trackTask(taskId) {
+            // this will push duplicate values
+            // but is filtered before sending to summary modal
+            this.taskIds.push(taskId);
+        },
+        cycleComplete(focusTime) {
+            this.focusTime = focusTime;
+            this.taskIds = [...(new Set(this.taskIds))];
+        },
+    },
 };
 </script>

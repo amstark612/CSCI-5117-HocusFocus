@@ -86,7 +86,7 @@ export default {
 				this.cyclePomodoroCount = 0;
 			}
 			if (this.cycleCount == this.goalCycles) {
-				console.log("emit to parent and show summary!");
+                this.$emit("cycleComplete", this.totalFocusTime);
 			}
 		},
 	},
@@ -130,8 +130,6 @@ export default {
 				this.totalFocusTime += timeElapsed;
                 this.firestoreRef.update({
                     focusTime: fieldValueUtility.increment(timeElapsed),
-                }).then(() => {
-                    console.log('updated...?');
                 });
 
 				this.pomodoroCount++;

@@ -1,7 +1,7 @@
 <template>
 	<div id="task-list" class="mt-6">
 		<header class="flex justify-center gap-x-1">
-			<AddTask @added="tasksKey += 1" />
+			<AddTask @added="fetchData" />
 			<div><h1>tasks</h1></div>
 		</header>
 
@@ -60,10 +60,10 @@ export default {
 		return {
 			firestoreRef: null,
 			tasks: [],
-			tasksKey: 0,
 			user: null,
 		};
 	},
+    emits: ["trackTask"],
 	components: {
 		AddTask,
 		BaseIcon,
@@ -123,15 +123,12 @@ export default {
 				.delete()
 				.then(() => {
 					console.log("succesfully deleted task!");
-					this.tasksKey += 1;
+					this.fetchData();
 				});
 		},
 		updateTask(taskId, property) {
-			console.log(property);
 			if (property.progress) {
-				console.log(
-					"emit task id to parent or something so we can track number of tasks worked on"
-				);
+                this.$emit("trackTask", taskId);
 			} else if (property.tags) {
 				console.log("stub for parsing tags...");
 			}
@@ -139,10 +136,7 @@ export default {
 			this.firestoreRef
 				.doc(taskId)
 				.update(property)
-				.then(() => {
-					console.log("successfuly updated task", property);
-					this.tasksKey += 1;
-				});
+				.then(() => this.fetchData());
 		},
 
 		registerAccount() {
