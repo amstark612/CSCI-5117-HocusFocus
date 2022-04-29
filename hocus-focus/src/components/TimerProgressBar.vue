@@ -11,14 +11,12 @@
 		dash="strict 60 0.8"
 		lineMode="in -4"
 		:legend="false"
-		class="font-medium stroke-current text-gray-200 dark:text-gray-600 text-center mx-auto"
+		class="font-medium stroke-current text-center mx-auto"
 	>
 		<template v-slot:legend-caption>
-			<!-- Formatted time display: e.g. 25:00 -->
 			<p class="dark:text-gray-100 text-gray-800 text-2l font-extrabold">
 				{{ minutes }} : {{ seconds }}
 			</p>
-			<!-- Current pomodoro mode text: Focusing/Resting -->
 			<p class="dial-label">
 				{{ timerText }}
 			</p>
@@ -27,7 +25,6 @@
 </template>
 
 <script>
-// import Interval from "../helpers/interval";
 import { radialTimer } from "@/constants";
 import { time } from "@/constants";
 

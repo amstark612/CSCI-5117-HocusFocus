@@ -139,6 +139,7 @@ export default {
 			this.intervalCount += 1;
 
 			this.timer.intervalDuration = null;
+            console.log(this.timer.settings.autobreak);
 			if (this.timer.settings.autobreak) {
 				this.runInterval();
 			}

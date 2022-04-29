@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<TimerManager @cycleComplete="cycleComplete" />
+		<TimerManager ref="timer" @cycleComplete="cycleComplete" />
 		<TaskList @trackTask="trackTask" />
 		<TimerSettingModal />
 	</div>
@@ -30,7 +30,11 @@ export default {
         trackTask(taskId) {
             // this will push duplicate values
             // but is filtered before sending to summary modal
-            this.taskIds.push(taskId);
+            let mode = this.$refs.timer.currentIntervalType;
+            let inProgress = this.$refs.timer.timer.running;
+            if (mode === "pomodoro" && inProgress) {
+                this.taskIds.push(taskId);
+            }
         },
         cycleComplete(focusTime) {
             this.focusTime = focusTime;
