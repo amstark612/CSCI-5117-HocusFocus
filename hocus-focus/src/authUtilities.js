@@ -23,7 +23,7 @@ async function setDefaultTask(user) {
         .set({
             createdAt: fieldValueUtility.serverTimestamp(),
             progress: 0,
-            tags: ["tapToAddTags"],
+            tags: [],
             title: "Tap to edit title",
         })
         .then(() => {

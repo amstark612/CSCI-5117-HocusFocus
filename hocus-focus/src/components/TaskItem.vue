@@ -11,7 +11,11 @@
 
 			<div class="line-clamp muted">
 				<small v-if="!editTags" class="clickable" @click="editTags = true">
-					<span v-for="tag in task.tags" :key="tag"> #{{ tag }} </span>
+                    <div v-if="task.tags.length">
+                        <span v-for="tag in task.tags" :key="tag"> #{{ tag }} </span>
+                    </div>
+
+                    <span v-else>#tapToAddTags</span>
 				</small>
 
 				<input
@@ -76,8 +80,14 @@ export default {
 
 	methods: {
 		updateTags() {
-			this.$emit('tags', this.task.id, { tags: this.tags });
-			this.editTags = false;
+            // replace hashes and spaces with commas, then split by commas
+            console.log(this.tags);
+            this.tags = this.tags.replace('#', ',')
+                                .replace(' ', ',')
+                                .split(',');
+            console.log(this.tags);
+			// this.$emit('tags', this.task.id, { tags: this.tags });
+			// this.editTags = false;
 		},
 	},
 };
