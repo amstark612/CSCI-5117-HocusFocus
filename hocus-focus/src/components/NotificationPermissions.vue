@@ -89,8 +89,10 @@ export default {
         BaseModal,
     },
     mounted() {
+        console.log(this.granted);
         if ('Notification' in window) {
             this.granted = Notification.permission === 'granted';
+            console.log(Notification.permission);
         } else {
             this.hasNotifications = false;
         }

@@ -128,9 +128,11 @@ export default {
 
 			if (this.currentIntervalType === "pomodoro") {
 				this.totalFocusTime += timeElapsed;
-                this.firestoreRef.update({
-                    focusTime: fieldValueUtility.increment(timeElapsed),
-                });
+                if (auth.currentUser) {
+                    this.firestoreRef.update({
+                        focusTime: fieldValueUtility.increment(timeElapsed),
+                    });
+                }
 
 				this.pomodoroCount++;
 				this.cyclePomodoroCount++;

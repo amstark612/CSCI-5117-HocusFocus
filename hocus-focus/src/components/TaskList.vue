@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import { auth, db, provider, fieldValueUtility } from "@/main";
-import { pomodoro } from "@/constants";
+import { auth, db, provider } from "@/main";
+import { registerUser } from "@/authUtilities";
 import AddTask from "@/components/AddTask.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import TaskItem from "@/components/TaskItem.vue";
@@ -84,9 +84,6 @@ export default {
 				this.fetchData();
 			}
 		},
-		tasksKey() {
-			if (this.user) this.fetchData();
-		},
 	},
 
     computed: {
@@ -101,7 +98,7 @@ export default {
 				.signInWithPopup(provider)
 				.then(() => {
 					this.registerAccount();
-					this.$router.push("/");
+                    this.fetchData();
 				})
 				.catch((err) => {
 					alert("Oops. " + err.message);
@@ -147,63 +144,8 @@ export default {
 
 		registerAccount() {
 			if (auth.currentUser) {
-				const user = auth.currentUser;
-				const uid = user.uid;
-
-				db.collection("users")
-					.doc(uid)
-					.get()
-					.then((doc) => {
-						if (!doc.exists) {
-							// create user document
-							db.collection("users")
-								.doc(uid)
-								.set({
-									displayName: user.displayName,
-									email: user.email,
-									focusTime: 0,
-									joinDate: fieldValueUtility.serverTimestamp(),
-									photoUrl: user.photoURL,
-								})
-								.then(() => {
-									console.log("Document successfully written!");
-								})
-								.catch((error) => {
-									console.error("Error writing document: ", error);
-								});
-
-							// set default timer settings
-							db.collection("users")
-								.doc(uid)
-								.collection("timer_settings")
-								.doc("0")
-								.set(pomodoro.DEFAULT_SETTINGS)
-								.then(() => {
-									console.log("Document successfully written!");
-								})
-								.catch((error) => {
-									console.error("Error writing document: ", error);
-								});
-
-							// set default task!
-							db.collection("users")
-								.doc(auth.currentUser.uid)
-								.collection("tasks")
-								.doc("0")
-								.set({
-									createdAt: fieldValueUtility.serverTimestamp(),
-									progress: 0,
-									tags: ["ACT", "math"],
-									title: "need to study for the ACT!",
-								})
-								.then(() => {
-									console.log("Document successfully written!");
-								})
-								.catch((error) => {
-									console.error("Error writing document: ", error);
-								});
-						}
-					});
+                registerUser(auth.currentUser);
+                this.fetchData();
 			}
 		},
 	},

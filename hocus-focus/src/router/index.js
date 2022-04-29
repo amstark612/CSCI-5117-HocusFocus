@@ -3,9 +3,11 @@ import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import TaskView from "../views/TaskView.vue";
 import RankingView from "../views/RankingView.vue";
-import { auth } from "@/main";
 import ToggleButton from "vue-js-toggle-button";
 import "tw-elements";
+import { auth } from "@/main";
+import { registerUser } from "@/authUtilities";
+
 Vue.use(ToggleButton);
 Vue.use(VueRouter);
 
@@ -21,9 +23,6 @@ const routes = [
 	{
 		path: "/tasks",
 		name: "tasks",
-		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
 		component: TaskView,
 		meta: {
 			requiresAuth: true,
@@ -46,12 +45,17 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, _, next) => {
-	const currentUser = auth.currentUser;
 	const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 
-	// if (requiresAuth && !currentUser) next("/");
-	if (requiresAuth && !currentUser) next("/home");
-	else next();
+    // ensure user is registered in our db as well as logged into google
+    if (auth.currentUser) {
+        registerUser(auth.currentUser);
+        next();
+    } else if (requiresAuth && !auth.currentUser) {
+        next("/home");
+    } else {
+        next();
+    }
 });
 
 export default router;
