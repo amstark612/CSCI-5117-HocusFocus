@@ -3,7 +3,6 @@
 		<TimerManager 
 			ref="timer" 
 			v-if="!showSummaryPrompt"
-            :key="settingsKey"
 			@sessionComplete="sessionComplete" 
 		/>
 
@@ -75,6 +74,7 @@ export default {
         sessionComplete(focusTime) {
             this.focusTime = focusTime;
             this.taskIds = [...(new Set(this.taskIds))];
+            this.showSummaryPrompt = true;
         },
     },
 };
