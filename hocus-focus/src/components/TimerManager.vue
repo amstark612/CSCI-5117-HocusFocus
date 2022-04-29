@@ -75,7 +75,7 @@ export default {
 			}
 		},
 		cycleCount() {
-			return this.pomodoroCount / 4;
+			return this.pomodoroCount / this.timer.settings.delay;
 		},
 	},
 
