@@ -1,18 +1,22 @@
 <template>
 	<div id="task-list" class="mt-6">
 		<header class="flex justify-center gap-x-1">
-			<AddTask @added="fetchData" />
+			<AddTask v-if="user" @added="fetchData" />
 			<div><h1>tasks</h1></div>
 		</header>
 
+		<div v-if="!user" class="text-center m-4">
+			<router-link to="/login" class="text-pastel-yellow-400">log in</router-link>
+			to add a task!
+		</div>
 
-		<div v-if="user">
+		<div v-else>
 			<div id="tag-list">
 				<div class="tag" v-for="tag in uniqueTags" :key="tag">
                     <span class="tag-link clickable" v-on:click="currentTag = tag">{{tag}}</span>
 				</div>
 			</div>
-			<span class="clear-tag clickable" v-on:click="currentTag = null"> clear filter </span>
+			<span class="clear-tag clickable" v-on:click="currentTag = null">clear filter</span>
             <div v-if="currentTag === null">
                 <TaskItem
                     v-for="task in filteredTasks"
