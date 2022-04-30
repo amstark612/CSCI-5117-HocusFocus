@@ -9,18 +9,32 @@
 		<div v-if="user">
 			<div id="tag-list">
 				<div id="tag" v-for="tag in uniqueTags" :key="tag">
-                    <router-link :key="tag" class="tag-link" :to="{name: 'TagedTasks', params:{tag: tag}}">{{ tag }}</router-link>
+                    <span class="tag-link clickable" v-on:click="currentTag = tag"> {{tag}} </span>
 				</div>
 			</div>
-			<TaskItem
-				v-for="task in filteredTasks"
-				:key="task.id"
-				:task="task"
-				@delete="deleteTask"
-				@title="updateTask"
-				@tags="updateTask"
-				@progress="updateTask"
-			/>
+			<span class="clear-tag clickable" v-on:click="currentTag = null"> clear filter </span>
+            <div v-if="currentTag === null">
+                <TaskItem
+                    v-for="task in filteredTasks"
+                    :key="task.id"
+                    :task="task"
+                    @delete="deleteTask"
+                    @title="updateTask"
+                    @tags="updateTask"
+                    @progress="updateTask"
+                />
+            </div>
+            <div v-if="currentTag !== null">
+                <TaskItem
+                    v-for="task in tagedTasks"
+                    :key="task.id"
+                    :task="task"
+                    @delete="deleteTask"
+                    @title="updateTask"
+                    @tags="updateTask"
+                    @progress="updateTask"
+                />
+            </div>
 		</div>
 	</div>
 </template>
@@ -38,6 +52,7 @@ export default {
 			firestoreRef: null,
 			tasks: [],
 			user: null,
+            currentTag: null,
 		};
 	},
     emits: ["trackTask"],
@@ -72,6 +87,12 @@ export default {
             let tags = [];
             this.tasks.forEach(task => tags.push(task.tags));
             return [...new Set(tags.flat())];
+        },
+        tagedTasks() {
+			// return this.$route.name === "home"
+            //     ? this.tasks.filter(task => task.progress < 100 && task.tags.includes(this.currentTag))
+            //     : this.tasks;
+            return this.tasks.filter(task => task.progress <= 100 && task.tags.includes(this.currentTag));
         }
     },
 
@@ -137,10 +158,8 @@ export default {
 
 <style scoped>
 #tag {
-    text-align: start;
+    text-align: center;
     border-radius: 50px;
-    border-color: #f4d4d8;
-    background-color: #f4d4d8;
     padding-left: 1%;
     padding-right: 1%;
     margin-right: 2%;
@@ -152,5 +171,16 @@ export default {
 
 #tag-list {
 	display: inline;
+}
+
+.clear-tag {
+	text-align: center;
+    border-radius: 50px;
+    padding-left: 1%;
+    padding-right: 1%;
+    /* margin-left: 55%; */
+    display: inline;
+	@apply bg-pastel-green-100;
+	@apply text-pastel-orange-300;
 }
 </style>
