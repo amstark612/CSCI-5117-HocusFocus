@@ -4,7 +4,6 @@ import HomeView from "../views/HomeView.vue";
 import TaskView from "../views/TaskView.vue";
 import RankingView from "../views/RankingView.vue";
 import ToggleButton from "vue-js-toggle-button";
-import "tw-elements";
 import { auth } from "@/main";
 import { registerUser } from "@/authUtilities";
 

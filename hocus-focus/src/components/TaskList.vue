@@ -5,12 +5,25 @@
 			<div><h1>tasks</h1></div>
 		</header>
 
+		<div v-if="user && tasks.length == 0" class="flex flex-col items-center justify-center text-center m-4">
+			<BaseIcon 
+				:properties="{
+					height: 'h-9',
+					width: 'w-9',
+					strokeWidth: '1.5',
+					clickable: false,
+				}"
+				:dArray="['M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2']"
+			/>
+			<div class="m-2">no tasks on deck!</div>
+		</div>
+
 		<div v-if="!user" class="text-center m-4">
 			<span class="text-pastel-yellow-400 clickable" @click="socialLogin">log in</span>
 			to add a task!
 		</div>
 
-		<div v-else>
+		<div v-if="user && tasks.length">
 			<div id="tag-list">
 				<div class="tag" v-for="tag in uniqueTags" :key="tag">
                     <span class="tag-link clickable" v-on:click="currentTag = tag">{{tag}}</span>
@@ -47,6 +60,7 @@
 import { auth, db, provider } from "@/main";
 import { registerUser } from "@/authUtilities";
 import AddTask from "@/components/AddTask.vue";
+import BaseIcon from "@/components/BaseIcon.vue";
 import TaskItem from "@/components/TaskItem.vue";
 
 export default {
@@ -62,6 +76,7 @@ export default {
     emits: ["trackTask"],
 	components: {
 		AddTask,
+        BaseIcon,
 		TaskItem,
 	},
 
