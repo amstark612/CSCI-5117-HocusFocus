@@ -63,37 +63,27 @@
 								</div>
 
 								<div class="flex flex-col justify-center flex-none w-8">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-4 w-4"
-										fill="none"
-										viewBox="0 0 22 22"
-										stroke="currentColor"
-										stroke-width="2"
-										@click="incrementSettings(setting.field)"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											d="M5 15l7-7 7 7"
-										/>
-									</svg>
+									<BaseIcon
+										@clicked="incrementSettings(setting.field)"
+										:properties="{
+											height: 'h-8',
+											width: 'w-8',
+											strokeWidth: '1.5',
+											classes: ['stroke-pastel-green-500'],
+										}"
+										:dArray="['M5 15l7-7 7 7']"
+									/>
 
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-4 w-4"
-										fill="none"
-										viewBox="0 0 22 22"
-										stroke="currentColor"
-										stroke-width="2"
-										@click="decrementSettings(setting.field)"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											d="M19 9l-7 7-7-7"
-										/>
-									</svg>
+									<BaseIcon
+										@clicked="decrementSettings(setting.field)"
+										:properties="{
+											height: 'h-8',
+											width: 'w-8',
+											strokeWidth: '1.5',
+											classes: ['stroke-pastel-green-500'],
+										}"
+										:dArray="['M19 9l-7 7-7-7']"
+									/>
 								</div>
 							</div>
 						</div>
@@ -119,41 +109,41 @@
 
 		<template v-slot:footer>
 			<div class="flex justify-around text-xsm sm:text-base">
-				<button @click="resetPreferences" class="flex items-center gap-2">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-6 w-6 stroke-pastel-green-500 clickable"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						stroke-width="2"
-						title="Reset to default settings!"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-						/>
-					</svg>
+				<button
+					@click="resetPreferences"
+					class="flex items-center gap-2"
+					title="Reset to default settings!"
+				>
+					<BaseIcon
+						:properties="{
+							height: 'h-8',
+							width: 'w-8',
+							strokeWidth: '1.5',
+							classes: ['stroke-pastel-green-500'],
+						}"
+						:dArray="[
+							'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
+						]"
+					/>
 					<div class="hidden sm:block">reset to default</div>
 				</button>
 
-				<button @click="save" class="flex items-center gap-2">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-6 w-6 stroke-pastel-green-500 clickable"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						stroke-width="2"
-						title="Save customized preferences!"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
-						/>
-					</svg>
+				<button
+					@click="save"
+					class="flex items-center gap-2"
+					title="Save customized preferences!"
+				>
+					<BaseIcon
+						:properties="{
+							height: 'h-8',
+							width: 'w-8',
+							strokeWidth: '1.5',
+							classes: ['stroke-pastel-green-500'],
+						}"
+						:dArray="[
+							'M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4',
+						]"
+					/>
 					<div class="hidden sm:block">save</div>
 				</button>
 			</div>
@@ -165,6 +155,7 @@
 import { auth, db } from "@/main";
 import { pomodoro, settingsLabel, time } from "@/constants";
 import BaseModal from "@/components/BaseModal.vue";
+import BaseIcon from "@/components/BaseIcon.vue";
 
 export default {
 	name: "TimerSettings",
@@ -181,6 +172,7 @@ export default {
 	},
 	components: {
 		BaseModal,
+		BaseIcon,
 	},
 
 	computed: {
@@ -208,10 +200,12 @@ export default {
 			}
 		},
 		decrementSettings(field) {
-			if (pomodoro.TIME_FIELDS.includes(field)) {
-				this.settings[field] -= time.MS_PER_MIN;
-			} else {
-				this.settings[field]--;
+			if (this.settings[field] > 0) {
+				if (pomodoro.TIME_FIELDS.includes(field)) {
+					this.settings[field] -= time.MS_PER_MIN;
+				} else {
+					this.settings[field]--;
+				}
 			}
 		},
 		resetPreferences() {
