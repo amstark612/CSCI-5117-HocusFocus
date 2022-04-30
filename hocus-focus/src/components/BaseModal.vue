@@ -50,6 +50,7 @@ export default {
     @apply overflow-x-hidden;
     @apply overflow-y-hidden;
     @apply z-30;
+    @apply w-full;
 }
 
 .backdrop {

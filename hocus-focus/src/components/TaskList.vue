@@ -8,7 +8,7 @@
 
 		<div v-if="user">
 			<div id="tag-list">
-				<div id="tag" v-for="tag in uniqueTags" :key="tag">
+				<div class="tag" v-for="tag in uniqueTags" :key="tag">
                     <router-link :key="tag" class="tag-link" :to="{name: 'TagedTasks', params:{tag: tag}}">{{ tag }}</router-link>
 				</div>
 			</div>
@@ -70,7 +70,7 @@ export default {
         },
         uniqueTags() {
             let tags = [];
-            this.tasks.forEach(task => tags.push(task.tags));
+            this.filteredTasks.forEach(task => tags.push(task.tags));
             return [...new Set(tags.flat())];
         }
     },
@@ -136,21 +136,19 @@ export default {
 </script>
 
 <style scoped>
-#tag {
-    text-align: start;
+.tag {
     border-radius: 50px;
-    border-color: #f4d4d8;
-    background-color: #f4d4d8;
-    padding-left: 1%;
-    padding-right: 1%;
-    margin-right: 2%;
-    display: inline;
-	
 	@apply bg-pastel-yellow-200;
 	@apply text-pastel-blue-500;
+    @apply inline;
+    @apply px-2;
 }
 
 #tag-list {
-	display: inline;
+    @apply flex;
+    @apply flex-wrap;
+    @apply justify-center;
+    @apply my-2;
+    @apply gap-2;
 }
 </style>

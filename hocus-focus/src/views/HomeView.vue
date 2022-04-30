@@ -3,7 +3,8 @@
 		<TimerManager 
 			ref="timer" 
 			v-if="!showSummaryPrompt"
-			@sessionComplete="sessionComplete" 
+			@sessionComplete="sessionComplete"
+            @showSettings="showSettings = true"
 		/>
 
 		<div v-else class="card prompt">
@@ -34,7 +35,11 @@
 		</div>
 
 		<TaskList @trackTask="trackTask" />
-		<TimerSettingModal @updated="settingsKey++" />
+
+		<TimerSettingModal 
+            :show="showSettings" 
+            @close="updateTimer" 
+        />
 	</div>
 </template>
 
@@ -49,6 +54,7 @@ export default {
     data() {
         return {
             focusTime: null,
+            showSettings: false,
 			showSummaryPrompt: false,
             showSummary: false,
             taskIds: [],
@@ -76,6 +82,10 @@ export default {
             this.taskIds = [...(new Set(this.taskIds))];
             this.showSummaryPrompt = true;
         },
+        updateTimer() {
+            this.showSettings = false;
+            this.$refs.timer.fetchSettings();
+        }
     },
 };
 </script>

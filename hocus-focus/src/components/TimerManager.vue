@@ -25,7 +25,7 @@
 				@resume="resume"
 				@runInterval="runInterval"
 				@skipInterval="skipInterval"
-				@updateSettings="fetchSettings"
+                @showSettings="$emit('showSettings')"
 			/>
 		</div>
 	</div>
@@ -60,7 +60,7 @@ export default {
 			},
 		};
 	},
-	emits: ["sessionComplete"],
+	emits: ["sessionComplete", "showSettings"],
 
 	components: {
 		TimerControls,
@@ -82,7 +82,9 @@ export default {
 	},
 
 	watch: {
-		// CTN_TODO this needs testing
+        timer() { // testing purposes
+            console.log(this.timer.settings);
+        },
 		cycleCount() {
 			if (this.cycleCount % this.goalCycles == 0) {
 				this.cyclePomodoroCount = 0;
@@ -164,7 +166,7 @@ export default {
 		skipInterval() {
 			clearInterval(this.$refs.radialTimer.intervalObject);
 			this.$refs.radialTimer.intervalObject = null;
-			this.timeUp(this.intervalDuration - this.$refs.radialTimer.timeLeft);
+			this.timeUp(this.timer.intervalDuration - this.$refs.radialTimer.timeLeft);
 		},
 
 		// only used for starting a fresh interval

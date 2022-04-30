@@ -23,15 +23,15 @@ export const pomodoro = {
 
 export const settingsLabel = [
 	{
-		label: "pomodoro duration",
+		label: "pomodoro (min)",
 		field: "pomodoro",
 	},
 	{
-		label: "short break duration",
+		label: "short break (min)",
 		field: "short",
 	},
 	{
-		label: "long break duration",
+		label: "long break (min)",
 		field: "long",
 	},
 	{

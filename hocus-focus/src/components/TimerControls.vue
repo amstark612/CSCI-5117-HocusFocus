@@ -1,12 +1,7 @@
 <template>
 	<div>
 		<div class="flex justify-center gap-x-4">
-			<div
-				title="timer-setting"
-				class="control"
-				data-bs-toggle="modal"
-				data-bs-target="#timerSettingsModal"
-			>
+			<div title="Change pomodoro settings" @click="$emit('showSettings')">
 				<BaseIcon
 					:properties="{
 						height: 'h-8',
@@ -71,24 +66,12 @@ import BaseIcon from "@/components/BaseIcon.vue";
 
 export default {
 	name: "TimerControls",
-	data() {
-		return {
-			showSettings: false,
-		};
-	},
 	props: {
 		running: Boolean,
 	},
-	emits: ["updateSettings", "pause", "resume", "runInterval", "skipInterval"],
+	emits: ["pause", "resume", "runInterval", "showSettings", "skipInterval"],
 	components: {
 		BaseIcon,
-	},
-
-	methods: {
-		updateSettings() {
-			this.showSettings = false;
-			this.$emit("updateSettings");
-		},
 	},
 };
 </script>
