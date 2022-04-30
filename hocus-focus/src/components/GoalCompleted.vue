@@ -6,7 +6,7 @@
 					'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z',
 				]"
 			/>
-			<h1 class="text-xl sm:text-3xl">Mission accomplished!</h1>
+			<h1 class="text-xl sm:text-3xl">mission accomplished!</h1>
 			<BaseIcon
 				:dArray="[
 					'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z',
@@ -15,11 +15,13 @@
 		</div>
 
 		<div class="sm:px-16">
-			Update your progress on any tasks and click below when you're ready to
+			update your progress on any tasks and click below when you're ready to
 			view your session summary!
 		</div>
-
-		<div @click="openGoalSummary">
+		<button
+			@click="openGoalSummary"
+			class="flex items-center gap-2 rounded-full"
+		>
 			<BaseIcon
 				:properties="{
 					height: 'h-8',
@@ -29,8 +31,8 @@
 				}"
 				:dArray="['M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z']"
 			/>
-			Ready!
-		</div>
+			ready!
+		</button>
 	</div>
 </template>
 
