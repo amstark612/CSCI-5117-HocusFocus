@@ -20,9 +20,7 @@
 					</span>
 				</div>
 				<div class="line-clamp">
-					<span class="clickable">
-						{{ this.email }}
-					</span>
+					<span class="clickable"> {{ this.joinDate }} </span>
 				</div>
 			</div>
 			<div class="text-center">
@@ -40,10 +38,11 @@ export default {
 	data() {
 		return {
 			displayName: null,
-			email: null,
+			joinDate: null,
 			profilePicture: null,
 			focusTime: null,
 			focusTimeString: null,
+			date: null,
 		};
 	},
 	props: {
@@ -53,10 +52,10 @@ export default {
 
 	mounted() {
 		this.displayName = this.ranking.displayName;
-		this.email = this.ranking.email;
 		this.profilePicture = this.ranking.photoUrl;
 		this.focusTime = this.ranking.focusTime;
 		this.getFocusTimeString();
+		this.getJoinDate();
 	},
 	methods: {
 		getFocusTimeString() {
@@ -69,6 +68,9 @@ export default {
 			} else {
 				this.focusTimeString = `${hours}:${minutes}`;
 			}
+		},
+		getJoinDate() {
+			this.joinDate = this.ranking.joinDate.toDate().toDateString();
 		},
 	},
 };
