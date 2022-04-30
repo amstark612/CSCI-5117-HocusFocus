@@ -1,16 +1,16 @@
 <template>
   <div class="tasks">
-	<AllTasks />
+	<TaskList />
   </div>
 </template>
 
 <script>
-import AllTasks from '../components/AllTasks.vue';
+import TaskList from '../components/TaskList.vue';
 
 export default {
 	name: "TaskView",
 	components: {
-		AllTasks,
+		TaskList,
 	},
 };
 </script>

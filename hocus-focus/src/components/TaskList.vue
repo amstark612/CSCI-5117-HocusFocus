@@ -13,7 +13,7 @@
 				</div>
 			</div>
 			<TaskItem
-				v-for="task in incompleteTasks"
+				v-for="task in filteredTasks"
 				:key="task.id"
 				:task="task"
 				@delete="deleteTask"
@@ -63,8 +63,10 @@ export default {
 	},
 
     computed: {
-        incompleteTasks() {
-            return this.tasks.filter(task => task.progress < 100);
+        filteredTasks() {
+            return this.$route.name === "home"
+                ? this.tasks.filter(task => task.progress < 100)
+                : this.tasks;
         },
         uniqueTags() {
             let tags = [];
