@@ -5,6 +5,7 @@
 			v-if="!showGoalCompletedStatus"
 			@sessionComplete="sessionComplete"
 			@showSettings="showSettings = true"
+			@showInfo="showInfo = true"
 		/>
 
 		<GoalCompleted
@@ -22,6 +23,7 @@
 		<TaskList @trackTask="trackTask" />
 
 		<TimerSettingModal :show="showSettings" @close="updateTimer" />
+		<BaseInfo :show="showInfo" @close="closeInfoModal" />
 	</div>
 </template>
 
@@ -30,6 +32,7 @@ import TaskList from "@/components/TaskList.vue";
 import TimerManager from "@/components/TimerManager.vue";
 import TimerSettingModal from "@/components/TimerSettingModal.vue";
 import GoalCompleted from "@/components/GoalCompleted.vue";
+import BaseInfo from "@/components/BaseInfo.vue";
 import GoalSummaryModal from "@/components/GoalSummaryModal.vue";
 import { auth, db } from "@/main";
 
@@ -39,6 +42,7 @@ export default {
 		return {
 			focusTime: null,
 			showSettings: false,
+			showInfo: false,
 			showGoalCompletedStatus: false,
 			showSummary: false,
 			taskIds: [],
@@ -53,6 +57,7 @@ export default {
 		TimerSettingModal,
 		GoalCompleted,
 		GoalSummaryModal,
+		BaseInfo,
 	},
 
 	firestore: function () {
@@ -82,6 +87,9 @@ export default {
 		updateTimer() {
 			this.showSettings = false;
 			this.$refs.timer.fetchSettings();
+		},
+		closeInfoModal() {
+			this.showInfo = false;
 		},
 		date_db() {
 			db.collection("users")

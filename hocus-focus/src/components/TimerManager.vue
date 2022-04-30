@@ -12,7 +12,7 @@
 			</div>
 
 			<TimerProgressBar
-                ref="radialTimer"
+				ref="radialTimer"
 				:running="timer.running"
 				:duration="timer.intervalDuration"
 				:currentIntervalType="currentIntervalType"
@@ -25,7 +25,8 @@
 				@resume="resume"
 				@runInterval="runInterval"
 				@skipInterval="skipInterval"
-                @showSettings="$emit('showSettings')"
+				@showSettings="$emit('showSettings')"
+				@showInfo="$emit('showInfo')"
 			/>
 		</div>
 	</div>
@@ -60,7 +61,7 @@ export default {
 			},
 		};
 	},
-	emits: ["sessionComplete", "showSettings"],
+	emits: ["sessionComplete", "showSettings", "showInfo"],
 
 	components: {
 		TimerControls,
@@ -87,7 +88,7 @@ export default {
 				this.cyclePomodoroCount = 0;
 			}
 			if (this.cycleCount == this.goalCycles) {
-                this.$emit("sessionComplete", this.totalFocusTime);
+				this.$emit("sessionComplete", this.totalFocusTime);
 			}
 		},
 	},
@@ -105,9 +106,7 @@ export default {
 			};
 
 			if (auth.currentUser) {
-				this.firestoreRef = db
-					.collection("users")
-					.doc(auth.currentUser.uid);
+				this.firestoreRef = db.collection("users").doc(auth.currentUser.uid);
 
 				this.firestoreRef
 					.collection("timer_settings")
@@ -125,17 +124,17 @@ export default {
 		},
 
 		timeUp(timeElapsed) {
-            this.notifyUser();
+			this.notifyUser();
 			this.timer.running = false;
 
 			if (this.currentIntervalType === "pomodoro") {
 				this.totalFocusTime += timeElapsed;
 
-                if (auth.currentUser) {
-                    this.firestoreRef.update({
-                        focusTime: fieldValueUtility.increment(timeElapsed),
-                    });
-                }
+				if (auth.currentUser) {
+					this.firestoreRef.update({
+						focusTime: fieldValueUtility.increment(timeElapsed),
+					});
+				}
 
 				this.pomodoroCount++;
 				this.cyclePomodoroCount++;
@@ -144,7 +143,8 @@ export default {
 			this.intervalCount++;
 
 			// queue up next mode
-			this.timer.intervalDuration = this.timer.settings[this.currentIntervalType];
+			this.timer.intervalDuration =
+				this.timer.settings[this.currentIntervalType];
 			if (this.timer.settings.autobreak) {
 				this.runInterval();
 			}
@@ -152,10 +152,10 @@ export default {
 
 		resume() {
 			if (this.$refs.radialTimer.intervalObject == null) {
-				console.log('running new interval');
+				console.log("running new interval");
 				this.runInterval();
 			} else {
-				console.log('resuming');
+				console.log("resuming");
 				this.timer.running = true;
 			}
 		},
@@ -163,23 +163,26 @@ export default {
 		skipInterval() {
 			clearInterval(this.$refs.radialTimer.intervalObject);
 			this.$refs.radialTimer.intervalObject = null;
-			this.timeUp(this.timer.intervalDuration - this.$refs.radialTimer.timeLeft);
+			this.timeUp(
+				this.timer.intervalDuration - this.$refs.radialTimer.timeLeft
+			);
 		},
 
 		// only used for starting a fresh interval
 		runInterval() {
-			this.timer.intervalDuration = this.timer.settings[this.currentIntervalType];
+			this.timer.intervalDuration =
+				this.timer.settings[this.currentIntervalType];
 			this.timer.running = true;
 			this.$refs.radialTimer.runInterval();
 		},
 
-        notifyUser() {
-            try {
-                new Notification("Time's up!");
-            } catch (err) {
-                alert('Notification API error: ' + err);
-            }
-        },
+		notifyUser() {
+			try {
+				new Notification("Time's up!");
+			} catch (err) {
+				alert("Notification API error: " + err);
+			}
+		},
 	},
 };
 </script>

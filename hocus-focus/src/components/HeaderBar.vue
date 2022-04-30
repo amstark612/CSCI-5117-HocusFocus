@@ -5,7 +5,7 @@
 				<router-link to="/">hocus-focus</router-link>
 			</div>
 
-            <!-- desktop menu -->
+			<!-- desktop menu -->
 			<nav class="hidden sm:block">
 				<span v-if="displayName">{{ displayName }} | </span>
 				<router-link v-if="displayName" to="/tasks">tasks | </router-link>
@@ -25,17 +25,20 @@
 			</nav>
 		</div>
 
-        <!-- mobile menu -->
+		<!-- mobile menu -->
 		<div v-if="showMenu" class="flex flex-col items-center gap-4 mb-4">
-            <div v-if="displayName" class="rounded-lg bg-pastel-yellow-200 text-pastel-blue-500 px-3 py-2 drop-shadow-sm">
-                {{ displayName }}
-            </div>
-            <div class="flex justify-center gap-3 text-pastel-yellow-500">
-                <router-link v-if="displayName" to="/tasks">tasks | </router-link>
-                <router-link to="/ranking">rankings | </router-link>
-                <button v-if="!displayName" @click="socialLogin">log in</button>
-                <button v-else @click="logout">log out</button>
-            </div>
+			<div
+				v-if="displayName"
+				class="rounded-lg bg-pastel-yellow-200 text-pastel-blue-500 px-3 py-2 drop-shadow-sm"
+			>
+				{{ displayName }}
+			</div>
+			<div class="flex justify-center gap-3 text-pastel-yellow-500">
+				<router-link v-if="displayName" to="/tasks">tasks | </router-link>
+				<router-link to="/ranking">rankings | </router-link>
+				<button v-if="!displayName" @click="socialLogin">log in</button>
+				<button v-else @click="logout">log out</button>
+			</div>
 		</div>
 	</header>
 </template>
@@ -71,9 +74,9 @@ export default {
 				.signInWithPopup(provider)
 				.then(() => {
 					this.registerAccount();
-                    if (this.$route.name != "home") {
-                        this.$router.push("/");
-                    }
+					if (this.$route.name != "home") {
+						this.$router.push("/");
+					}
 				})
 				.catch((err) => {
 					alert("Oops. " + err.message);
@@ -81,16 +84,16 @@ export default {
 		},
 		logout() {
 			auth.signOut().then(() => {
-                if (this.$route.name != "home") {
-                    this.$router.push("/");
-                }
+				if (this.$route.name != "home") {
+					this.$router.push("/");
+				}
 			});
 			this.displayName = null;
 		},
 		registerAccount() {
 			if (auth.currentUser) {
-                registerUser(auth.currentUser);
-            }
+				registerUser(auth.currentUser);
+			}
 		},
 	},
 };

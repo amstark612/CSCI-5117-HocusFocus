@@ -1,6 +1,19 @@
 <template>
 	<div>
 		<div class="flex justify-center gap-x-4">
+			<div title="Help" @click="$emit('showInfo')">
+				<BaseIcon
+					:properties="{
+						height: 'h-8',
+						width: 'w-8',
+						strokeWidth: '1.5',
+						classes: ['stroke-pastel-green-500'],
+					}"
+					:dArray="[
+						'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+					]"
+				/>
+			</div>
 			<div title="Change pomodoro settings" @click="$emit('showSettings')">
 				<BaseIcon
 					:properties="{
@@ -69,7 +82,14 @@ export default {
 	props: {
 		running: Boolean,
 	},
-	emits: ["pause", "resume", "runInterval", "showSettings", "skipInterval"],
+	emits: [
+		"pause",
+		"resume",
+		"runInterval",
+		"showSettings",
+		"skipInterval",
+		"showInfo",
+	],
 	components: {
 		BaseIcon,
 	},

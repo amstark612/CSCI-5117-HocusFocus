@@ -46,15 +46,15 @@ const router = new VueRouter({
 router.beforeEach((to, _, next) => {
 	const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 
-    // ensure user is registered in our db as well as logged into google
-    if (auth.currentUser) {
-        registerUser(auth.currentUser);
-        next();
-    } else if (requiresAuth && !auth.currentUser) {
-        next("/");
-    } else {
-        next();
-    }
+	// ensure user is registered in our db as well as logged into google
+	if (auth.currentUser) {
+		registerUser(auth.currentUser);
+		next();
+	} else if (requiresAuth && !auth.currentUser) {
+		next("/");
+	} else {
+		next();
+	}
 });
 
 export default router;
