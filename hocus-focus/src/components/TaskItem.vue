@@ -24,6 +24,8 @@
 					v-model="tags"
 					v-on:keyup.enter="updateTags"
 					@blur="updateTags"
+                    v-focus
+                    v-hideOnClickOut
 				/>
 			</div>
 		</div>
@@ -50,7 +52,9 @@ import BaseIcon from "@/components/BaseIcon.vue";
 import BaseProgressSlider from "./BaseProgressSlider.vue";
 import EditableSpan from "@/components/EditableSpan.vue";
 
-// CTN_TODO: disable edit mode of component when user edits a different component or clicks out
+// CTN_TODO this is hacky idk how else to make it available to both directives
+let outsideClickHandler = null;
+
 export default {
 	name: "TaskItem",
 	data() {
@@ -93,6 +97,29 @@ export default {
 			this.editTags = false;
 		},
 	},
+    directives: {
+        focus: {
+            inserted: (element) => element.focus(),
+        },
+        hideOnClickOut: {
+            inserted: (element) => {
+                outsideClickHandler = (evt) => {
+                    if (!element.contains(evt.target)) {
+                        // CTN_TODO surprisingly, we do not need additional code to update things
+                        // just doing this somehow makes clicks outside of the element detectable
+                        console.log('updating field');
+                    }
+                }
+
+                document.addEventListener('click', outsideClickHandler);
+                document.addEventListener('touchstart', outsideClickHandler);
+            },
+            unbind: () => {
+                document.removeEventListener('click', outsideClickHandler);
+                document.removeEventListener('touchstart', outsideClickHandler);
+            }
+        },
+    },
 };
 </script>
 
@@ -130,5 +157,9 @@ export default {
 	@apply justify-center;
 	@apply flex;
 	@apply items-center;
+}
+
+input[type=text] {
+    @apply outline-none;
 }
 </style>
