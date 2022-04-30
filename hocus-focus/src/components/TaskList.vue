@@ -6,7 +6,7 @@
 		</header>
 
 		<div v-if="!user" class="text-center m-4">
-			<router-link to="/login" class="text-pastel-yellow-400">log in</router-link>
+			<span class="text-pastel-yellow-400 clickable" @click="socialLogin">log in</span>
 			to add a task!
 		</div>
 

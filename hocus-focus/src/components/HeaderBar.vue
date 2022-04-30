@@ -33,8 +33,8 @@
             <div class="flex justify-center gap-3 text-pastel-yellow-500">
                 <router-link v-if="displayName" to="/tasks">tasks | </router-link>
                 <router-link to="/ranking">rankings | </router-link>
-                <router-link v-if="!displayName" to="/login">log in</router-link>
-                <button v-if="displayName" @click="logout">log out</button>
+                <button v-if="!displayName" @click="socialLogin">log in</button>
+                <button v-else @click="logout">log out</button>
             </div>
 		</div>
 	</header>
