@@ -172,7 +172,7 @@ export default {
 		return {
 			MS_PER_MIN: time.MS_PER_MIN,
 			settings: null,
-			defaultSettings: pomodoro.DEFAULT_SETTINGS,
+			DEFAULT_SETTINGS: null,
 			settingsLabel: settingsLabel,
 		};
 	},
@@ -215,7 +215,15 @@ export default {
 			}
 		},
 		resetPreferences() {
-			this.settings = this.defaultSettings;
+			this.DEFAULT_SETTINGS = {
+				delay: 4,
+				autobreak: true,
+				long: 10 * time.MS_PER_MIN,
+				pomodoro: 25 * time.MS_PER_MIN,
+				short: 5 * time.MS_PER_MIN,
+				goalCycles: 1,
+			};
+			this.settings = this.DEFAULT_SETTINGS;
 			this.save();
 		},
 		fetchSettings() {
