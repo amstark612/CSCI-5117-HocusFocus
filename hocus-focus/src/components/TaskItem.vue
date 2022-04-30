@@ -26,6 +26,7 @@
 					@blur="updateTags"
                     v-focus
                     v-hideOnClickOut
+					class="w-32 sm:w-full" 
 				/>
 			</div>
 		</div>

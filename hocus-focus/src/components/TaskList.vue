@@ -7,9 +7,9 @@
 
 
 		<div v-if="user">
-			<div id="tag-list" v-for="task in incompleteTasks" :key="task.id" >
-				<div id="tag" v-for="tag in task.tags" :key="tag">
-					<router-link v-if="task.tags !== 'tapToAddTags'" id="tag-link" :to="{name: 'TagedTasks', params:{tag: tag}}">{{tag}}</router-link>
+			<div id="tag-list">
+				<div id="tag" v-for="tag in uniqueTags" :key="tag">
+                    <router-link :key="tag" class="tag-link" :to="{name: 'TagedTasks', params:{tag: tag}}">{{ tag }}</router-link>
 				</div>
 			</div>
 			<TaskItem
@@ -29,7 +29,6 @@
 import { auth, db, provider } from "@/main";
 import { registerUser } from "@/authUtilities";
 import AddTask from "@/components/AddTask.vue";
-// import BaseIcon from "@/components/BaseIcon.vue";
 import TaskItem from "@/components/TaskItem.vue";
 
 export default {
@@ -44,7 +43,6 @@ export default {
     emits: ["trackTask"],
 	components: {
 		AddTask,
-		// BaseIcon,
 		TaskItem,
 	},
 
@@ -67,6 +65,11 @@ export default {
     computed: {
         incompleteTasks() {
             return this.tasks.filter(task => task.progress < 100);
+        },
+        uniqueTags() {
+            let tags = [];
+            this.tasks.forEach(task => tags.push(task.tags));
+            return [...new Set(tags.flat())];
         }
     },
 
