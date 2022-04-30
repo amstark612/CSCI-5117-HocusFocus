@@ -164,7 +164,7 @@ export default {
 		skipInterval() {
 			clearInterval(this.$refs.radialTimer.intervalObject);
 			this.$refs.radialTimer.intervalObject = null;
-			this.timeUp(this.intervalDuration - this.$refs.radialTimer.timeLeft);
+			this.timeUp(this.timer.intervalDuration - this.$refs.radialTimer.timeLeft); 
 		},
 
 		// only used for starting a fresh interval
