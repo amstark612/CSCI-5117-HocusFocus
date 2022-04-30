@@ -9,18 +9,32 @@
 		<div v-if="user">
 			<div id="tag-list">
 				<div class="tag" v-for="tag in uniqueTags" :key="tag">
-                    <router-link :key="tag" class="tag-link" :to="{name: 'TagedTasks', params:{tag: tag}}">{{ tag }}</router-link>
+                    <span class="tag-link clickable" v-on:click="currentTag = tag">{{tag}}</span>
 				</div>
 			</div>
-			<TaskItem
-				v-for="task in filteredTasks"
-				:key="task.id"
-				:task="task"
-				@delete="deleteTask"
-				@title="updateTask"
-				@tags="updateTask"
-				@progress="updateTask"
-			/>
+			<span class="clear-tag clickable" v-on:click="currentTag = null"> clear filter </span>
+            <div v-if="currentTag === null">
+                <TaskItem
+                    v-for="task in filteredTasks"
+                    :key="task.id"
+                    :task="task"
+                    @delete="deleteTask"
+                    @title="updateTask"
+                    @tags="updateTask"
+                    @progress="updateTask"
+                />
+            </div>
+            <div v-if="currentTag !== null">
+                <TaskItem
+                    v-for="task in tagedTasks"
+                    :key="task.id"
+                    :task="task"
+                    @delete="deleteTask"
+                    @title="updateTask"
+                    @tags="updateTask"
+                    @progress="updateTask"
+                />
+            </div>
 		</div>
 	</div>
 </template>
@@ -38,6 +52,7 @@ export default {
 			firestoreRef: null,
 			tasks: [],
 			user: null,
+            currentTag: null,
 		};
 	},
     emits: ["trackTask"],
@@ -72,6 +87,9 @@ export default {
             let tags = [];
             this.filteredTasks.forEach(task => tags.push(task.tags));
             return [...new Set(tags.flat())];
+        },
+        tagedTasks() {
+            return this.filteredTasks.filter(task => task.tags.includes(this.currentTag));
         }
     },
 
@@ -150,5 +168,13 @@ export default {
     @apply justify-center;
     @apply my-2;
     @apply gap-2;
+}
+
+.clear-tag {
+    border-radius: 50px;
+	@apply bg-pastel-green-100;
+	@apply text-pastel-orange-300;
+    @apply inline;
+    @apply px-2;
 }
 </style>

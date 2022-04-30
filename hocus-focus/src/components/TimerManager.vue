@@ -82,9 +82,6 @@ export default {
 	},
 
 	watch: {
-        timer() { // testing purposes
-            console.log(this.timer.settings);
-        },
 		cycleCount() {
 			if (this.cycleCount % this.goalCycles == 0) {
 				this.cyclePomodoroCount = 0;
