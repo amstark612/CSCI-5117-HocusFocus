@@ -7,13 +7,13 @@
 
 
 		<div v-if="user">
-			<div id="tag-list" v-for="task in incompleteTasks" :key="task.id" >
+			<div id="tag-list" v-for="task in allTasks" :key="task.id" >
 				<div id="tag" v-for="tag in task.tags" :key="tag">
-					<router-link v-if="task.tags !== 'tapToAddTags'" id="tag-link" :to="{name: 'TagedTasks', params:{tag: tag}}">{{tag}}</router-link>
+					<router-link v-if="task.tags !== 'tapToAddTags'" id="tag-link" :to="{name: 'AllTasksTaged', params:{tag: tag}}">{{tag}}</router-link>
 				</div>
 			</div>
 			<TaskItem
-				v-for="task in incompleteTasks"
+				v-for="task in allTasks"
 				:key="task.id"
 				:task="task"
 				@delete="deleteTask"
@@ -33,7 +33,7 @@ import AddTask from "@/components/AddTask.vue";
 import TaskItem from "@/components/TaskItem.vue";
 
 export default {
-	name: "TaskList",
+	name: "AllTasks",
 	data() {
 		return {
 			firestoreRef: null,
@@ -65,8 +65,8 @@ export default {
 	},
 
     computed: {
-        incompleteTasks() {
-            return this.tasks.filter(task => task.progress < 100);
+        allTasks() {
+            return this.tasks.filter(task => task.progress <= 100);
         }
     },
 
@@ -112,6 +112,8 @@ export default {
 		updateTask(taskId, property) {
 			if (property.progress) {
                 this.$emit("trackTask", taskId);
+			} else if (property.tags) {
+				console.log("stub for parsing tags...");
 			}
 
 			this.firestoreRef
