@@ -129,14 +129,6 @@ export default {
 		},
 	},
 
-	watch: {
-		taskIds() {
-			console.log(this.taskIds);
-		},
-		focusTime() {
-			console.log(this.focusTime);
-		},
-	},
 	created() {
 		this.date_db();
 		this.db_numberOfTasks();

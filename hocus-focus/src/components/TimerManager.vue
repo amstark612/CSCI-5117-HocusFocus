@@ -145,6 +145,10 @@ export default {
 			// queue up next mode
 			this.timer.intervalDuration =
 				this.timer.settings[this.currentIntervalType];
+            // radial timer watches duration, so do this in case user has
+            // same durations for different modes
+            this.$refs.radialTimer.timeLeft = this.timer.intervalDuration;
+
 			if (this.timer.settings.autobreak) {
 				this.runInterval();
 			}

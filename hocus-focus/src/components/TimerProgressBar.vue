@@ -32,7 +32,7 @@ export default {
 	name: "TimerProgressBar",
 	data() {
 		return {
-			timeLeft: this.duration,
+			timeLeft: 0,
 			intervalObject: null,
 		};
 	},
@@ -67,13 +67,11 @@ export default {
 		}
 	},
 
-	watch: {
-		duration() {
-			if (this.duration) {
-				this.timeLeft = this.duration;
-			}
-		},
-	},
+    watch: {
+        duration() {
+            this.timeLeft = this.duration ? this.duration : this.timeLeft;
+        }
+    },
 
 	methods: {
 		runInterval() {

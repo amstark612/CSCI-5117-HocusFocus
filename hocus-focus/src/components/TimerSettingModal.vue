@@ -4,11 +4,9 @@
 		:popupClasses="['bg-pastel-green-200', 'border-pastel-green-500']"
 	>
 		<template v-slot:header>
-			<div class="flex justify-between">
+			<div class="flex justify-between text-pastel-green-500">
 				<div class="flex items-center gap-2">
 					<BaseIcon
-						@clicked="$emit('close')"
-						title="Close without saving"
 						:properties="{
 							height: 'h-8',
 							width: 'w-8',
@@ -43,14 +41,14 @@
 					:key="setting.label"
 					class="flex flex-col gap-2"
 				>
-					<div class="flex gap-2 justify-end">
+					<div class="flex gap-2 justify-end text-pastel-green-500">
 						<div class="flex items-center justify-end py-2">
 							{{ setting.label }} :
 						</div>
 
 						<div class="flex items-center">
 							<div class="flex gap-2">
-								<div class="flex-none card p-1 w-10 text-center">
+								<div class="flex-none card p-1 w-10 text-center flex items-center justify-center">
 									{{ settingsMin[setting.field] }}
 								</div>
 
@@ -82,7 +80,7 @@
 					</div>
 				</div>
 
-				<div class="flex gap-2 justify-end">
+				<div class="flex gap-2 justify-end text-pastel-green-500">
 					<div class="flex items-center justify-end py-2">
 						autostart breaks :
 					</div>
@@ -153,9 +151,7 @@ export default {
 	name: "TimerSettings",
 	data() {
 		return {
-			MS_PER_MIN: time.MS_PER_MIN,
 			settings: null,
-			DEFAULT_SETTINGS: null,
 			settingsLabel: settingsLabel,
 		};
 	},
@@ -192,7 +188,7 @@ export default {
 			}
 		},
 		decrementSettings(field) {
-			if (this.settings[field] > 0) {
+			if (this.settings[field] > 1) {
 				if (pomodoro.TIME_FIELDS.includes(field)) {
 					this.settings[field] -= time.MS_PER_MIN;
 				} else {
@@ -201,15 +197,7 @@ export default {
 			}
 		},
 		resetPreferences() {
-			this.DEFAULT_SETTINGS = {
-				delay: 4,
-				autobreak: true,
-				long: 10 * time.MS_PER_MIN,
-				pomodoro: 25 * time.MS_PER_MIN,
-				short: 5 * time.MS_PER_MIN,
-				goalCycles: 1,
-			};
-			this.settings = this.DEFAULT_SETTINGS;
+			this.settings = {...pomodoro.DEFAULT_SETTINGS};
 			this.save();
 		},
 		fetchSettings() {
@@ -235,7 +223,7 @@ export default {
 						}
 					});
 			} else {
-				this.settings = pomodoro.DEFAULT_SETTINGS;
+				this.settings = {...pomodoro.DEFAULT_SETTINGS};
 			}
 		},
 
