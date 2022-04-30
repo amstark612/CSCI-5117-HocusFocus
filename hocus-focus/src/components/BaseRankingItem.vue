@@ -62,11 +62,10 @@ export default {
 		getFocusTimeString() {
 			const hours = parseInt(this.focusTime / 60);
 			const minutes = this.focusTime % 60;
-			if (hours < 10) {
-				this.focusTimeString = `0${hours}`;
-			}
-			if (minutes < 10) {
-				this.focusTimeString += `:0${minutes}`;
+			if (hours < 10 && minutes < 10) {
+				this.focusTimeString = `0${hours}:0${minutes}`;
+			} else if (hours > 10 && minutes < 10) {
+				this.focusTimeString = `${hours}:0${minutes}`;
 			} else {
 				this.focusTimeString = `${hours}:${minutes}`;
 			}
