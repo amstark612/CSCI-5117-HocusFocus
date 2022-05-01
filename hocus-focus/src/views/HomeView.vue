@@ -2,7 +2,7 @@
 	<div class="home">
 		<TimerManager
 			ref="timer"
-			v-if="!showGoalCompletedStatus"
+            :class="showGoalCompletedStatus ? 'hidden' : ''"
 			@sessionComplete="sessionComplete"
 			@showSettings="showSettings = true"
 			@showInfo="showInfo = true"
@@ -223,5 +223,9 @@ export default {
 	@apply border-pastel-green-500;
 	@apply bg-pastel-green-100;
 	@apply text-pastel-green-500;
+}
+
+.hidden {
+    display: hidden;
 }
 </style>
