@@ -8,8 +8,8 @@
 			<!-- desktop menu -->
 			<nav class="hidden sm:block">
 				<span v-if="displayName">{{ displayName }} | </span>
-				<router-link v-if="displayName" to="/tasks">tasks | </router-link>
-				<router-link to="/ranking">rankings | </router-link>
+				<router-link v-if="displayName" to="/tasks">tasks </router-link> |
+				<router-link to="/ranking">rankings </router-link> |
 				<button v-if="!displayName" @click="socialLogin">log in</button>
 				<button v-if="displayName" @click="logout">log out</button>
 			</nav>
@@ -99,3 +99,9 @@ export default {
 	},
 };
 </script>
+
+<style>
+nav a.router-link-exact-active {
+	@apply text-pastel-orange-500;
+}
+</style>

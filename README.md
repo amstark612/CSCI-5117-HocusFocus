@@ -21,11 +21,11 @@ CSCI 5117, Spring 2022, [assignment description](https://canvas.umn.edu/courses/
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* ...
+* Focus Timer:
 
 Which (if any) device integration(s) does your app support?
 
-* ...
+* Both web and mobile
 
 Which (if any) progressive web app feature(s) does your app support?
 
@@ -75,8 +75,38 @@ along with a very brief caption:**
 
 ![](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
 
-Our HomePage:
-![](/screenshot/Screen%20Shot%202022-05-01%20at%203.08.54%20PM.png?raw=true "Homepage")
+HomePage:
+
+On the homepage, if users are not loged in, they can only use the timer with the default value. After user loged in, they can set their own value for the timer, add tasks and track them. In addition, only the tasks that are not finished yet will show on the homepage. Tasks can be orgainzed by tags, and are able to be edited by clicking.
+* Web Homepage:
+![](/screenshot/homepage.png?raw=true "Homepage")
+* Mobile Homepage:
+![](/screenshot/mhome.png?raw=true "MobileHome")
+
+TaskPage:
+All tasks that user has created will show in this page, user can add, edit, delete tasks and filter tasks with the tags.
+* Web Taskpage:
+![](/screenshot/tasks.png?raw=true "Taskpage")
+* Moblie Taskpage:
+![](/screenshot/task.png?raw=true "MobileTask")
+
+RankingPage:
+* Web Rankingpage:
+![](/screenshot/rankings.png?raw=true "Rankingpahe")
+* Mobile Rankingpage:
+![](/screenshot/mranking.png?raw=true "MobileRanking")
+
+HelpPage:
+Showing how to use this app.
+* Web Helppage:
+![](/screenshot/info.png?raw=true "Helppage")
+* Moblie Helppage:
+![](/screenshot/minfo.png?raw=true "MobileHelp")
+
+TimerSettingPage:
+* Web TimerSetting page:
+![](/screenshot/setting.png?raw=true "TimerSetting")
+![](/screenshot/msetting.png?raw=true "MobileSetting")
 
 
 
@@ -85,8 +115,8 @@ Our HomePage:
 **Document integrations with 3rd Party code or services here.
 Please do not document required libraries (e.g., Vue, Vuefire, Firebase).**
 
-* Library or service name: description of use
-* ...
+* Tailwind Elements: Tailwind Modal/Dialog component for the pop up window for timer-setting, summary, information(help) page, login 
+* toggle for the auto-break button
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
