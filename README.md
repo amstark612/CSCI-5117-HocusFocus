@@ -6,7 +6,7 @@ CSCI 5117, Spring 2022, [assignment description](https://canvas.umn.edu/courses/
 
 * Team Name: Mutiny
 * App Name: hocus-focus
-* App Link: <https://TODO.firebaseapp.com/>
+* App Link: <https://hocus-focus-mutiny.web.app/>
 
 ### Students
 
