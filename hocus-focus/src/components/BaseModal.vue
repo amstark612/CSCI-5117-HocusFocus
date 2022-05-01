@@ -48,7 +48,8 @@ export default {
 
 .modal {
     @apply overflow-x-hidden;
-    @apply overflow-y-hidden;
+    @apply overflow-scroll;
+    /* @apply overflow-y-hidden; */
     @apply z-30;
     @apply w-full;
 }
@@ -64,7 +65,7 @@ export default {
     @apply xl:w-3/5;
     @apply 2xl:w-2/4;
     @apply relative;
-    @apply mt-10;
+    @apply my-10;
     @apply mx-auto;
     @apply flex;
     @apply flex-col;

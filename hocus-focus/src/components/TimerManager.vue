@@ -186,7 +186,7 @@ export default {
 			try {
 				new Notification("Time's up!");
 			} catch (err) {
-				alert("Notification API error: " + err);
+				alert("Time's up!");
 			}
 		},
 	},

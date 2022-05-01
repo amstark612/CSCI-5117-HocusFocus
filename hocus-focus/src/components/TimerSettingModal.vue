@@ -1,7 +1,7 @@
 <template>
 	<BaseModal
 		v-if="show"
-		:popupClasses="['bg-pastel-green-200', 'border-pastel-green-500']"
+		:popupClasses="['bg-pastel-green-100', 'border-pastel-green-500']"
 	>
 		<template v-slot:header>
 			<div class="flex justify-between text-pastel-green-500">
