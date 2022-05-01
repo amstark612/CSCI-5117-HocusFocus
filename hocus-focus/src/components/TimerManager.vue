@@ -34,7 +34,7 @@
 
 <script>
 import { auth, db, fieldValueUtility } from "@/main";
-import { pomodoro } from "@/constants";
+import { pomodoro, time } from "@/constants";
 import TimerControls from "@/components/TimerControls.vue";
 import TimerProgressBar from "./TimerProgressBar.vue";
 
@@ -134,7 +134,7 @@ export default {
 
 				if (auth.currentUser) {
 					this.firestoreRef.update({
-						focusTime: fieldValueUtility.increment(timeElapsed),
+						focusTime: fieldValueUtility.increment(timeElapsed / time.MS_PER_MIN),
 					});
 				}
 
