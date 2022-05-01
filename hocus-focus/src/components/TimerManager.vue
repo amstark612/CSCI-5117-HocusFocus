@@ -120,7 +120,9 @@ export default {
 							this.timer.intervalDuration = this.timer.settings.pomodoro;
 						}
 					});
-			}
+			} else {
+                this.timer.sequence = computeSequence();
+            }
 		},
 
 		timeUp(timeElapsed) {
