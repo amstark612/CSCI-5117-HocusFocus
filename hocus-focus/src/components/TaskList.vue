@@ -1,7 +1,7 @@
 <template>
 	<div id="task-list" class="mt-6">
 		<header class="flex justify-center gap-x-1">
-			<AddTask v-if="user" @added="fetchData" />
+			<AddTask v-if="user" @added="fetchData"/>
 			<div><h1>tasks</h1></div>
 		</header>
 
