@@ -98,6 +98,12 @@ export default {
 	},
 
 	methods: {
+        reset() {
+            this.intervalCount = 0;
+            this.pomodoroCount = 0;
+            this.cyclePomodoroCount = 0;
+        },
+
 		fetchSettings() {
 			let computeSequence = () => {
 				let sequence = Array(this.timer.settings.delay - 1);

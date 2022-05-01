@@ -130,6 +130,7 @@ export default {
 		closeSummaryPrompt() {
 			this.showGoalCompletedStatus = false;
 			this.showSummary = false;
+            this.$refs.timer.reset();
 		},
 
 		registerAccount() {
