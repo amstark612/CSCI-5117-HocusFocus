@@ -65,6 +65,7 @@ export async function registerUser(user) {
                 return true;
             } else {
                 registerNewUser(user).then(success => {
+                    console.log(success);
                     if (success) {
                         return true;
                     } else {

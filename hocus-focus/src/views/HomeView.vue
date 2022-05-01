@@ -9,18 +9,18 @@
 		/>
 
 		<GoalCompleted
-			v-if="showGoalCompletedStatus"
+			v-if="user && showGoalCompletedStatus"
 			@showSummary="openGoalSummary"
 		/>
 
 		<GoalSummaryModal
-			v-if="showSummary"
+			v-if="user && showSummary"
 			@closeSummaryPrompt="closeSummaryPrompt"
 			:focusTime="focusTime"
 			:taskIds="taskIds"
 		/>
 
-		<TaskList @trackTask="trackTask" />
+		<TaskList ref="taskList" @trackTask="trackTask" />
 
 		<TimerSettingModal :show="showSettings" @close="updateTimer" />
 		<BaseInfo :show="showInfo" @close="closeInfoModal" />
@@ -34,7 +34,8 @@ import TimerSettingModal from "@/components/TimerSettingModal.vue";
 import GoalCompleted from "@/components/GoalCompleted.vue";
 import BaseInfo from "@/components/BaseInfo.vue";
 import GoalSummaryModal from "@/components/GoalSummaryModal.vue";
-import { auth, db } from "@/main";
+import { auth, db, fieldValueUtility } from "@/main";
+import { pomodoro } from "@/constants";
 
 export default {
 	name: "HomeView",
@@ -49,6 +50,7 @@ export default {
 			showDetailSummary: false,
 			firstDay: 0,
 			numberOfTasks: 0,
+            user: null,
 		};
 	},
 	components: {
@@ -61,13 +63,15 @@ export default {
 	},
 
 	firestore: function () {
-		return {
-			dataSubTask: db
-				.collection("users")
-				.doc(auth.currentUser.uid)
-				.collection("tasks"),
-			data: db.collection("users").doc(auth.currentUser.uid),
-		};
+        if (auth.currentUser) {
+            return {
+                dataSubTask: db
+                    .collection("users")
+                    .doc(auth.currentUser.uid)
+                    .collection("tasks"),
+                data: db.collection("users").doc(auth.currentUser.uid),
+            };
+        }
 	},
 	methods: {
 		trackTask(taskId) {
@@ -127,12 +131,81 @@ export default {
 			this.showGoalCompletedStatus = false;
 			this.showSummary = false;
 		},
+
+		registerAccount() {
+			if (auth.currentUser) {
+                let user = auth.currentUser;
+
+                db.collection("users")
+                    .doc(user.uid)
+                    .get()
+                    .then((doc) => {
+                        if (!doc.exists) {
+                            db.collection("users")
+                            .doc(user.uid)
+                            .set({
+                                displayName: user.displayName,
+                                email: user.email,
+                                focusTime: 0,
+                                joinDate: fieldValueUtility.serverTimestamp(),
+                                photoUrl: user.photoURL,
+                            })
+                            .then(() => {
+                                console.log("User document created!");
+
+                                // create tasks collection
+                                db.collection("users")
+                                    .doc(user.uid)
+                                    .collection("tasks")
+                                    .doc("0")
+                                    .set({
+                                        createdAt: fieldValueUtility.serverTimestamp(),
+                                        progress: 0,
+                                        tags: [],
+                                        title: "Tap to edit title",
+                                    })
+                                    .then(() => {
+                                        console.log("Default task created!");
+                                        this.$refs.taskList.fetchData();
+                                    })
+                                    .catch((error) => {
+                                        console.error("Error writing document: ", error);
+                                });
+
+                                db.collection("users")
+                                    .doc(user.uid)
+                                    .collection("timer_settings")
+                                    .doc("0")
+                                    .set(pomodoro.DEFAULT_SETTINGS)
+                                    .then(() => {
+                                        console.log("User timer settings document created!");
+                                    })
+                                    .catch((error) => {
+                                        console.error("Error writing document: ", error);
+                                });
+                            })
+                            .catch((error) => {
+                                console.error("Error writing document: ", error);
+                        });
+                        }
+                });
+			}
+		},
 	},
 
 	created() {
-		this.date_db();
-		this.db_numberOfTasks();
+        if (auth.currentUser) {
+            this.date_db();
+            this.db_numberOfTasks();
+        }
 	},
+
+    mounted() {
+        if (auth.currentUser) {
+            this.user = auth.currentUser;
+            this.registerAccount();
+        }
+    },
 };
 </script>
 

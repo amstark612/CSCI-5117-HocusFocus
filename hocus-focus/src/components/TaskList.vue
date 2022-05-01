@@ -57,8 +57,9 @@
 </template>
 
 <script>
-import { auth, db, provider } from "@/main";
-import { registerUser } from "@/authUtilities";
+import { auth, db, provider, fieldValueUtility } from "@/main";
+import { pomodoro } from "@/constants";
+// import { registerUser } from "@/authUtilities";
 import AddTask from "@/components/AddTask.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import TaskItem from "@/components/TaskItem.vue";
@@ -110,6 +111,10 @@ export default {
         tagedTasks() {
             return this.filteredTasks.filter(task => task.tags.includes(this.currentTag));
         }
+    },
+
+    mounted() {
+        this.registerAccount();
     },
 
 	methods: {
@@ -164,8 +169,61 @@ export default {
 
 		registerAccount() {
 			if (auth.currentUser) {
-                registerUser(auth.currentUser);
-                this.fetchData();
+                let user = auth.currentUser;
+
+                db.collection("users")
+                    .doc(user.uid)
+                    .get()
+                    .then((doc) => {
+                        if (!doc.exists) {
+                            db.collection("users")
+                                .doc(user.uid)
+                                .set({
+                                    displayName: user.displayName,
+                                    email: user.email,
+                                    focusTime: 0,
+                                    joinDate: fieldValueUtility.serverTimestamp(),
+                                    photoUrl: user.photoURL,
+                                })
+                                .then(() => {
+                                    console.log("User document created!");
+
+                                    // create tasks collection
+                                    db.collection("users")
+                                        .doc(user.uid)
+                                        .collection("tasks")
+                                        .doc("0")
+                                        .set({
+                                            createdAt: fieldValueUtility.serverTimestamp(),
+                                            progress: 0,
+                                            tags: [],
+                                            title: "Tap to edit title",
+                                        })
+                                        .then(() => {
+                                            console.log("Default task created!");
+                                            this.fetchData();
+                                        })
+                                        .catch((error) => {
+                                            console.error("Error writing document: ", error);
+                                    });
+
+                                    db.collection("users")
+                                        .doc(user.uid)
+                                        .collection("timer_settings")
+                                        .doc("0")
+                                        .set(pomodoro.DEFAULT_SETTINGS)
+                                        .then(() => {
+                                            console.log("User timer settings document created!");
+                                        })
+                                        .catch((error) => {
+                                            console.error("Error writing document: ", error);
+                                    });
+                                })
+                                .catch((error) => {
+                                    console.error("Error writing document: ", error);
+                            });
+                        }
+                });
 			}
 		},
 	},

@@ -74,6 +74,7 @@ export default {
 				.signInWithPopup(provider)
 				.then(() => {
 					this.registerAccount();
+                    this.showMenu = false;
 					if (this.$route.name != "home") {
 						this.$router.push("/");
 					}

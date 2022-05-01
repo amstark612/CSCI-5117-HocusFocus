@@ -5,7 +5,6 @@ import TaskView from "../views/TaskView.vue";
 import RankingView from "../views/RankingView.vue";
 import ToggleButton from "vue-js-toggle-button";
 import { auth } from "@/main";
-import { registerUser } from "@/authUtilities";
 
 Vue.use(ToggleButton);
 Vue.use(VueRouter);
@@ -48,7 +47,8 @@ router.beforeEach((to, _, next) => {
 
 	// ensure user is registered in our db as well as logged into google
 	if (auth.currentUser) {
-		registerUser(auth.currentUser);
+        // CTN_TODO hacking around a bug -_-
+		// registerUser(auth.currentUser);
 		next();
 	} else if (requiresAuth && !auth.currentUser) {
 		next("/");
