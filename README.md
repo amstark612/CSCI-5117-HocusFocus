@@ -70,11 +70,6 @@ Login page
 
 ## Screenshots of Site (complete)
 
-**[Add a screenshot of each key page](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
-along with a very brief caption:**
-
-![](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
-
 HomePage:
 
 On the homepage, if users are not loged in, they can only use the timer with the default value. After user loged in, they can set their own value for the timer, add tasks and track them. In addition, only the tasks that are not finished yet will show on the homepage. Tasks can be orgainzed by tags, and are able to be edited by clicking.
