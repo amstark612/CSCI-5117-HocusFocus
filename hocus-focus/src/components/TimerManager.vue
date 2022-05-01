@@ -45,7 +45,6 @@ export default {
 			firestoreRef: null,
 
 			// bookkeeping variables
-			goalCycles: 1, // count of cycles the user aims to complete
 			intervalCount: 0, // count of any interval type user has begun
 			pomodoroCount: 0, // total count of pomodoro intervals user has completed in a cycle
 			cyclePomodoroCount: 0, // how many pomodoros completed in a cycle
@@ -84,10 +83,10 @@ export default {
 
 	watch: {
 		cycleCount() {
-			if (this.cycleCount % this.goalCycles == 0) {
+			if (this.cycleCount % this.timer.settings.goalCycles == 0) {
 				this.cyclePomodoroCount = 0;
 			}
-			if (this.cycleCount == this.goalCycles) {
+			if (this.cycleCount == this.timer.settings.goalCycles) {
 				this.$emit("sessionComplete", this.totalFocusTime);
 			}
 		},

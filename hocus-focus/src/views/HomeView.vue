@@ -130,6 +130,8 @@ export default {
 		closeSummaryPrompt() {
 			this.showGoalCompletedStatus = false;
 			this.showSummary = false;
+			this.focusTime = null;
+			this.taskIds = [];
             this.$refs.timer.reset();
 		},
 
