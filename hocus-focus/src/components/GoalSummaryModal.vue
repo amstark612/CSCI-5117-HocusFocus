@@ -189,7 +189,6 @@ export default {
 	@apply border;
 	@apply drop-shadow-lg;
 	@apply text-sm;
-	@apply bg-gradient-to-b;
 }
 .timer {
 	@apply flex;
@@ -217,21 +216,19 @@ export default {
 .deck {
 	@apply block;
 	@apply w-full;
-	@apply m-1;
+	@apply m-2;
 	@apply border-pastel-green-500;
 	@apply bg-gradient-to-b;
 	@apply from-pastel-green-100;
 	@apply to-pastel-green-200;
 	@apply text-pastel-green-500;
-	/* @apply sm:flex-col; */
-	/* @apply sm:gap-x-6; */
 	@apply items-center;
 	@apply sm:w-4/5;
-	/* @apply sm:mt-3; */
-	/* @apply sm:ml-0; */
+	@apply sm:m-1;
 }
 .number {
-	@apply text-5xl;
+	@apply text-2xl;
+	@apply sm:text-5xl;
 }
 .closeButton {
 	display: flex;
