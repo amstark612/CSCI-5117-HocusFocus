@@ -65,6 +65,8 @@ export default {
 				this.focusTimeString = `0${hours}:0${minutes}`;
 			} else if (hours > 10 && minutes < 10) {
 				this.focusTimeString = `${hours}:0${minutes}`;
+			} else if (hours < 10 && minutes > 10) {
+				this.focusTimeString = `0${hours}:${minutes}`;
 			} else {
 				this.focusTimeString = `${hours}:${minutes}`;
 			}

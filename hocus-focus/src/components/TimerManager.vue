@@ -157,7 +157,7 @@ export default {
             // same durations for different modes
             this.$refs.radialTimer.timeLeft = this.timer.intervalDuration;
 
-			if (this.timer.settings.autobreak) {
+			if (this.cycleCount != this.timer.settings.goalCycles && this.timer.settings.autobreak) {
 				this.runInterval();
 			}
 		},
