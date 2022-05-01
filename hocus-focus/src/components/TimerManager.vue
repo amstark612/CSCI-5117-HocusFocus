@@ -101,6 +101,7 @@ export default {
             this.intervalCount = 0;
             this.pomodoroCount = 0;
             this.cyclePomodoroCount = 0;
+			this.timer.intervalDuration = this.timer.settings.pomodoro;
         },
 
 		fetchSettings() {

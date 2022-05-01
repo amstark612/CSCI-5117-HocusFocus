@@ -101,7 +101,6 @@ export default {
 				.get()
 				.then((doc) => {
 					if (doc.exists) {
-						console.log("hello");
 						this.firstDay = doc.data().joinDate;
 					} else {
 						console.log("No such document!");
