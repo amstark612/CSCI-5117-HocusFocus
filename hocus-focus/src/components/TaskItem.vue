@@ -3,7 +3,7 @@
 		<div class="task-title">
 			<div class="line-clamp">
 				<EditableSpan 
-					:text="task.title" 
+					:text="task.title || 'Tap to edit title'" 
 					@edited="$emit('title', task.id, { title: $event })" 
 					class="w-32 sm:w-full" 
 				/>

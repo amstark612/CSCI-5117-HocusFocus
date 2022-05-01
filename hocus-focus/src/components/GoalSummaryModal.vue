@@ -47,28 +47,31 @@
 						</div>
 					</div>
 				</div>
-				<h2>task progress</h2>
-				<div class="card deck">
-					<div
-						v-for="task in tasks"
-						:key="task.id"
-						class="grid grid-cols-3 gap-y-4"
-					>
-						<div id="text-left ml-2" class="col-span-2 flex items-center gap-2">
-							<BaseIcon
-								:properties="{
-									height: 'h-6',
-									width: 'w-8',
-									strokeWidth: '1.5',
-									classes: ['stroke-pastel-green-500'],
-								}"
-								:dArray="[
-									'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4',
-								]"
-							/>
-							{{ task.title }}
+
+				<div v-if="tasks.length">
+					<h2>task progress</h2>
+					<div class="card deck pb-2">
+						<div
+							v-for="task in tasks"
+							:key="task.id"
+							class="grid grid-cols-3 gap-y-4"
+						>
+							<div id="text-left ml-2" class="col-span-2 flex items-center gap-2">
+								<BaseIcon
+									:properties="{
+										height: 'h-6',
+										width: 'w-8',
+										strokeWidth: '1.5',
+										classes: ['stroke-pastel-green-500'],
+									}"
+									:dArray="[
+										'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4',
+									]"
+								/>
+								{{ task.title }}
+							</div>
+							<div class="text-right mr-2">{{ task.progress }} %</div>
 						</div>
-						<div class="text-right mr-2">{{ task.progress }} %</div>
 					</div>
 				</div>
 			</div>
@@ -76,14 +79,14 @@
 
 		<template v-slot:footer>
 			<div class="closeButton">
-				<button @click="close" class="flex items-center gap-2 rounded-full">
+				<button @click="close" class="flex items-center gap-2 rounded-full text-pastel-yellow-500">
 					start a new session &nbsp;
 					<BaseIcon
 						:properties="{
 							height: 'h-8',
 							width: 'w-8',
 							strokeWidth: '1.5',
-							classes: ['stroke-pastel-green-500'],
+							classes: ['stroke-pastel-yellow-500'],
 						}"
 						:dArray="[
 							'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z',
@@ -183,7 +186,7 @@ export default {
 	/* @apply h-fit; */
 }
 .card1 {
-	@apply p-3;
+	@apply p-4;
 	@apply my-2;
 	@apply rounded-lg;
 	@apply border;
@@ -198,9 +201,7 @@ export default {
 	@apply h-fit;
 	@apply mt-4;
 	@apply border-pastel-green-500;
-	@apply bg-gradient-to-b;
-	@apply from-pastel-green-100;
-	@apply to-pastel-green-200;
+	@apply bg-pastel-green-100;
 	@apply text-pastel-green-500;
 	@apply sm:h-fit;
 }
@@ -218,9 +219,7 @@ export default {
 	@apply w-full;
 	@apply m-2;
 	@apply border-pastel-green-500;
-	@apply bg-gradient-to-b;
-	@apply from-pastel-green-100;
-	@apply to-pastel-green-200;
+	@apply bg-pastel-yellow-100;
 	@apply text-pastel-green-500;
 	@apply items-center;
 	@apply sm:w-4/5;

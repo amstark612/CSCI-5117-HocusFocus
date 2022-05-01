@@ -4,7 +4,7 @@
 
 		<div class="card timer">
 			<div class="flex justify-around w-full">
-				<div>{{ cyclePomodoroCount }} / {{ timer.settings.delay }} intervals</div>
+				<div>{{ cyclePomodoroCount }} / {{ timer.settings.delay }} pomodoros</div>
 
 				<div>
 					{{ Math.floor(cycleCount) }} / {{ timer.settings.goalCycles }} cycles
@@ -157,7 +157,7 @@ export default {
             // same durations for different modes
             this.$refs.radialTimer.timeLeft = this.timer.intervalDuration;
 
-			if (this.timer.settings.autobreak) {
+			if (this.cycleCount != this.timer.settings.goalCycles && this.timer.settings.autobreak) {
 				this.runInterval();
 			}
 		},

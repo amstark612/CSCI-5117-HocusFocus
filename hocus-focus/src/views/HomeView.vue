@@ -77,11 +77,12 @@ export default {
 		trackTask(taskId) {
 			// this will push duplicate values
 			// but is filtered before sending to summary modal
-			let mode = this.$refs.timer.currentIntervalType;
-			let inProgress = this.$refs.timer.timer.running;
-			if (mode === "pomodoro" && inProgress) {
-				this.taskIds.push(taskId);
-			}
+			// let mode = this.$refs.timer.currentIntervalType;
+			// let inProgress = this.$refs.timer.timer.running;
+			// if (mode === "pomodoro" && inProgress) {
+			// 	this.taskIds.push(taskId);
+			// }
+			this.taskIds.push(taskId);
 		},
 		sessionComplete(focusTime) {
 			this.focusTime = focusTime;
