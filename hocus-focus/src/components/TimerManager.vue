@@ -4,7 +4,7 @@
 
 		<div class="card timer">
 			<div class="flex justify-around w-full">
-				<div>{{ cyclePomodoroCount }} / 4 intervals</div>
+				<div>{{ cyclePomodoroCount }} / {{ timer.settings.delay }} intervals</div>
 
 				<div>
 					{{ Math.floor(cycleCount) }} / {{ timer.settings.goalCycles }} cycles
