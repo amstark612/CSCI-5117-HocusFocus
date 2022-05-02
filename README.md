@@ -66,6 +66,12 @@ Login page
 **Is there anything special we need to know in order to effectively test your app? (optional):**
 
 * Review info modal describing pomodoro technique to see how sequence of events plays out
+* Additional definitions:
+  * A `session` is the entire block the user plans to sit down and work for and is composed of `cycles`
+  * A `cycle` is a sequence of `short break`, `long break`, and `focus`/`pomodoro` `intervals`
+    * Traditionally, the sequence is `pomodoro`, `short`, `pomodoro`, `short`, `pomodoro`, `long`
+    * A `long break delay` is the number of `pomodoro` intervals a user must complete before they get to take their `long` break
+    * `autostart breaks`, if set to `true`, will automatically start the timer for the next interval when the first interval is over
 
 
 
@@ -75,34 +81,51 @@ HomePage:
 
 On the homepage, if users are not loged in, they can only use the timer with the default value. After user loged in, they can set their own value for the timer, add tasks and track them. In addition, only the tasks that are not finished yet will show on the homepage. Tasks can be orgainzed by tags, and are able to be edited by clicking.
 * Web Homepage:
+
 ![](/screenshot/homepage.png?raw=true "Homepage")
+
 * Mobile Homepage:
+
 ![](/screenshot/mhome.png?raw=true "MobileHome")
 
 TaskPage:
 All tasks that user has created will show in this page, user can add, edit, delete tasks and filter tasks with the tags.
+
 * Web Taskpage:
+
 ![](/screenshot/tasks.png?raw=true "Taskpage")
+
 * Moblie Taskpage:
+
 ![](/screenshot/task.png?raw=true "MobileTask")
 
 RankingPage:
 * Web Rankingpage:
+
 ![](/screenshot/rankings.png?raw=true "Rankingpahe")
+
 * Mobile Rankingpage:
+
 ![](/screenshot/mranking.png?raw=true "MobileRanking")
 
 HelpPage:
 Showing how to use this app.
 * Web Helppage:
+
 ![](/screenshot/info.png?raw=true "Helppage")
+
 * Moblie Helppage:
+
 ![](/screenshot/minfo.png?raw=true "MobileHelp")
+
 
 TimerSettingPage:
 * Web TimerSetting page:
+
 ![](/screenshot/setting.png?raw=true "TimerSetting")
+
 ![](/screenshot/msetting.png?raw=true "MobileSetting")
+
 
 Requesting permission to send notifications:
 <img width="921" alt="image" src="https://user-images.githubusercontent.com/43075531/166171165-a9cd4092-6d3e-4ef0-8475-d1864ddb50ea.png">
