@@ -113,6 +113,7 @@ export default {
 
 			if (auth.currentUser) {
 				this.firestoreRef = db.collection("users").doc(auth.currentUser.uid);
+                console.log(this.firestoreRef);
 
 				this.firestoreRef
 					.collection("timer_settings")

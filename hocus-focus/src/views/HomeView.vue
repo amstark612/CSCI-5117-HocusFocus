@@ -17,7 +17,7 @@
 			v-if="user && showSummary"
 			@closeSummaryPrompt="closeSummaryPrompt"
 			:focusTime="focusTime"
-			:taskIds="taskIds"
+			:taskIds="uniqueTaskIds"
 		/>
 
 		<TaskList ref="taskList" @trackTask="trackTask" />
@@ -62,6 +62,12 @@ export default {
 		BaseInfo,
 	},
 
+    computed: {
+        uniqueTasksIds() {
+			return [...new Set(this.taskIds)];
+        }
+    },
+
 	firestore: function () {
         if (auth.currentUser) {
             return {
@@ -86,7 +92,7 @@ export default {
 		},
 		sessionComplete(focusTime) {
 			this.focusTime = focusTime;
-			this.taskIds = [...new Set(this.taskIds)];
+			// this.taskIds = [...new Set(this.taskIds)];
 			this.showGoalCompletedStatus = true;
 		},
 		updateTimer() {
