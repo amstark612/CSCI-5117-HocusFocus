@@ -21,7 +21,8 @@ CSCI 5117, Spring 2022, [assignment description](https://canvas.umn.edu/courses/
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* Focus Timer:
+* Focus Timer: Tracking the state/sequence of events across multiple components
+
 
 Which (if any) device integration(s) does your app support?
 
@@ -29,7 +30,7 @@ Which (if any) device integration(s) does your app support?
 
 Which (if any) progressive web app feature(s) does your app support?
 
-* ...
+* Notifications even when tab is not active (not compatible with Safari iOS)
 
 
 
@@ -64,7 +65,7 @@ Login page
 
 **Is there anything special we need to know in order to effectively test your app? (optional):**
 
-* ...
+* Review info modal describing pomodoro technique to see how sequence of events plays out
 
 
 
@@ -103,6 +104,11 @@ TimerSettingPage:
 ![](/screenshot/setting.png?raw=true "TimerSetting")
 ![](/screenshot/msetting.png?raw=true "MobileSetting")
 
+Requesting permission to send notifications:
+<img width="921" alt="image" src="https://user-images.githubusercontent.com/43075531/166171165-a9cd4092-6d3e-4ef0-8475-d1864ddb50ea.png">
+
+Summary Modal:
+<img width="903" alt="image" src="https://user-images.githubusercontent.com/43075531/166171512-ae8fdc13-b4d6-4907-912a-2383cb0625ce.png">
 
 
 ## External Dependencies
@@ -112,6 +118,7 @@ Please do not document required libraries (e.g., Vue, Vuefire, Firebase).**
 
 * Tailwind Elements: Tailwind Modal/Dialog component for the pop up window for timer-setting, summary, information(help) page, login 
 * toggle for the auto-break button
+* Circular timer
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
